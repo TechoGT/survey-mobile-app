@@ -1,0 +1,20 @@
+.bigger-4 {
+	font-size: 400%;
+}
+
+.bigger-2 {
+	font-size: 200%;
+}
+
+.center {
+	align: center;
+}
+
+.spinner svg {
+  width: 60px;
+  height: 60px;
+}
+
+.spinner {
+	stroke: #0083A9;
+}

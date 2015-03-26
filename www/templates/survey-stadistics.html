@@ -1,0 +1,27 @@
+<ion-view view-title="stadistics">
+  <ion-content ng-controller="stadisticsController">
+  	<div class="list card">
+	  <div class="item item-avatar">
+	    <img src="img/techo_logo.png">
+	    <h2>{{survey.name}}</h2>
+	    <p>{{survey.type}}</p>
+	  </div>
+	  <div class="item item-body">	    
+	    <p>
+	      	100 Encuestas Completas<br/>
+	      	(otros datos relevantes para comenzar una nueva encuesta de tipo: {{survey.type}}) 
+	      	<br/>
+	      	<h3>Token: {{token}}</h3>
+
+
+	    </p>	    
+	  </div>	  	  
+	  <div class="item tabs tabs-secondary tabs-icon-top">
+	    <a class="tab-item" href="#/surveys/{{survey.id}}/{{survey.questions[currentQuestion].id}}">
+	    	<i class="icon ion-ios-plus-empty"></i>
+	      Nueva Encuesta
+	    </a>
+	  </div>
+	</div>
+  </ion-content>
+</ion-view>
