@@ -1,6 +1,27 @@
-<ion-view view-title="question">
-  <ion-content ng-controller="questionController">
-  	Pregunta: {{question}} <br/>
-  	<a ng-href="#/surveys/{{survey.id}}/{{question.id + 1}}">Siguiente</a> 	
+<ion-view view-title="question" ng-controller="questionController">
+<ion-header-bar align-title="center" class="bar-positive">  
+  <h1 class="title">Seccion 1</h1>  
+</ion-header-bar>
+  <ion-content>  
+  	<div class="list card">
+	  <div class="item">	    
+	    <center> Esta es la primer pregunta: {{question.label}} {{question.id}}?</center>
+	  </div>
+	  <div class="item item-body">	
+	  	<div></div>	  		    
+	  </div>	  	  
+	  <div class="item tabs tabs-secondary tabs-icon-top">
+	    <a class="tab-item" ng-href="#/surveys/{{survey.id}}/{{survey.questions[currentQuestion + 1].id}}">
+	    	<i class="icon ion-ios-arrow-right"></i>
+	      Siguiente
+	    </a>
+	  </div>
+	</div>
   </ion-content>
+  <div class="bar bar-footer item-input-inset">
+  <label class="item-input-wrapper">
+    <i class="icon ion-ios-search placeholder-icon"></i>
+    	
+  </label>
+  </div>
 </ion-view>

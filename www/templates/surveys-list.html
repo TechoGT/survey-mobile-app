@@ -4,7 +4,7 @@
 </ion-header-bar>
   <ion-content >
   	<ion-list>
-  		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" href="#/surveys/{{survey.id}}">
+  		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" ng-href="#/surveys/{{survey.id}}">
   			<img ng-src="img/techo_logo.png">
   			<h2>{{survey.name}}</h2>
   			<p>{{survey.type}}</p>
@@ -17,5 +17,5 @@
   <label class="item-input-wrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
     <input type="search" placeholder="Buscar" ng-model="search_survey">
-  </label>
+  </label></div>
 </ion-view>

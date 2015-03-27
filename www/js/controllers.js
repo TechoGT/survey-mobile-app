@@ -31,12 +31,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('questionController', function($scope, surveys, $stateParams) {
-	$scope.survey = surveys.get($stateParams.surveyId);
-	if (surveys.getQuestion($scope.survey, $stateParams.questionId)) {
+	$scope.survey = surveys.get($stateParams.surveyId);	
 		$scope.question = surveys.getQuestion($scope.survey, $stateParams.questionId);
-	} else {
-		alert('Ya no hay mas preguntas');
-	}
 })
 
 .controller('loginController', function($scope, $rootScope, volunteers, $ionicPopup, $state){
