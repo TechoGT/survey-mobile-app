@@ -6,12 +6,8 @@ angular.module('starter.services',[])
 		name: '',
 		dpi: '',
 		email: '',
-		phone: ''
-	},{
-		name: '',
-		dpi: '',
-		email: '',
-		phone: ''
+		phone: '',
+		token: ''
 	}];
 
 	return {
@@ -36,14 +32,23 @@ angular.module('starter.services',[])
 				},
 				{
 						id: 1,
-						type: 'text',
+						type: 'password',
 						label: 'clave'						
+				},{
+						id: 2,
+						type: 'checkbox',
+						options: [{opt: 'a'}, {opt: 'b'}, {opt: 'c'}, {opt:'d'}],
+						label: 'enviar'						
+				},{
+						id: 3,
+						type: 'date',
+						label: 'fecha'
 				}
 			]
 		},
 		{
 			id: 1,
-			name: 'Survey Name2',
+			name: 'Survey qwerty',
 			type: 'Survey Type', 
 			token: '',
 			questions: [
@@ -51,11 +56,19 @@ angular.module('starter.services',[])
 						id: 0,
 						type: 'text',
 						label: 'usuario'						
-				},
-				{
+				},{
 						id: 1,
-						type: 'text',
+						type: 'password',
 						label: 'clave'						
+				},{
+						id: 2,
+						type: 'checkbox',
+						options: [{opt: 'a'}, {opt: 'b'}, {opt: 'c'}, {opt:'d'}],
+						label: 'enviar'						
+				},{
+						id: 3,
+						type: 'date',
+						label: 'fecha'
 				}
 			]
 			
@@ -70,12 +83,21 @@ angular.module('starter.services',[])
 						id: 0,
 						type: 'text',
 						label: 'usuario'						
-				},
-				{
+				},{
 						id: 1,
-						type: 'text',
+						type: 'password',
 						label: 'clave'						
-				}]
+				},{
+						id: 2,
+						type: 'checkbox',
+						options: [{opt: 'a'}, {opt: 'b'}, {opt: 'c'}, {opt:'d'}],
+						label: 'enviar'						
+				},{
+						id: 3,
+						type: 'date',
+						label: 'fecha'
+				}
+				]
 			
 		},
 		{
@@ -88,15 +110,26 @@ angular.module('starter.services',[])
 						id: 0,
 						type: 'text',
 						label: 'usuario'						
-				},
-				{
+				},{
 						id: 1,
-						type: 'text',
+						type: 'password',
 						label: 'clave'						
+				},{
+						id: 2,
+						type: 'radio',
+						options: [{opt: 'a'}, {opt: 'b'}, {opt: 'c'}, {opt:'d'}],
+						label: 'enviar'						
+				},{
+						id: 3,
+						type: 'date',
+						label: 'fecha'
 				}
 			]
 			
 		}];
+	var surveyId = 0;
+	var sectionId = 0;
+	var questionId = 0;
 
 	return {
 		all: function() {
@@ -126,14 +159,48 @@ angular.module('starter.services',[])
 					}
 				}
 			}
+		},
+		getSurveyId: function() {
+			return surveyId;
+		},
+		getSectionId: function() {
+			return sectionId;
+		},
+		getQuestionId: function() {
+			return questionId;
+		},
+		setSurveyId: function(id) {
+			surveyId = id;
+		},
+		setSectionId: function(id) {
+			sectionId = id;
+		},
+		setQuestionId: function(id) {
+			questionId = id;
+		},
+		nextSurvey: function() {
+			surveyId++;
+		},
+		nextSection: function() {
+			sectionId++;
+		},
+		nextQuestion: function() {			
+				questionId++;
+		},
+		prevSurvey: function() {
+			surveyId--;
+		},
+		prevSection: function() {
+			sectionId--;
+		},
+		prevQuestion: function() {
+			questionId--;
 		}
 	};
 })
 
 .factory('data', function() {
-	var filledSurveys = [{
-
-	}];
+	var filledSurveys = [];
 
 	return {
 		all: function() {

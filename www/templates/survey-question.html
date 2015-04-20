@@ -1,27 +1,81 @@
-<ion-view view-title="question" ng-controller="questionController">
+<ion-view view-title="question" ng-controller="stadisticsController">
 <ion-header-bar align-title="center" class="bar-positive">  
   <h1 class="title">Seccion 1</h1>  
 </ion-header-bar>
   <ion-content>  
   	<div class="list card">
 	  <div class="item">	    
-	    <center> Esta es la primer pregunta: {{question.label}} {{question.id}}?</center>
+	    <center> <span class="input-label">{{question.label}}</span></center>
 	  </div>
-	  <div class="item item-body">	
-	  	<div></div>	  		    
+	  <div class="item item-body">
+	  	<form class="css-form" novalidate name="answerForm">           
+            <div class="list card">                                                     
+	  	<div ng-switch on='question.type'>
+		   <div ng-switch-when="text">
+		   <label class="item item-input">
+				  <input type="text">	
+			</label>			
+		    </div>
+		    <div ng-switch-when="password">
+		    <label class="item item-input">
+				  <input type="password">	
+			</label>			
+		    </div>
+		    <div ng-switch-when="number">
+		    <label class="item item-input">
+		       <input type="number">
+		       </label>
+		    </div>
+		    <div ng-switch-when="email">
+		    <label class="item item-input">
+		       <input type="email">
+		       </label>
+		    </div>
+		    <div ng-switch-when="tel">
+		    <label class="item item-input">
+		       <input type="tel">
+		       </label>
+		    </div>
+		    <div ng-switch-when="radio">
+		       <div class="list">
+				  <label class="item item-radio" ng-repeat="option in question.options">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      {{option.opt}}
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+		    </div>
+		    <div ng-switch-when="checkbox">		    
+		       <ul class="list">
+				  <li class="item item-checkbox" ng-repeat="option in question.options">				  
+				     <label class="checkbox">
+				       <input type="checkbox">
+				     </label>
+				     {{option.opt}}
+				  </li>
+				</ul>
+		    </div>
+		    <div ng-switch-when="date">
+		    	<label class="item item-input">
+				  <span class="input-label">Fecha</span>
+				  <input type="date">
+				</label>
+		    </div>
+		   <div ng-switch-default>
+		       Bad type!
+		   </div>	
+		</div>                         
+        </form>	   
+		</div>	  		    
 	  </div>	  	  
 	  <div class="item tabs tabs-secondary tabs-icon-top">
-	    <a class="tab-item" ng-href="#/surveys/{{survey.id}}/{{survey.questions[currentQuestion + 1].id}}">
+	    <a class="tab-item" ng-click="nextQuestion({{survey.id}})" >
 	    	<i class="icon ion-ios-arrow-right"></i>
 	      Siguiente
 	    </a>
 	  </div>
 	</div>
-  </ion-content>
-  <div class="bar bar-footer item-input-inset">
-  <label class="item-input-wrapper">
-    <i class="icon ion-ios-search placeholder-icon"></i>
-    	
-  </label>
-  </div>
+  </ion-content>  
 </ion-view>

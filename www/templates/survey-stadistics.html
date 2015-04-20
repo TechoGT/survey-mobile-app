@@ -10,17 +10,43 @@
 	    <p>{{survey.type}}</p>
 	  </div>
 	  <div class="item item-body">	    
-	    <p>
-	      	100 Encuestas Completas<br/>
-	      	(otros datos relevantes para comenzar una nueva encuesta de tipo: {{survey.type}}) 
-	      	<br/>
-	      	<h3>Token: {{token}}</h3>
-	    </p>	    
+			<div>
+          <form class="css-form" novalidate name="volunteerForm">           
+            <div class="list card">
+              <div class="item item-divider">
+              Datos del Voluntario
+              </div>              
+              <label class="item item-input">
+                <input type="text" placeholder="Nombre Completo" ng-model="volunteers[0].name" name="u1Name" required>
+                <div ng-show="volunteerForm.$submitted || volunteerForm.u1Name.$touched">
+                  <i class="icon ion-ios-close invalid" ng-show="volunteerForm.u1Name.$error.required"></i>
+                  <i class="icon ion-ios-checkmark valid" ng-hide="volunteerForm.u1Name.$error.required"></i>
+                </div>
+              </label>              
+              <label class="item item-input">
+                <input type="tel" placeholder="Teléfono" ng-model="volunteers[0].phone">                
+              </label>
+              <label class="item item-input">
+                <input type="email" placeholder="Correo Electrónico" ng-model="volunteers[0].email">                
+              </label>
+              <div class="item item-divider">
+              Token
+              </div> 
+              <label class="item item-input">
+                <input type="text" placeholder="Token de Autorización" ng-model="volunteers[0].token" name="token" required>
+                <div ng-show="volunteerForm.$submitted || volunteerForm.token.$touched">
+                  <i class="icon ion-ios-close invalid" ng-show="volunteerForm.token.$error.required"></i>
+                  <i class="icon ion-ios-checkmark valid" ng-hide="volunteerForm.token.$error.required"></i>
+                </div>
+              </label>
+            </div>                         
+            </form>
+          </div>	    
 	  </div>	  	  
-	  <div class="item tabs tabs-secondary tabs-icon-top">
-	    <a class="tab-item" href="#/surveys/{{survey.id}}/{{survey.questions[currentQuestion].id}}">
+	  <div class="item tabs tabs-secondary tabs-icon-top">	  
+	  	    <a class="tab-item" ng-click="nextQuestion({{survey.id}})"> 
 	    	<i class="icon ion-ios-plus-empty"></i>
-	      Nueva Encuesta
+	      Iniciar Encuesta
 	    </a>
 	  </div>
 	</div>
