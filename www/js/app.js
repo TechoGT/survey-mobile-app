@@ -31,6 +31,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/surveys-list.html'
   })
 
+  .state('sections', {
+    url: '/surveys/:surveyId/sections',
+    templateUrl: 'templates/sections-list.html'
+  })
+
   .state('survey-stadistics', {
     url: '/surveys/:surveyId',
     templateUrl: 'templates/survey-stadistics.html'    
@@ -41,8 +46,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/survey-finale.html'    
   })
 
-.state('survey-question', {
-    url: '/surveys/:surveyId/:questionId',
+  .state('survey-section', {
+    url: '/surveys/:surveyId/:sectionId',
+    templateUrl: 'templates/survey-section.html'    
+  })
+
+  .state('survey-question', {
+    url: '/surveys/:surveyId/:sectionId/:questionId',
     templateUrl: 'templates/survey-question.html'    
   });
 

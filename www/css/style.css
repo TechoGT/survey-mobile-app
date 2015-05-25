@@ -18,3 +18,11 @@
 .spinner {
 	stroke: #0083A9;
 }
+
+.item-body p {
+	margin-top: 0px;
+}
+
+.item {
+	color:#387ef5;
+}

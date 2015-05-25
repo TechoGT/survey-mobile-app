@@ -1,0 +1,20 @@
+<ion-view view-title="surveys" ng-controller="sectionsController">
+<ion-header-bar align-title="center" class="bar-positive">  
+  <h1 class="title">Secciones</h1>  
+</ion-header-bar>
+  <ion-content >
+  	<ion-list>
+  		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="section in sections | filter: search_section" type="item-text-wrap" ng-href="#/surveys/{{survey.sid}}/{{section.gid}}">
+  			<img ng-src="img/techo_logo.png">
+  			<h2>{{section.group_name}}</h2>
+  			<p>{{section.gid}}</p>
+        <i class="icon ion-ios-arrow-right icon-accessory"></i>  			
+  		</ion-item>
+  	</ion-list>
+  </ion-content>
+<div class="bar bar-footer item-input-inset">
+  <label class="item-input-wrapper">
+    <i class="icon ion-ios-search placeholder-icon"></i>
+    <input type="search" placeholder="Buscar" ng-model="search_section">
+  </label></div>
+</ion-view>

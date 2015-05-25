@@ -4,12 +4,11 @@
 </ion-header-bar>
   <ion-content >
   	<ion-list>
-  		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" ng-href="#/surveys/{{survey.id}}">
+  		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" ng-href="#/surveys/{{survey.sid}}/sections">
   			<img ng-src="img/techo_logo.png">
-  			<h2>{{survey.name}}</h2>
-  			<p>{{survey.type}}</p>
-        <i class="icon ion-ios-arrow-right icon-accessory"></i>
-  			
+  			<h2>Encuesta</h2>
+  			<p>{{survey.sid}}</p>
+        <i class="icon ion-ios-arrow-right icon-accessory"></i>  			
   		</ion-item>
   	</ion-list>
   </ion-content>

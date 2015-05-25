@@ -4,10 +4,8 @@ angular.module('starter.services',[])
 	var volunteers = [
 	{
 		name: '',
-		dpi: '',
 		email: '',
-		phone: '',
-		token: ''
+		phone: ''
 	}];
 
 	return {
@@ -17,130 +15,43 @@ angular.module('starter.services',[])
 	};
 })
 
+.factory('$localstorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}])
+
 .factory('surveys', function(){
-	var surveysCollection = [
-		{
-			id: 0,
-			name: 'Survey Name1',
-			type: 'Survey Type', 
-			token: '',
-			questions: [
-				{
-						id: 0,
-						type: 'text',
-						label: 'usuario'						
-				},
-				{
-						id: 1,
-						type: 'password',
-						label: 'clave'						
-				},{
-						id: 2,
-						type: 'checkbox',
-						options: [{opt: 'a'}, {opt: 'b'}, {opt: 'c'}, {opt:'d'}],
-						label: 'enviar'						
-				},{
-						id: 3,
-						type: 'date',
-						label: 'fecha'
-				}
-			]
-		},
-		{
-			id: 1,
-			name: 'Survey qwerty',
-			type: 'Survey Type', 
-			token: '',
-			questions: [
-				{
-						id: 0,
-						type: 'text',
-						label: 'usuario'						
-				},{
-						id: 1,
-						type: 'password',
-						label: 'clave'						
-				},{
-						id: 2,
-						type: 'checkbox',
-						options: [{opt: 'a'}, {opt: 'b'}, {opt: 'c'}, {opt:'d'}],
-						label: 'enviar'						
-				},{
-						id: 3,
-						type: 'date',
-						label: 'fecha'
-				}
-			]
-			
-		},
-		{
-			id: 2,
-			name: 'Survey Name3',
-			type: 'Survey Type', 
-			token: '',
-			questions: [
-				{
-						id: 0,
-						type: 'text',
-						label: 'usuario'						
-				},{
-						id: 1,
-						type: 'password',
-						label: 'clave'						
-				},{
-						id: 2,
-						type: 'checkbox',
-						options: [{opt: 'a'}, {opt: 'b'}, {opt: 'c'}, {opt:'d'}],
-						label: 'enviar'						
-				},{
-						id: 3,
-						type: 'date',
-						label: 'fecha'
-				}
-				]
-			
-		},
-		{
-			id: 3,
-			name: 'Survey Name4',
-			type: 'Survey Type', 
-			token: '',
-			questions: [
-				{
-						id: 0,
-						type: 'text',
-						label: 'usuario'						
-				},{
-						id: 1,
-						type: 'password',
-						label: 'clave'						
-				},{
-						id: 2,
-						type: 'radio',
-						options: [{opt: 'a'}, {opt: 'b'}, {opt: 'c'}, {opt:'d'}],
-						label: 'enviar'						
-				},{
-						id: 3,
-						type: 'date',
-						label: 'fecha'
-				}
-			]
-			
-		}];
-	var surveyId = 0;
-	var sectionId = 0;
-	var questionId = 0;
+	var surveysCollection = [];// End of survey
+	var positionSurvey = 0;
+	var positionSection = 0;
+	var positionQuestion = 0;
+  var surveyId = 0;
 
 	return {
 		all: function() {
 			return surveysCollection;
 		},
+    add: function(survey) {
+      surveysCollection.push(survey);
+    },    
 		remove: function(survey) {
 			surveysCollection.splice(surveysCollection.indexOf(survey), 1);
 		},
 		get: function(surveyId) {
 			for (var i = 0; i < surveysCollection.length; i++) {
-				if (surveysCollection[i].id === parseInt(surveyId)) {
+				if (surveysCollection[i].sid === surveyId) {
 					return surveysCollection[i];
 				}else {
 					if(i === surveysCollection.length) {
@@ -149,53 +60,78 @@ angular.module('starter.services',[])
 				}
 			}
 		},
-		getQuestion: function(survey, questionId) {
-			for (var i = 0; i < survey.questions.length; i++) {
-				if (survey.questions[i].id === parseInt(questionId)) {
-					return survey.questions[i];
+		getSection: function(survey, sectionId) {					
+			//console.log(survey.sections.length);
+			for (var i = 0; i < survey.sections.length; i++) {
+				if (survey.sections[i].gid === sectionId) {					    			
+					return survey.sections[i];
 				}else {
-					if(i === survey.questions.length) {
+					if(i === survey.sections.length) {
 						return null;
 					}
 				}
 			}
 		},
-		getSurveyId: function() {
-			return surveyId;
+		getQuestion: function(survey, sectionId, questionId) {			
+			//console.log(section);
+			var section;
+			for (var i = 0; i < survey.sections.length; i++) {
+				if (survey.sections[i].gid === sectionId) {					
+					section = survey.sections[i];
+				}else {
+					if(i === survey.sections.length) {
+						section = null;
+					}
+				}
+			}			
+			if (section === undefined) {} else {				
+				for (var i = 0; i < section.questions.length; i++) {
+					if (section.questions[i].id === questionId) {						
+						return section.questions[i];
+					}else {
+						if(i === section.questions.length) {
+							return null;
+						}
+					}
+				}
+			}
 		},
-		getSectionId: function() {
-			return sectionId;
+		getSurveyposition: function() {
+			return positionSurvey;
 		},
-		getQuestionId: function() {
-			return questionId;
+		getSectionposition: function() {
+			return positionSection;
 		},
-		setSurveyId: function(id) {
-			surveyId = id;
+		getQuestionposition: function() {
+			return positionQuestion;
 		},
-		setSectionId: function(id) {
-			sectionId = id;
+		setSurveyposition: function(pos) {
+			positionSurvey = pos;
 		},
-		setQuestionId: function(id) {
-			questionId = id;
+		setSectionposition: function(pos) {
+			positionSection = pos;
+		},
+		setQuestionposition: function(pos) {
+			positionQuestion = pos;
 		},
 		nextSurvey: function() {
-			surveyId++;
+			positionSurvey++;
 		},
 		nextSection: function() {
-			sectionId++;
+			positionSection++;
 		},
 		nextQuestion: function() {			
-				questionId++;
+			positionQuestion++;
 		},
 		prevSurvey: function() {
-			surveyId--;
+			positionSurvey--;
 		},
 		prevSection: function() {
-			sectionId--;
+			positionSection--;
 		},
-		prevQuestion: function() {
-			questionId--;
-		}
+		prevQuestion: function() {			
+			positionQuestion--;
+		},
 	};
 })
 

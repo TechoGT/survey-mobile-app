@@ -1,81 +1,160 @@
 <ion-view view-title="question" ng-controller="stadisticsController">
 <ion-header-bar align-title="center" class="bar-positive">  
-  <h1 class="title">Seccion 1</h1>  
+  <h1 class="title">{{section.group_name}}</h1>  
 </ion-header-bar>
   <ion-content>  
   	<div class="list card">
-	  <div class="item">	    
-	    <center> <span class="input-label">{{question.label}}</span></center>
+	  <div class="item item-body">	    	  
+	    <center><p>{{question.question}}</p></center>
 	  </div>
-	  <div class="item item-body">
+	  <div class="item item-body">	  
 	  	<form class="css-form" novalidate name="answerForm">           
             <div class="list card">                                                     
-	  	<div ng-switch on='question.type'>
-		   <div ng-switch-when="text">
-		   <label class="item item-input">
-				  <input type="text">	
-			</label>			
-		    </div>
-		    <div ng-switch-when="password">
-		    <label class="item item-input">
-				  <input type="password">	
-			</label>			
-		    </div>
-		    <div ng-switch-when="number">
-		    <label class="item item-input">
-		       <input type="number">
-		       </label>
-		    </div>
-		    <div ng-switch-when="email">
-		    <label class="item item-input">
-		       <input type="email">
-		       </label>
-		    </div>
-		    <div ng-switch-when="tel">
-		    <label class="item item-input">
-		       <input type="tel">
-		       </label>
-		    </div>
-		    <div ng-switch-when="radio">
-		       <div class="list">
-				  <label class="item item-radio" ng-repeat="option in question.options">
+            	<label class="item item-input" ng-if="question.type == 'D'">		       	
+		       		<input type="date">
+		       	</label>
+		       	<div class="list" ng-if="question.type == 'G'">		       	
+		       		<label class="item item-radio">
+					    <input type="radio" name="gender">
+						    <div class="item-content">
+						      <p>Hombre</p>
+						    </div>
+					    <i class="radio-icon ion-ios-checkmark"></i>					    
+				  	</label>
+				  	<label class="item item-radio">
+				  		<input type="radio" name="gender">
+						    <div class="item-content">
+						      <p>Mujer</p>
+						    </div>
+					    <i class="radio-icon ion-ios-checkmark"></i>
+				  	</label>
+		       	</div>		       	
+		    	<label class="item item-input" ng-if="question.type == 'N'">
+		       		<input type="number">
+		       	</label>
+		       	<div class="list" ng-if="question.type == 'Y'">		       	
+		       		<label class="item item-radio">
+					    <input type="radio" name="yesno">
+					    <div class="item-content">
+					      <p>Si</p>
+					    </div>
+					    <i class="radio-icon ion-ios-checkmark"></i>					    
+				  	</label>
+				  	<label class="item item-radio">
+				  		<input type="radio" name="yesno">
+						    <div class="item-content">
+						      <p>No</p>
+						    </div>
+					    <i class="radio-icon ion-ios-checkmark"></i>
+				  	</label>
+		       	</div>		       	
+			    <div class="list" ng-if="question.type == 'L'">
+				  <label class="item item-radio" ng-repeat="option in question.answeroptions">
 				    <input type="radio" name="group">
 				    <div class="item-content">
-				      {{option.opt}}
+				      <p>{{option.answer}}</p>
 				    </div>
-				    <i class="radio-icon ion-checkmark"></i>
+				    <i class="radio-icon ion-ios-checkmark"></i>
 				  </label>
 				</div>
+				<div class="list" ng-if="question.type == 'O'">
+				  <label class="item item-radio" ng-repeat="option in question.asweroptions">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      <p>{{option.answer}}</p>
+				    </div>
+				    <i class="radio-icon ion-ios-checkmark"></i>
+				  </label>
+				  <label class="item item-input">
+				  	<input type="text">
+				  </label>
+				</div>
+				<div class="list" ng-if="question.type == '5'">
+				  <label class="item item-radio">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      <p>1</p>
+				    </div>
+				    <i class="radio-icon ion-ios-checkmark"></i>
+				  </label>
+				  <label class="item item-radio">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      <p>2</p>
+				    </div>
+				    <i class="radio-icon ion-ios-checkmark"></i>
+				  </label>
+				  <label class="item item-radio">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      <p>3</p>
+				    </div>
+				    <i class="radio-icon ion-ios-checkmark"></i>
+				  </label>
+				  <label class="item item-radio">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      <p>4</p>
+				    </div>
+				    <i class="radio-icon ion-ios-checkmark"></i>
+				  </label>
+				  <label class="item item-radio">
+				    <input type="radio" name="group">
+				    <div class="item-content">
+				      <p>5</p>
+				    </div>
+				    <i class="radio-icon ion-ios-checkmark"></i>
+				  </label>
+				</div>
+		       	<label class="item item-input" ng-if="question.type == 'S'">
+		       		<input type="text">
+		       	</label>
+		       	<label class="item item-input" ng-if="question.type == 'T'">
+		       		<input type="text">
+		       	</label>
+		       	<label class="item item-input" ng-if="question.type == 'U'">
+		       		<textarea rows="3" cols="20"></textarea>
+		       	</label>
+		       	<div class="list" ng-if="question.type == '!'">
+			       	<label class="item item-input item-select">					    
+					    <select>
+					      <option selected>Seleccione una opcion</option>
+					      <option ng-repeat="answeroption in question.answeroptions">{{answeroption.answer}}</option>
+					    </select>
+					</label>
+				</div>
+				<div ng-if="question.type == 'M'">				
+					<ul class="list">
+					  <li class="item item-checkbox" ng-repeat="option in question.subquestions">
+					     <label class="checkbox">
+					       <input type="checkbox">
+					     </label>
+					     {{option.question}}
+					  </li>
+					</ul>				
+				</div>
+				<div ng-if="question.type == 'P'">
+					<ul class="list">
+					  <li class="item item-checkbox" ng-repeat="option in question.subquestions">
+					     <label class="checkbox">
+					       <input type="checkbox">
+					     </label>
+					     {{option.question}}
+					  </li>
+					</ul>
+					<label class="item item-input">
+						<input type="text">
+					</label>
+				</div>
 		    </div>
-		    <div ng-switch-when="checkbox">		    
-		       <ul class="list">
-				  <li class="item item-checkbox" ng-repeat="option in question.options">				  
-				     <label class="checkbox">
-				       <input type="checkbox">
-				     </label>
-				     {{option.opt}}
-				  </li>
-				</ul>
-		    </div>
-		    <div ng-switch-when="date">
-		    	<label class="item item-input">
-				  <span class="input-label">Fecha</span>
-				  <input type="date">
-				</label>
-		    </div>
-		   <div ng-switch-default>
-		       Bad type!
-		   </div>	
-		</div>                         
+	  </div>                         
         </form>	   
 		</div>	  		    
 	  </div>	  	  
-	  <div class="item tabs tabs-secondary tabs-icon-top">
-	    <a class="tab-item" ng-click="nextQuestion({{survey.id}})" >
-	    	<i class="icon ion-ios-arrow-right"></i>
-	      Siguiente
-	    </a>
-	  </div>
+	  <a class="item item-icon-right positive" ng-click="nextQuestion()">
+        <i class="icon ion-ios-arrow-forward"></i>
+        Siguiente
+    	</a>
 	</div>
   </ion-content>  
 </ion-view>

@@ -1,15 +1,15 @@
 <ion-view view-title="stadistics" ng-controller="stadisticsController">
 <ion-header-bar align-title="center" class="bar-positive">  
-  <h1 class="title">{{survey.name}}</h1>  
+  <h1 class="title">Encuesta</h1>  
 </ion-header-bar>
   <ion-content>  
   	<div class="list card">
 	  <div class="item item-avatar">
 	    <img src="img/techo_logo.png">
-	    <h2>{{survey.name}}</h2>
-	    <p>{{survey.type}}</p>
+	    <h2>Encuesta</h2>
+	    <p>{{survey.sid}}</p>
 	  </div>
-	  <div class="item item-body">	    
+	  <div class="item item-body">	        
 			<div>
           <form class="css-form" novalidate name="volunteerForm">           
             <div class="list card">
@@ -29,26 +29,14 @@
               <label class="item item-input">
                 <input type="email" placeholder="Correo Electrónico" ng-model="volunteers[0].email">                
               </label>
-              <div class="item item-divider">
-              Token
-              </div> 
-              <label class="item item-input">
-                <input type="text" placeholder="Token de Autorización" ng-model="volunteers[0].token" name="token" required>
-                <div ng-show="volunteerForm.$submitted || volunteerForm.token.$touched">
-                  <i class="icon ion-ios-close invalid" ng-show="volunteerForm.token.$error.required"></i>
-                  <i class="icon ion-ios-checkmark valid" ng-hide="volunteerForm.token.$error.required"></i>
-                </div>
-              </label>
             </div>                         
             </form>
           </div>	    
 	  </div>	  	  
-	  <div class="item tabs tabs-secondary tabs-icon-top">	  
-	  	    <a class="tab-item" ng-click="nextQuestion({{survey.id}})"> 
-	    	<i class="icon ion-ios-plus-empty"></i>
-	      Iniciar Encuesta
-	    </a>
-	  </div>
+	  <a class="item item-icon-right positive" ng-click="nextSection()">
+        <i class="icon ion-ios-arrow-forward"></i>
+        Iniciar Encuesta
+    </a>
 	</div>
   </ion-content>
 </ion-view>
