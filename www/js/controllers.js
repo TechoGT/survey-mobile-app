@@ -51,8 +51,7 @@ angular.module('starter.controllers', [])
 	   	console.log(data);
    		surveys.add(data);
 	   	alertPopup.close();
-	   	$state.go('surveys');
-	   	//cambiar de estado
+	   	$state.go('survey-volunteer-data');
 	   }).
 	   error(function(data, status, headers, config) {
 		   	if (status === 500) {
@@ -61,74 +60,59 @@ angular.module('starter.controllers', [])
 		   		console.log('Error');
 		   	}
 	   });
-
-	   alertPopup.then(function(res) {
-	     //al cerrarse
-	   });
-
-	   /*$timeout(function() { //demostration porpuse only
-		    alertPopup.close(); //close the popup after 3 seconds for some reason
-		    $state.go('surveys');
-		}, 3000);*/
 	 };	
 })
 
-.controller('surveyController', function($scope, surveys){
-	$scope.surveys = surveys.all();       	
+.controller('surveyController', function($scope, surveys, context, $state){
+	$scope.surveys = surveys.all(); 
+
+	$scope.viewSections = function (survey) {
+		context.setSurvey(survey);
+		$state.go('sections');
+	}      	
 })
 
-.controller('sectionsController', function($scope, $stateParams, surveys){
-	$scope.survey = surveys.get($stateParams.surveyId);
-	$scope.sections = $scope.survey.sections;
-})
+.controller('sectionsController', function($scope, context, $state){
+	$scope.sections = context.getSurvey().sections;
 
-.controller('endController', function($scope, $state) {
-	$scope.begin = function() {
-		$state.go('init');
+	$scope.initQuestions = function(section) {
+		console.log(section);
+		context.setSection(section);
+		context.setQuestion(section.questions[0]);
+		$state.go('survey-question');
 	}
 })
 
-.controller('stadisticsController', function($scope, surveys, $stateParams, $ionicPopup, $state, $rootScope, volunteers, $location) {	
-	$scope.survey = surveys.get($stateParams.surveyId);	
-	$scope.section = surveys.getSection($scope.survey, $stateParams.sectionId);			
-	$scope.question = surveys.getQuestion($scope.survey, $stateParams.sectionId , $stateParams.questionId);
-	$scope.token = '';	
-	$scope.currentSurvey = surveys.getSurveyposition();
-	$scope.currentSection = surveys.getSectionposition();
-	$scope.currentQuestion = surveys.getQuestionposition();	
+.controller('endController', function($scope, $state, context) {
 
-	/*$scope.nextSection = function() {		
-		$scope.currentSection = surveys.getSectionposition();
-			if($scope.currentSection < $scope.survey.sections.length){														
-				$scope.changeSection();
-			}else if($scope.currentSection >= $scope.survey.sections.length-1) {				
-				var newPath = '/surveys/' + $scope.currentSurvey + '/end';
-				$location.path(newPath);			
-			}		
-	}*/
-	
-	$scope.nextQuestion = function() {										
-			if($scope.currentQuestion < $scope.survey.sections[$scope.currentSection].questions.length){								
-				$scope.changeQuestion();
-				surveys.nextQuestion();
-			}else if($scope.currentQuestion >= ($scope.survey.sections[$scope.currentSection].questions.length-1)) {									
-				
-				surveys.setQuestionposition(0);
-			}
+	$scope.begin = function() {		
+		$state.go('sections');
 	}
+})
 
-/*	$scope.changeSection = function() {		
-			var newPath = '/surveys/' + $scope.survey.sid + '/' + $scope.survey.sections[$scope.currentSection].gid;
-			$location.path(newPath);			
-	}*/
+.controller('volunteerDataController', function($scope, $state, volunteers) {
+	$scope.volunteer = volunteers.all();
+})
 
-	$scope.changeQuestion = function() {
-		if($scope.survey.sections[$scope.currentSection].questions[$scope.currentQuestion].parent_qid == 0){
-			var newPath = '/surveys/' + $scope.survey.sid + '/' + $scope.survey.sections[$scope.currentSection].gid + '/' + $scope.survey.sections[$scope.currentSection].questions[$scope.currentQuestion].id;
-			$location.path(newPath);
+.controller('questionController', function($scope, $state, context) {		
+	$scope.section = context.getSection();	
+	$scope.question = context.getQuestion();
+
+	$scope.nextQuestion = function() {					
+		if(context.changeQuestion(1)) {
+			$scope.question = context.getQuestion();			
+			$state.go('survey-question');
+		}else {				
+			$state.go('survey-finale');
 		}
-	}
-	
-	$rootScope.volunteers = volunteers.all();	
-});
+	};
 
+	$scope.prevQuestion = function() {
+		if(context.changeQuestion(-1)) {
+			$scope.question = context.getQuestion();
+			$state.go('survey-question');
+		}else {
+			$state.go('sections');
+		}
+	};
+});

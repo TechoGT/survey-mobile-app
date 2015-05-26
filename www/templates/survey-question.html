@@ -1,4 +1,4 @@
-<ion-view view-title="question" ng-controller="stadisticsController">
+<ion-view view-title="question" ng-controller="questionController">
 <ion-header-bar align-title="center" class="bar-positive">  
   <h1 class="title">{{section.group_name}}</h1>  
 </ion-header-bar>
@@ -150,11 +150,23 @@
 	  </div>                         
         </form>	   
 		</div>	  		    
-	  </div>	  	  
-	  <a class="item item-icon-right positive" ng-click="nextQuestion()">
-        <i class="icon ion-ios-arrow-forward"></i>
-        Siguiente
-    	</a>
+	  </div>
+	  	<div class="row">
+		  <div class="col">	  	
+		  	<a class="item item-icon-left positive" ng-click="prevQuestion()">
+		        <i class="icon ion-ios-arrow-back"></i>
+		        Anterior
+    		</a>
+    	  </div>
+		  <div class="col">	  	
+		  	<a class="item item-icon-right positive" ng-click="nextQuestion()">
+		        <i class="icon ion-ios-arrow-forward"></i>
+		        Siguiente
+    		</a>
+    	   </div>
+		</div>
+
+
 	</div>
   </ion-content>  
 </ion-view>

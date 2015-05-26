@@ -4,7 +4,7 @@
 </ion-header-bar>
   <ion-content >
   	<ion-list>
-  		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" ng-href="#/surveys/{{survey.sid}}/sections">
+  		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" ng-click="viewSections({{survey}})">
   			<img ng-src="img/techo_logo.png">
   			<h2>Encuesta</h2>
   			<p>{{survey.sid}}</p>
