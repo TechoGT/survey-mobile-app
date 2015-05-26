@@ -32,27 +32,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .state('sections', {
-    url: '/surveys/:surveyId/sections',
+    url: '/surveys/sections',
     templateUrl: 'templates/sections-list.html'
   })
 
-  .state('survey-stadistics', {
-    url: '/surveys/:surveyId',
-    templateUrl: 'templates/survey-stadistics.html'    
+  .state('survey-volunteer-data', {
+    url: '/surveys/data',
+    templateUrl: 'templates/survey-volunteer-data.html'    
   })
 
   .state('survey-finale', {
-    url: '/surveys/:surveyId/end',
+    url: '/surveys/sections/question/end',
     templateUrl: 'templates/survey-finale.html'    
   })
-
-  .state('survey-section', {
-    url: '/surveys/:surveyId/:sectionId',
-    templateUrl: 'templates/survey-section.html'    
-  })
-
+  
   .state('survey-question', {
-    url: '/surveys/:surveyId/:sectionId/:questionId',
+    url: '/surveys/sections/question',
     templateUrl: 'templates/survey-question.html'    
   });
 

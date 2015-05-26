@@ -1,7 +1,7 @@
 angular.module('starter.services',[])
 
 .factory('volunteers', function() {
-	var volunteers = [
+	var volunteer = [
 	{
 		name: '',
 		email: '',
@@ -10,7 +10,7 @@ angular.module('starter.services',[])
 
 	return {
 		all: function() {
-			return volunteers;
+			return volunteer;
 		}
 	};
 })
@@ -32,102 +32,86 @@ angular.module('starter.services',[])
   }
 }])
 
+.factory('context', function() {
+	var survey = {};
+	var section = {};
+	var question = {};
+	var currentQuestion = 0;
+
+	return {
+		getSurvey: function (){
+			return survey;
+		},
+
+		getSection: function (){
+			return section;
+		},
+
+		getQuestion: function (){
+			return question;
+		},
+
+		setSurvey: function(Survey) {
+			survey = Survey;
+		},
+
+		setSection: function(Section) {
+			section = Section;
+		},
+
+		setQuestion: function(Question) {
+			question = Question;
+		},
+
+		setCurrentQuestion: function(cq) {
+			currentQuestion = cq;
+		},
+
+		changeQuestion: function(direction) {
+			if (direction === 1) {
+				if(section.questions[currentQuestion+1]) {
+					question = section.questions[currentQuestion+1];
+					currentQuestion++;
+					return true;
+				} else {
+					currentQuestion = 0;
+					return false;
+				}				
+			} else if (direction === -1) {
+				if (section.questions[currentQuestion-1]) {
+					question = section.questions[currentQuestion-1];
+					currentQuestion--;
+					return true;
+				}else {
+					currentQuestion = 0;
+					return false;
+				}
+			}
+		}
+	};
+})
+
 .factory('surveys', function(){
 	var surveysCollection = [];// End of survey
-	var positionSurvey = 0;
-	var positionSection = 0;
-	var positionQuestion = 0;
-  var surveyId = 0;
+	
 
 	return {
 		all: function() {
 			return surveysCollection;
 		},
-    add: function(survey) {
-      surveysCollection.push(survey);
-    },    
+
+	    add: function(survey) {
+	      surveysCollection.push(survey);
+	    },    
+
 		remove: function(survey) {
 			surveysCollection.splice(surveysCollection.indexOf(survey), 1);
-		},
-		get: function(surveyId) {
-			for (var i = 0; i < surveysCollection.length; i++) {
-				if (surveysCollection[i].sid === surveyId) {
-					return surveysCollection[i];
-				}else {
-					if(i === surveysCollection.length) {
-						return null;
-					}
-				}
-			}
-		},
-		getSection: function(survey, sectionId) {					
-			//console.log(survey.sections.length);
-			for (var i = 0; i < survey.sections.length; i++) {
-				if (survey.sections[i].gid === sectionId) {					    			
-					return survey.sections[i];
-				}else {
-					if(i === survey.sections.length) {
-						return null;
-					}
-				}
-			}
-		},
-		getQuestion: function(survey, sectionId, questionId) {			
-			//console.log(section);
-			var section;
-			for (var i = 0; i < survey.sections.length; i++) {
-				if (survey.sections[i].gid === sectionId) {					
-					section = survey.sections[i];
-				}else {
-					if(i === survey.sections.length) {
-						section = null;
-					}
-				}
-			}			
-			if (section === undefined) {} else {				
-				for (var i = 0; i < section.questions.length; i++) {
-					if (section.questions[i].id === questionId) {						
-						return section.questions[i];
-					}else {
-						if(i === section.questions.length) {
-							return null;
-						}
-					}
-				}
-			}
-		},
-		getSurveyposition: function() {
-			return positionSurvey;
-		},
-		getSectionposition: function() {
-			return positionSection;
-		},
-		getQuestionposition: function() {
-			return positionQuestion;
-		},
-		setSurveyposition: function(pos) {
-			positionSurvey = pos;
-		},
-		setSectionposition: function(pos) {
-			positionSection = pos;
 		},
 		setQuestionposition: function(pos) {
 			positionQuestion = pos;
 		},
-		nextSurvey: function() {
-			positionSurvey++;
-		},
-		nextSection: function() {
-			positionSection++;
-		},
 		nextQuestion: function() {			
 			positionQuestion++;
-		},
-		prevSurvey: function() {
-			positionSurvey--;
-		},
-		prevSection: function() {
-			positionSection--;
 		},
 		prevQuestion: function() {			
 			positionQuestion--;

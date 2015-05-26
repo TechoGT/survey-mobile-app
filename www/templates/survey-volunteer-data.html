@@ -1,4 +1,4 @@
-<ion-view view-title="stadistics" ng-controller="stadisticsController">
+<ion-view view-title="stadistics" ng-controller="volunteerDataController">
 <ion-header-bar align-title="center" class="bar-positive">  
   <h1 class="title">Encuesta</h1>  
 </ion-header-bar>
@@ -6,8 +6,8 @@
   	<div class="list card">
 	  <div class="item item-avatar">
 	    <img src="img/techo_logo.png">
-	    <h2>Encuesta</h2>
-	    <p>{{survey.sid}}</p>
+	    <h2>Bienvenido</h2>
+	    <p>Ingrese sus datos</p>
 	  </div>
 	  <div class="item item-body">	        
 			<div>
@@ -33,9 +33,9 @@
             </form>
           </div>	    
 	  </div>	  	  
-	  <a class="item item-icon-right positive" ng-click="nextSection()">
+	  <a class="item item-icon-right positive" ng-href="#/surveys">
         <i class="icon ion-ios-arrow-forward"></i>
-        Iniciar Encuesta
+        Iniciar
     </a>
 	</div>
   </ion-content>
