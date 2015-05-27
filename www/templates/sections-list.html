@@ -1,9 +1,12 @@
 <ion-view view-title="surveys" ng-controller="sectionsController">
 <ion-header-bar align-title="center" class="bar-positive">  
+  <div class="buttons">
+    <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">atrás</button>
+  </div>
   <h1 class="title">Secciones</h1>  
 </ion-header-bar>
   <ion-content>
-  <div ng-repeat="section in sections | filter: search_section">
+  <div ng-repeat="section in sections | filter: search_section">  
     <div class="list card">
       <div class="item item-icon-left">
       <i class="icon ion-ios-book-outline"></i>

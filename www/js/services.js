@@ -106,16 +106,7 @@ angular.module('starter.services',[])
 
 		remove: function(survey) {
 			surveysCollection.splice(surveysCollection.indexOf(survey), 1);
-		},
-		setQuestionposition: function(pos) {
-			positionQuestion = pos;
-		},
-		nextQuestion: function() {			
-			positionQuestion++;
-		},
-		prevQuestion: function() {			
-			positionQuestion--;
-		},
+		}
 	};
 })
 
