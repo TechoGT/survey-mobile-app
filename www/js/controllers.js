@@ -73,13 +73,18 @@ angular.module('starter.controllers', [])
 })
 
 .controller('sectionsController', function($scope, context, $state){
-	$scope.sections = context.getSurvey().sections;
+	$scope.sections = context.getSurvey().sections;	
 
 	$scope.initQuestions = function(section) {
 		console.log(section);
-		context.setSection(section);
 		context.setQuestion(section.questions[0]);
+		context.setSection(section);		
+		console.log('pregunta a mostrar: ' + section.questions[0].question);
 		$state.go('survey-question');
+	}
+
+	$scope.goBack = function() {
+		$state.go('surveys');
 	}
 })
 
@@ -103,7 +108,7 @@ angular.module('starter.controllers', [])
 			$scope.question = context.getQuestion();			
 			$state.go('survey-question');
 		}else {				
-			$state.go('survey-finale');
+			$state.go('sections');
 		}
 	};
 
@@ -115,4 +120,8 @@ angular.module('starter.controllers', [])
 			$state.go('sections');
 		}
 	};
+
+	$scope.goBack = function () {
+		$state.go('sections');
+	}
 });
