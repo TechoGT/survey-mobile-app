@@ -40,11 +40,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/surveys/data',
     templateUrl: 'templates/survey-volunteer-data.html'    
   })
-
-  .state('survey-finale', {
-    url: '/surveys/sections/question/end',
-    templateUrl: 'templates/survey-finale.html'    
-  })
   
   .state('survey-question', {
     url: '/surveys/sections/question',
