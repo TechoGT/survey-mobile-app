@@ -1,9 +1,12 @@
 <ion-view view-title="surveys" ng-controller="sectionsController">
 <ion-header-bar align-title="center" class="bar-positive">  
   <div class="buttons">
-    <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">atrás</button>
+    <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">volver</button>
   </div>
-  <h1 class="title">Secciones</h1>  
+  <h1 class="title">Secciones</h1> 
+  <div class="buttons">
+    <button class="button icon-left ion-ios-plus-outline button-clear " ng-click="newSurvey()"></button>
+  </div> 
 </ion-header-bar>
   <ion-content>
   <div ng-repeat="section in sections | filter: search_section">  
@@ -26,5 +29,9 @@
   <label class="item-input-wrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
     <input type="search" placeholder="Buscar" ng-model="search_section">
-  </label></div>
+  </label>
+  <label class="item-input bigger-2" ng-click="help()">
+    <i class="icon ion-ios-information-empty placeholder-icon"></i>    
+  </label>
+</div>
 </ion-view>
