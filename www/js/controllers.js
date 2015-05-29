@@ -3,12 +3,11 @@ angular.module('starter.controllers', [])
 .controller('initController', function($scope, $ionicPopup, $timeout, $state, $http, context, $localstorage) {
 	// Aca se sincronizara con el api
 
-	if($localstorage.getObject('surveys') != null) {
-		$scope.showList = true;
-	}else{
-		$scope.showList = false;
-	}
-
+		if($localstorage.getObject('surveys') != null) {
+			$scope.showList = true;
+		}else{
+			$scope.showList = false;
+		}	
 
 	$scope.sync = function(){		
 		$scope.getSurveyCode();		// servicio 
@@ -104,7 +103,7 @@ angular.module('starter.controllers', [])
 	 };	
 })
 
-.controller('surveyController', function($scope, context, $state, $localstorage, $http){
+.controller('surveyController', function($scope, context, $state, $localstorage, $http, $ionicPopup){
 	$scope.surveys = $localstorage.getObject('surveys').list; 
 
 	$scope.viewSections = function (survey) {		
@@ -114,23 +113,41 @@ angular.module('starter.controllers', [])
 
 	$scope.goBack = function() {
 		$state.go('survey-volunteer-data');
-	}
+	};
 	
-	$scope.sendData = function(surveyID) { // proceso critico				
-		var json = {answers: data.getAnswers()};
-		
+	$scope.showAlert = function(mensaje) {
+	   var alertPopup = $ionicPopup.alert({
+	     title: 'Alerta',
+	     template: mensaje
+	   });
+	   alertPopup.then(function(res) {
+	     console.log('Gracias');
+	   });
+	 };
+
+	 $scope.sendData = function(surveyID) {
+	 	var json = {sid: surveyID, answers: $localstorage.getObject('answers'), volunteer: $localstorage.getObject('volunteer')};
 		console.log(json);
-		/*$http.get('http://104.236.99.15/api/v1/sync/response/'+surveyID, {
-		    params: json
-		});*/
-		 	
-		 	/*$http.post('http://104.236.99.15/api/v1/sync/response/' + surveyID, json)
+			   var alertPopup = $ionicPopup.alert({
+			     title: 'Enviando',
+			     template: '<center><ion-spinner icon="android" class="bigger-2"></ion-spinner></center>',
+			     scope: $scope,
+			     buttons: {}
+			   });
+
+		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
 		 	.success(function(data, status, headers, config) {
-	   		console.log('envio de ' + json + ' Exitoso'); 
+		 		alertPopup.close();
+		 		$scope.showAlert('Respuestas enviadas correctamente.');		 		
+	   			console.log('envio de ' + json + ' Exitoso'); 
 			}).error(function(data, status, headers, config) {
+				alertPopup.close();
+				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');
 				console.log('envio de ' + surveyID + ' fallido');		   	
-		   });*/
-	 };      	
+		   });
+
+		};
+	
 })
 
 .controller('sectionsController', function($scope, context, $state, $localstorage){
@@ -191,26 +208,28 @@ angular.module('starter.controllers', [])
 	$scope.question = context.getQuestion();
 
 	$scope.nextQuestion = function() {					
-		if(context.changeQuestion(1)) {			
-			if($scope.question.preg != ''){ // answered question 
-				var answer = '\'' + context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + '=>' + $scope.question.preg +'\'';
+		if($scope.question.preg != ''){ // answered question 
+				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+				var value = $scope.question.preg;
 				if($localstorage.getObject('answers') != null) {   			
-		   			var answerslist = $localstorage.getObject('answers').list;
-		   			answerslist.push(answer);
+		   			var answerslist = $localstorage.getObject('answers');
+		   			console.log(answerslist);
+		   			answerslist[key] = value;
 		   			$localstorage.setObject('answers', answerslist);
 		   		}else {
 		   			console.log('No existe');
-		   			var answerslist = [];
-		   			answerslist.push(answer);
-		   			$localstorage.setObject('answers', {list: answerslist});   					   						   		
+		   			var answerslist = {};
+		   			answerslist[key] = value;
+		   			$localstorage.setObject('answers', answerslist);   					   						   		
 		   		}
-			}			
+		}
+
+		if(context.changeQuestion(1)) {			
+			// verificar si la pregunta es obligatoria			
 			$scope.question = context.getQuestion();			
 			$state.go('survey-question');
-		}else {
+		}else {		
 			console.log($localstorage.getObject('answers'));
-			//data.getSurvey().sections.push(data.getSection());
-			//data.setSection({gid:'', description:'', group_name:'', questions: []});
 			$state.go('sections');
 		}
 	};

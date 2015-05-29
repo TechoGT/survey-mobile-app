@@ -3,10 +3,7 @@
   <div class="buttons">
     <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">volver</button>
   </div>
-  <h1 class="title">Secciones</h1> 
-  <div class="buttons">
-    <button class="button icon-left ion-ios-plus-outline button-clear " ng-click="newSurvey()"></button>
-  </div> 
+  <h1 class="title">Secciones</h1>
 </ion-header-bar>
   <ion-content>
   <div ng-repeat="section in sections | filter: search_section">  

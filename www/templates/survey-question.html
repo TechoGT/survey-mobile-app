@@ -17,24 +17,24 @@
 		       		<input type="date" ng-model="question.preg">
 		       	</label>
 		       	<div class="list" ng-if="question.type == 'G'">	 <!--GENDER-->	       	
-		       		<ion-radio ng-model="question.preg" ng-value="'men'">Hombre</ion-radio>
-					<ion-radio ng-model="question.preg" ng-value="'women'">Mujer</ion-radio>		       		
+		       		<ion-radio ng-model="question.preg" ng-value="'M'">Hombre</ion-radio>
+					<ion-radio ng-model="question.preg" ng-value="'F'">Mujer</ion-radio>		       		
 		       	</div>		       	
 		    	<label class="item item-input" ng-if="question.type == 'N'">  <!--NUMBER-->
 		       		<input type="number" ng-model="question.preg">
 		       	</label>
 		       	<div class="list" ng-if="question.type == 'Y'">		       	<!--YES/NO-->
-		       		<ion-radio ng-model="question.preg" ng-value="'yes'">Si</ion-radio>
-					<ion-radio ng-model="question.preg" ng-value="'no'">No</ion-radio>
+		       		<ion-radio ng-model="question.preg" ng-value="'Y'">Si</ion-radio>
+					<ion-radio ng-model="question.preg" ng-value="'N'">No</ion-radio>
 		       	</div>		       	
 			    <div class="list" ng-if="question.type == 'L'"> <!--RADIO OPTIONS-->
-				  <label class="item item-radio" ng-repeat="option in question.answeroptions">
-				    <ion-radio ng-model="question.preg" ng-value="option.aid">{{option.answer}}</ion-radio>
+				  <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
+				    <ion-radio ng-model="question.preg" ng-value="key">{{option.answer}}</ion-radio>
 				  </label>
 				</div>
 				<div class="list" ng-if="question.type == 'O'"> <!--RADIO OPTIONS WITH COMMENTS-->
-				  <label class="item item-radio" ng-repeat="option in question.answeroptions">
-				    <ion-radio ng-model="question.preg" ng-value="option.aid">{{option.answer}}</ion-radio>
+				  <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
+				    <ion-radio ng-model="question.preg" ng-value="key">{{option.answer}}</ion-radio>
 				  </label>
 				  <label class="item item-input">
 				  	<input type="text">
