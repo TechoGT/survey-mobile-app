@@ -15,11 +15,8 @@ angular.module('starter.services',[])
     getObject: function(key) {
       return angular.fromJson($window.localStorage[key] || null);
     },
-    getCount: function() {
-    	return count;
-    },
-    setCount: function(n) {
-    	count = n;
+    removeObject: function(key) {
+    	$window.localStorage.removeItem(key);
     }
   }
 }])

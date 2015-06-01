@@ -126,8 +126,9 @@ angular.module('starter.controllers', [])
 	 };
 
 	 $scope.sendData = function(surveyID) {
-	 	var json = {sid: surveyID, answers: $localstorage.getObject('answers'), volunteer: $localstorage.getObject('volunteer')};
-		console.log(json);
+	 	var json = {sid: surveyID, answers: $localstorage.getObject(surveyID), volunteer: $localstorage.getObject('volunteer')};
+	 	if($localstorage.getObject(surveyID) != null) {	 		
+				console.log(json);
 			   var alertPopup = $ionicPopup.alert({
 			     title: 'Enviando',
 			     template: '<center><ion-spinner icon="android" class="bigger-2"></ion-spinner></center>',
@@ -136,17 +137,18 @@ angular.module('starter.controllers', [])
 			   });
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
-		 	.success(function(data, status, headers, config) {
+		 	.success(function(data, status, headers, config) {		 		
 		 		alertPopup.close();
 		 		$scope.showAlert('Respuestas enviadas correctamente.');		 		
-	   			console.log('envio de ' + json + ' Exitoso'); 
+		 		$localstorage.removeObject(surveyID);	   			
 			}).error(function(data, status, headers, config) {
 				alertPopup.close();
-				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');
-				console.log('envio de ' + surveyID + ' fallido');		   	
+				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');				
 		   });
-
-		};
+	 	} else {
+	 		$scope.showAlert('Este instrumento no contiene respuestas para enviar.');
+	 	}
+	};
 	
 })
 
@@ -211,16 +213,16 @@ angular.module('starter.controllers', [])
 		if($scope.question.preg != ''){ // answered question 
 				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 				var value = $scope.question.preg;
-				if($localstorage.getObject('answers') != null) {   			
-		   			var answerslist = $localstorage.getObject('answers');
+				if($localstorage.getObject(context.getSurvey().sid) != null) {   			
+		   			var answerslist = $localstorage.getObject(context.getSurvey().sid);
 		   			console.log(answerslist);
 		   			answerslist[key] = value;
-		   			$localstorage.setObject('answers', answerslist);
+		   			$localstorage.setObject(context.getSurvey().sid, answerslist);
 		   		}else {
 		   			console.log('No existe');
 		   			var answerslist = {};
 		   			answerslist[key] = value;
-		   			$localstorage.setObject('answers', answerslist);   					   						   		
+		   			$localstorage.setObject(context.getSurvey().sid, answerslist);   					   						   		
 		   		}
 		}
 
