@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngCordova'])
 
 .controller('initController', function($scope, $ionicPopup, $timeout, $state, $http, context, $localstorage) {
 	// Aca se sincronizara con el api
@@ -60,23 +60,23 @@ angular.module('starter.controllers', [])
 	   success(function(data, status, headers, config) {
 	   	//console.log(data);	   	
    		if($localstorage.getObject('surveys') != null) {   			
-   			for(i = 0; i < $localstorage.getObject('surveys').list.length; i++){   				
-   				console.log(data.sid + '==' + $localstorage.getObject('surveys').list[i].sid);
-   				if(data.sid == $localstorage.getObject('surveys').list[i].sid){
+   			for(i = 0; i < $localstorage.getObject('surveys').length; i++){   				
+   				console.log(data.sid + '==' + $localstorage.getObject('surveys')[i].sid);
+   				if(data.sid == $localstorage.getObject('surveys')[i].sid){
    					//ya existe   					
-   						$scope.showAlert('La encuesta ya existe en su dispositivo.'); 
+   						//$scope.showAlert('La encuesta ya existe en su dispositivo.'); 
    						alertPopup.close();  						
    						$state.go('survey-volunteer-data');   					
    						break;   							
    				}else{
    					//no existe   					
-   					if(i == ($localstorage.getObject('surveys').list.length-1)) {
-   						var localList = $localstorage.getObject('surveys').list;
+   					if(i == ($localstorage.getObject('surveys').length-1)) {
+   						var localList = $localstorage.getObject('surveys');
    						localList.push(data);
-   						$localstorage.setObject('surveys', {list: localList});   						
-   						console.log($localstorage.getObject('surveys').list);
+   						$localstorage.setObject('surveys', localList);   						
+   						console.log($localstorage.getObject('surveys'));
    					}else{
-   						console(i + "==" + ($localstorage.getObject('surveys').list.length-1));
+   						console(i + "==" + ($localstorage.getObject('surveys').length-1));
    					}
    					alertPopup.close();
 	   				$state.go('survey-volunteer-data');   					
@@ -86,7 +86,7 @@ angular.module('starter.controllers', [])
    			console.log('No existe');
    			var listt = [];
    			listt.push(data);
-   			$localstorage.setObject('surveys', {list: listt});   			
+   			$localstorage.setObject('surveys', listt);   			
    			alertPopup.close();
 	   		$state.go('survey-volunteer-data');
    			console.log($localstorage.getObject('surveys'));
@@ -104,7 +104,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('surveyController', function($scope, context, $state, $localstorage, $http, $ionicPopup){
-	$scope.surveys = $localstorage.getObject('surveys').list; 
+	$scope.surveys = $localstorage.getObject('surveys'); 
 
 	$scope.viewSections = function (survey) {		
 		context.setSurvey(survey);				
@@ -148,6 +148,10 @@ angular.module('starter.controllers', [])
 	 	} else {
 	 		$scope.showAlert('Este instrumento no contiene respuestas para enviar.');
 	 	}
+	};
+
+	$scope.gps = function() {
+		$state.go('gps');
 	};
 	
 })
@@ -205,9 +209,9 @@ angular.module('starter.controllers', [])
 	 };
 })
 
-.controller('questionController', function($scope, $state, context, $localstorage) {		
+.controller('questionController', function($scope, $state, context, $localstorage, $cordovaGeolocation, $ionicPopup) {		
 	$scope.section = context.getSection();	
-	$scope.question = context.getQuestion();
+	$scope.question = context.getQuestion();	
 
 	$scope.nextQuestion = function() {					
 		if($scope.question.preg != ''){ // answered question 
@@ -247,5 +251,50 @@ angular.module('starter.controllers', [])
 
 	$scope.goBack = function () {
 		$state.go('sections');
-	}
+	};
+
+	  	if($localstorage.getObject('gps') != null) {
+			$scope.showGpsList = true;
+		}else{
+			$scope.showGpsList = false;
+		}
+  
+	  $scope.getPosition = function() {
+	  	var posOptions = {timeout: 10000, enableHighAccuracy: true};
+	  	$cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+	      var latitude  = position.coords.latitude;
+	      var longitude = position.coords.longitude;
+
+	      	if($localstorage.getObject('gps') != null) {
+				$scope.gps = $localstorage.getObject('gps');
+				$scope.gps.push(latitude + "," + longitude);
+				$localstorage.setObject('gps', $scope.gps);
+			}else {
+				var positions = [];				
+				positions.push(latitude + "," + longitude);
+				$localstorage.setObject('gps', positions);
+				console.log(positions);
+			}
+
+		    if($localstorage.getObject('gps') != null) {
+				$scope.showGpsList = true;
+			}else{
+				$scope.showGpsList = false;
+			}
+
+	    }, function(err) {
+	      //error      
+	      $scope.showAlert("Verifique que el GPS de su dispositivo este encendido.");
+	    });
+	  };
+
+	  	$scope.showAlert = function(mensaje) {
+		   var alertPopup = $ionicPopup.alert({
+		     title: 'Alerta',
+		     template: mensaje
+		   });
+		   alertPopup.then(function(res) {
+		     console.log('Gracias');
+		   });
+		 };
 });
