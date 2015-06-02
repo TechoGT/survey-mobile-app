@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngCordova'])
 
 .controller('initController', function($scope, $ionicPopup, $timeout, $state, $http, context, $localstorage) {
 	// Aca se sincronizara con el api
@@ -149,6 +149,10 @@ angular.module('starter.controllers', [])
 	 		$scope.showAlert('Este instrumento no contiene respuestas para enviar.');
 	 	}
 	};
+
+	$scope.gps = function() {
+		$state.go('gps');
+	};
 	
 })
 
@@ -248,4 +252,47 @@ angular.module('starter.controllers', [])
 	$scope.goBack = function () {
 		$state.go('sections');
 	}
+})
+
+.controller('geoController', function($cordovaGeolocation) {
+
+  var posOptions = {timeout: 10000, enableHighAccuracy: false};
+  
+  $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position) {
+      var latitude  = position.coords.latitude;
+      var longitude = position.coords.longitude;
+      alert('Lat: ' + latitude + 'Long: ' + longitude);
+    }, function(err) {
+      // error
+    });
+
+
+  var watchOptions = {
+    frequency : 1000,
+    timeout : 3000,
+    enableHighAccuracy: true // may cause errors if true
+  };
+
+  var watch = $cordovaGeolocation.watchPosition(watchOptions);
+  watch.then(
+    null,
+    function(err) {
+      // error
+    },
+    function(position) {
+      var lat  = position.coords.latitude;
+      var long = position.coords.longitude;
+  });
+
+
+  watch.clearWatch();
+  // OR
+  $cordovaGeolocation.clearWatch(watch)
+    .then(function(result) {
+      // success
+      }, function (error) {
+      // error
+    });
 });

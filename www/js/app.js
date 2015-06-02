@@ -11,10 +11,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.geolocation.then(success, error);
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
   });
 })
 
@@ -44,6 +46,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('survey-question', {
     url: '/surveys/sections/question',
     templateUrl: 'templates/survey-question.html'    
+  })
+
+  .state('gps', {
+    url: '/gps',
+    templateUrl: 'templates/geolocation.html'    
   });
 
   $urlRouterProvider.otherwise('/init');
