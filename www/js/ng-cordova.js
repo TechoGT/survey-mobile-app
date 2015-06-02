@@ -1,7 +1,7 @@
 
 angular.module('ngCordova', ['ngCordova.plugins']);
 
-angular.module('ngCordova.plugins', ['geolocation']);
+angular.module('ngCordova.plugins', ['ngCordova.plugins.geolocation']);
 
 //#### Begin Individual Plugin Code ####
 

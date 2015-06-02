@@ -48,10 +48,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     templateUrl: 'templates/survey-question.html'    
   })
 
-  .state('gps', {
-    url: '/gps',
-    templateUrl: 'templates/geolocation.html'    
-  });
 
   $urlRouterProvider.otherwise('/init');
 });
