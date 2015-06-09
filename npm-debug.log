@@ -1,0 +1,463 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'ionic' ]
+2 info using npm@1.4.10
+3 info using node@v0.11.14-pre
+4 verbose cache add [ 'ionic', null ]
+5 verbose cache add name=undefined spec="ionic" args=["ionic",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'ionic',
+6 verbose parsed url   path: 'ionic',
+6 verbose parsed url   href: 'ionic' }
+7 silly lockFile 00d10074-ionic ionic
+8 verbose lock ionic /home/humberth/.npm/00d10074-ionic.lock
+9 silly lockFile 00d10074-ionic ionic
+10 silly lockFile 00d10074-ionic ionic
+11 verbose addNamed [ 'ionic', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 966fc04a-ionic ionic@
+14 verbose lock ionic@ /home/humberth/.npm/966fc04a-ionic.lock
+15 silly addNameRange { name: 'ionic', range: '*', hasData: false }
+16 verbose url raw ionic
+17 verbose url resolving [ 'https://registry.npmjs.org/', './ionic' ]
+18 verbose url resolved https://registry.npmjs.org/ionic
+19 info trying registry request attempt 1 at 15:14:44
+20 verbose etag "95IYCZVBX032NQI1TP8RY7S1D"
+21 http GET https://registry.npmjs.org/ionic
+22 http 200 https://registry.npmjs.org/ionic
+23 silly registry.get cb [ 200,
+23 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+23 silly registry.get     etag: '"937PQJDWRY7RD6BB7VAN05TDH"',
+23 silly registry.get     'content-type': 'application/json',
+23 silly registry.get     'cache-control': 'max-age=60',
+23 silly registry.get     'content-length': '409128',
+23 silly registry.get     'accept-ranges': 'bytes',
+23 silly registry.get     date: 'Thu, 04 Jun 2015 21:14:44 GMT',
+23 silly registry.get     via: '1.1 varnish',
+23 silly registry.get     age: '0',
+23 silly registry.get     connection: 'close',
+23 silly registry.get     'x-served-by': 'cache-atl6227-ATL',
+23 silly registry.get     'x-cache': 'HIT',
+23 silly registry.get     'x-cache-hits': '1',
+23 silly registry.get     'x-timer': 'S1433452484.520230,VS0,VE34',
+23 silly registry.get     vary: 'Accept' } ]
+24 silly addNameRange number 2 { name: 'ionic', range: '*', hasData: true }
+25 silly addNameRange versions [ 'ionic',
+25 silly addNameRange   [ '0.9.6',
+25 silly addNameRange     '0.9.8',
+25 silly addNameRange     '0.9.9',
+25 silly addNameRange     '0.9.10',
+25 silly addNameRange     '0.9.11',
+25 silly addNameRange     '0.9.12',
+25 silly addNameRange     '0.9.13',
+25 silly addNameRange     '0.9.14',
+25 silly addNameRange     '0.9.15',
+25 silly addNameRange     '0.9.16',
+25 silly addNameRange     '1.0.0-beta.1',
+25 silly addNameRange     '1.0.0-beta',
+25 silly addNameRange     '1.0.1-beta',
+25 silly addNameRange     '1.0.3-beta',
+25 silly addNameRange     '1.0.4',
+25 silly addNameRange     '1.0.5',
+25 silly addNameRange     '1.0.6',
+25 silly addNameRange     '1.0.7',
+25 silly addNameRange     '1.0.8',
+25 silly addNameRange     '1.0.9',
+25 silly addNameRange     '1.0.10',
+25 silly addNameRange     '1.0.11',
+25 silly addNameRange     '1.0.12',
+25 silly addNameRange     '1.0.13',
+25 silly addNameRange     '1.0.14',
+25 silly addNameRange     '1.0.15',
+25 silly addNameRange     '1.0.16',
+25 silly addNameRange     '1.0.17',
+25 silly addNameRange     '1.1.0-beta1',
+25 silly addNameRange     '1.1.0-beta2',
+25 silly addNameRange     '1.1.0-beta3',
+25 silly addNameRange     '1.1.0-beta4',
+25 silly addNameRange     '1.1.0-beta5',
+25 silly addNameRange     '1.1.0-beta6',
+25 silly addNameRange     '1.1.0',
+25 silly addNameRange     '1.1.1-beta1',
+25 silly addNameRange     '1.1.1-beta2',
+25 silly addNameRange     '1.1.1-beta3',
+25 silly addNameRange     '1.1.1',
+25 silly addNameRange     '1.1.3',
+25 silly addNameRange     '1.1.4',
+25 silly addNameRange     '1.1.5-beta1',
+25 silly addNameRange     '1.1.5-beta2',
+25 silly addNameRange     '1.1.5-beta3',
+25 silly addNameRange     '1.1.5-beta4',
+25 silly addNameRange     '1.1.5-beta5',
+25 silly addNameRange     '1.1.5',
+25 silly addNameRange     '1.1.6',
+25 silly addNameRange     '1.1.7-beta1',
+25 silly addNameRange     '1.1.7',
+25 silly addNameRange     '1.1.8-beta1',
+25 silly addNameRange     '1.1.8-beta2',
+25 silly addNameRange     '1.1.8-beta3',
+25 silly addNameRange     '1.1.8-beta4',
+25 silly addNameRange     '1.1.8-beta5',
+25 silly addNameRange     '1.1.8',
+25 silly addNameRange     '1.1.9-beta1',
+25 silly addNameRange     '1.1.9',
+25 silly addNameRange     '1.1.10',
+25 silly addNameRange     '1.1.11-beta1',
+25 silly addNameRange     '1.1.11-beta2',
+25 silly addNameRange     '1.1.11',
+25 silly addNameRange     '1.1.12-beta1',
+25 silly addNameRange     '1.1.12-beta2',
+25 silly addNameRange     '1.1.12-beta3',
+25 silly addNameRange     '1.1.12',
+25 silly addNameRange     '1.1.13',
+25 silly addNameRange     '1.1.14-beta1',
+25 silly addNameRange     '1.1.14-beta2',
+25 silly addNameRange     '1.1.14-beta3',
+25 silly addNameRange     '1.2.0-beta1',
+25 silly addNameRange     '1.2.0',
+25 silly addNameRange     '1.2.1-beta1',
+25 silly addNameRange     '1.2.1-beta2',
+25 silly addNameRange     '1.2.1-beta3',
+25 silly addNameRange     '1.2.1-beta4',
+25 silly addNameRange     '1.2.1',
+25 silly addNameRange     '1.2.2',
+25 silly addNameRange     '1.2.3-beta1',
+25 silly addNameRange     '1.2.3-beta2',
+25 silly addNameRange     '1.2.3-beta3',
+25 silly addNameRange     '1.2.3',
+25 silly addNameRange     '1.2.4-beta1',
+25 silly addNameRange     '1.2.4-beta2',
+25 silly addNameRange     '1.2.4-beta3',
+25 silly addNameRange     '1.2.4',
+25 silly addNameRange     '1.2.5-beta1',
+25 silly addNameRange     '1.2.5-beta2',
+25 silly addNameRange     '1.2.5-beta3',
+25 silly addNameRange     '1.2.5',
+25 silly addNameRange     '1.2.6-beta1',
+25 silly addNameRange     '1.2.6-beta2',
+25 silly addNameRange     '1.2.6-beta3',
+25 silly addNameRange     '1.2.6',
+25 silly addNameRange     '1.2.7',
+25 silly addNameRange     '1.2.8-beta1',
+25 silly addNameRange     '1.2.8-beta2',
+25 silly addNameRange     '1.2.8',
+25 silly addNameRange     '1.2.9',
+25 silly addNameRange     '1.2.10',
+25 silly addNameRange     '1.2.11',
+25 silly addNameRange     '1.2.12',
+25 silly addNameRange     '1.2.13',
+25 silly addNameRange     '1.2.14-beta1',
+25 silly addNameRange     '1.2.14-beta2',
+25 silly addNameRange     '1.2.14-beta3',
+25 silly addNameRange     '1.2.14-beta4',
+25 silly addNameRange     '1.2.14-beta5',
+25 silly addNameRange     '1.2.14-beta6',
+25 silly addNameRange     '1.2.14',
+25 silly addNameRange     '1.3.0-beta1',
+25 silly addNameRange     '1.3.0',
+25 silly addNameRange     '1.3.1',
+25 silly addNameRange     '1.3.2',
+25 silly addNameRange     '1.3.3',
+25 silly addNameRange     '1.3.4',
+25 silly addNameRange     '1.3.5',
+25 silly addNameRange     '1.3.6',
+25 silly addNameRange     '1.3.7',
+25 silly addNameRange     '1.3.8',
+25 silly addNameRange     '1.3.9',
+25 silly addNameRange     '1.3.10',
+25 silly addNameRange     '1.4.0-alpha.1',
+25 silly addNameRange     '1.3.11',
+25 silly addNameRange     '1.3.1-1.alpha.0',
+25 silly addNameRange     '1.4.0-alpha.2',
+25 silly addNameRange     '1.3.12',
+25 silly addNameRange     '1.3.12-beta.1',
+25 silly addNameRange     '1.3.12-beta.2',
+25 silly addNameRange     '1.3.13-beta.0',
+25 silly addNameRange     '1.3.1-3.beta.1',
+25 silly addNameRange     '1.3.1-3.beta.2',
+25 silly addNameRange     '1.3.13',
+25 silly addNameRange     '1.3.1-3.beta.4',
+25 silly addNameRange     '1.3.14-beta',
+25 silly addNameRange     '1.3.14-beta.1',
+25 silly addNameRange     '1.4.0-alpha.3',
+25 silly addNameRange     '1.3.14',
+25 silly addNameRange     '1.4.0-alpha.4',
+25 silly addNameRange     '1.4.0-alpha.5',
+25 silly addNameRange     '1.3.15-beta.0',
+25 silly addNameRange     '1.3.15-beta.1',
+25 silly addNameRange     '1.3.15-beta.2',
+25 silly addNameRange     '1.3.15-beta.3',
+25 silly addNameRange     '1.3.15-beta.4',
+25 silly addNameRange     '1.3.15',
+25 silly addNameRange     '1.3.16',
+25 silly addNameRange     '1.4.0-alpha.6',
+25 silly addNameRange     '1.3.17-beta.0',
+25 silly addNameRange     '1.3.17-beta.1',
+25 silly addNameRange     '1.3.17-beta.2',
+25 silly addNameRange     '1.3.17-beta.3',
+25 silly addNameRange     '1.3.1-7.beta.4',
+25 silly addNameRange     '1.3.17',
+25 silly addNameRange     '1.3.18-beta.0',
+25 silly addNameRange     '1.3.18-beta.1',
+25 silly addNameRange     '1.3.18-beta.2',
+25 silly addNameRange     '1.3.18-beta.3',
+25 silly addNameRange     '1.3.18',
+25 silly addNameRange     '1.3.19-beta.0',
+25 silly addNameRange     '1.3.19-beta.1',
+25 silly addNameRange     '1.3.19-beta.2',
+25 silly addNameRange     '1.3.19-beta.3',
+25 silly addNameRange     '1.3.19-beta.4',
+25 silly addNameRange     '1.3.19',
+25 silly addNameRange     '1.3.20',
+25 silly addNameRange     '1.4.1-beta.0',
+25 silly addNameRange     '1.4.0-beta.1',
+25 silly addNameRange     '1.4.0-beta.2',
+25 silly addNameRange     '1.4.0-beta.3',
+25 silly addNameRange     '1.4.0-beta.5',
+25 silly addNameRange     '1.4.0-beta.6',
+25 silly addNameRange     '1.4.0-beta.7',
+25 silly addNameRange     '1.3.21-beta.0',
+25 silly addNameRange     '1.3.21-beta.1',
+25 silly addNameRange     '1.3.21',
+25 silly addNameRange     '1.3.22',
+25 silly addNameRange     '1.4.0-beta.8',
+25 silly addNameRange     '1.4.0-beta.9',
+25 silly addNameRange     '1.4.0-beta.10',
+25 silly addNameRange     '1.4.0-beta.11',
+25 silly addNameRange     '1.4.0-beta.12',
+25 silly addNameRange     '1.4.0-beta.13',
+25 silly addNameRange     '1.4.0-beta.14',
+25 silly addNameRange     '1.4.0-beta.15',
+25 silly addNameRange     '1.4.0-beta.16',
+25 silly addNameRange     '1.4.0-beta.17',
+25 silly addNameRange     '1.4.0-beta.18',
+25 silly addNameRange     '1.4.0',
+25 silly addNameRange     '1.4.1',
+25 silly addNameRange     '1.4.2',
+25 silly addNameRange     '1.4.3',
+25 silly addNameRange     '1.4.4-beta.0',
+25 silly addNameRange     '1.4.4-beta.2',
+25 silly addNameRange     '1.4.4',
+25 silly addNameRange     '1.4.5-beta.0',
+25 silly addNameRange     '1.4.5-beta.1',
+25 silly addNameRange     '1.4.5-beta.2',
+25 silly addNameRange     '1.4.5-beta.3',
+25 silly addNameRange     '1.4.5',
+25 silly addNameRange     '1.4.6-beta.0',
+25 silly addNameRange     '1.4.6',
+25 silly addNameRange     '1.4.7',
+25 silly addNameRange     '1.4.8',
+25 silly addNameRange     '1.5.0-beta.0',
+25 silly addNameRange     '1.5.0-beta.1',
+25 silly addNameRange     '1.5.0' ] ]
+26 verbose addNamed [ 'ionic', '1.5.0' ]
+27 verbose addNamed [ '1.5.0', '1.5.0' ]
+28 silly lockFile cd515cb7-ionic-1-5-0 ionic@1.5.0
+29 verbose lock ionic@1.5.0 /home/humberth/.npm/cd515cb7-ionic-1-5-0.lock
+30 silly lockFile c951377e--npmjs-org-ionic-ionic-1-5-0-tgz https://registry.npmjs.org/ionic/-/ionic-1.5.0.tgz
+31 verbose lock https://registry.npmjs.org/ionic/-/ionic-1.5.0.tgz /home/humberth/.npm/c951377e--npmjs-org-ionic-ionic-1-5-0-tgz.lock
+32 verbose addRemoteTarball [ 'https://registry.npmjs.org/ionic/-/ionic-1.5.0.tgz',
+32 verbose addRemoteTarball   '9777e0724a447f277c2e51c89f550e2f5ea54c35' ]
+33 info retry fetch attempt 1 at 15:14:45
+34 verbose fetch to= /home/humberth/tmp/npm-4907-z1mnkwYS/1433452485089-0.8795782697852701/tmp.tgz
+35 http GET https://registry.npmjs.org/ionic/-/ionic-1.5.0.tgz
+36 http 200 https://registry.npmjs.org/ionic/-/ionic-1.5.0.tgz
+37 verbose tar unpack /home/humberth/tmp/npm-4907-z1mnkwYS/1433452485089-0.8795782697852701/tmp.tgz
+38 silly lockFile e2472cf3-humberth-npm-ionic-1-5-0-package tar:///home/humberth/.npm/ionic/1.5.0/package
+39 verbose lock tar:///home/humberth/.npm/ionic/1.5.0/package /home/humberth/.npm/e2472cf3-humberth-npm-ionic-1-5-0-package.lock
+40 silly lockFile da3ab984-85089-0-8795782697852701-tmp-tgz tar:///home/humberth/tmp/npm-4907-z1mnkwYS/1433452485089-0.8795782697852701/tmp.tgz
+41 verbose lock tar:///home/humberth/tmp/npm-4907-z1mnkwYS/1433452485089-0.8795782697852701/tmp.tgz /home/humberth/.npm/da3ab984-85089-0-8795782697852701-tmp-tgz.lock
+42 silly gunzTarPerm modes [ '755', '644' ]
+43 silly gunzTarPerm extractEntry package.json
+44 silly gunzTarPerm extractEntry .npmignore
+45 silly gunzTarPerm extractEntry README.md
+46 silly gunzTarPerm extractEntry LICENSE
+47 silly gunzTarPerm extractEntry .jscs.json
+48 silly gunzTarPerm extractEntry CHANGELOG.md
+49 silly gunzTarPerm extractEntry .gitattributes
+50 silly gunzTarPerm extractEntry bin/ionic
+51 silly gunzTarPerm extractEntry e2e/e2e.spec.js
+52 silly gunzTarPerm extractEntry e2e/helpers.js
+53 silly gunzTarPerm extractEntry e2e/shell.spec.js
+54 silly gunzTarPerm extractEntry lib/cli.js
+55 silly gunzTarPerm extractEntry lib/hooks/after_platform_add/010_install_plugins.js
+56 silly gunzTarPerm extractEntry lib/hooks/after_plugin_add/010_register_plugin.js
+57 silly gunzTarPerm extractEntry lib/hooks/after_plugin_rm/010_deregister_plugin.js
+58 silly gunzTarPerm extractEntry lib/hooks/after_prepare/010_add_platform_class.js
+59 silly gunzTarPerm extractEntry lib/hooks/after_prepare/020_remove_sass_from_platforms.js
+60 silly gunzTarPerm extractEntry lib/hooks/before_platform_add/init_directories.js
+61 silly gunzTarPerm extractEntry lib/ionic/utils.js
+62 silly gunzTarPerm extractEntry lib/ionic/ions.js
+63 silly gunzTarPerm extractEntry lib/ionic/lib.js
+64 silly gunzTarPerm extractEntry lib/ionic/link.js
+65 silly gunzTarPerm extractEntry lib/ionic/login.js
+66 silly gunzTarPerm extractEntry lib/ionic/ionitron.js
+67 silly gunzTarPerm extractEntry lib/ionic/add.js
+68 silly gunzTarPerm extractEntry lib/ionic/ports.js
+69 silly gunzTarPerm extractEntry lib/ionic/project.js
+70 silly gunzTarPerm extractEntry lib/ionic/prompt.js
+71 silly gunzTarPerm extractEntry lib/ionic/push.js
+72 silly gunzTarPerm extractEntry lib/ionic/info.js
+73 silly gunzTarPerm extractEntry lib/ionic/templates.js
+74 silly gunzTarPerm extractEntry lib/ionic/hooks.js
+75 silly gunzTarPerm extractEntry lib/ionic/serve.js
+76 silly gunzTarPerm extractEntry lib/ionic/help.js
+77 silly gunzTarPerm extractEntry lib/ionic/service.js
+78 silly gunzTarPerm extractEntry lib/ionic/docs.js
+79 silly gunzTarPerm extractEntry lib/ionic/setup.js
+80 silly gunzTarPerm extractEntry lib/ionic/cordova.js
+81 silly gunzTarPerm extractEntry lib/ionic/share.js
+82 silly gunzTarPerm extractEntry lib/ionic/config.js
+83 silly gunzTarPerm extractEntry lib/ionic/start.js
+84 silly gunzTarPerm extractEntry lib/ionic/browser.js
+85 silly gunzTarPerm extractEntry lib/ionic/task.js
+86 silly gunzTarPerm extractEntry lib/ionic/bower.js
+87 silly gunzTarPerm extractEntry lib/ionic/state.js
+88 silly gunzTarPerm extractEntry lib/ionic/upload.js
+89 silly gunzTarPerm extractEntry lib/ionic/stats.js
+90 silly gunzTarPerm extractEntry lib/ionic/app.js
+91 silly gunzTarPerm extractEntry lib/ionic/store.js
+92 silly gunzTarPerm extractEntry lib/ionic/multibar.js
+93 silly gunzTarPerm extractEntry lib/ionic/package.js
+94 silly gunzTarPerm extractEntry lib/ionic/starter-templates.json
+95 silly gunzTarPerm extractEntry lib/ionic/resources/generate.js
+96 silly gunzTarPerm extractEntry lib/ionic/resources/settings.js
+97 silly gunzTarPerm extractEntry lib/ionic/resources/docs.json
+98 silly gunzTarPerm extractEntry lib/ionic/assets/gradle.properties
+99 silly gunzTarPerm extractEntry lib/ionic/assets/ionitron.txt
+100 silly gunzTarPerm extractEntry lib/ionic/assets/preview.html
+101 silly gunzTarPerm extractEntry lib/ionic/CrosswalkNotes.md
+102 silly gunzTarPerm extractEntry lib/tasks/bumpversion.js
+103 silly gunzTarPerm extractEntry lib/tasks/cliTasks.js
+104 silly gunzTarPerm extractEntry lib/tasks/createDocsJson.js
+105 silly gunzTarPerm extractEntry npm-shrinkwrap.json
+106 silly gunzTarPerm extractEntry spec/cli.spec.js
+107 silly lockFile e2472cf3-humberth-npm-ionic-1-5-0-package tar:///home/humberth/.npm/ionic/1.5.0/package
+108 silly lockFile e2472cf3-humberth-npm-ionic-1-5-0-package tar:///home/humberth/.npm/ionic/1.5.0/package
+109 silly lockFile da3ab984-85089-0-8795782697852701-tmp-tgz tar:///home/humberth/tmp/npm-4907-z1mnkwYS/1433452485089-0.8795782697852701/tmp.tgz
+110 silly lockFile da3ab984-85089-0-8795782697852701-tmp-tgz tar:///home/humberth/tmp/npm-4907-z1mnkwYS/1433452485089-0.8795782697852701/tmp.tgz
+111 silly lockFile c951377e--npmjs-org-ionic-ionic-1-5-0-tgz https://registry.npmjs.org/ionic/-/ionic-1.5.0.tgz
+112 silly lockFile c951377e--npmjs-org-ionic-ionic-1-5-0-tgz https://registry.npmjs.org/ionic/-/ionic-1.5.0.tgz
+113 silly lockFile cd515cb7-ionic-1-5-0 ionic@1.5.0
+114 silly lockFile cd515cb7-ionic-1-5-0 ionic@1.5.0
+115 silly lockFile 966fc04a-ionic ionic@
+116 silly lockFile 966fc04a-ionic ionic@
+117 silly resolved [ { name: 'ionic',
+117 silly resolved     version: '1.5.0',
+117 silly resolved     preferGlobal: true,
+117 silly resolved     description: 'A tool for creating and developing Ionic Framework mobile apps.',
+117 silly resolved     homepage: 'http://ionicframework.com/',
+117 silly resolved     bin: { ionic: 'bin/ionic' },
+117 silly resolved     scripts:
+117 silly resolved      { bump: 'node lib/tasks/bumpversion',
+117 silly resolved        'beta-bump': 'node lib/tasks/bumpversion --level pre --identifier beta',
+117 silly resolved        'publish-release': 'node lib/tasks/bumpversion --npmPublish',
+117 silly resolved        'publish-tag': 'node lib/tasks/bumpversion --level beta --npmPublishTag',
+117 silly resolved        'full-release': 'node lib/tasks/bumpversion --npmInstall --git --npmPublish',
+117 silly resolved        test: 'npm run jasmine',
+117 silly resolved        e2e: 'jasmine-node --captureExceptions ./e2e',
+117 silly resolved        jasmine: 'jasmine-node --captureExceptions  ./spec' },
+117 silly resolved     keywords:
+117 silly resolved      [ 'ionic',
+117 silly resolved        'ionic framework',
+117 silly resolved        'ionicframework',
+117 silly resolved        'mobile',
+117 silly resolved        'app',
+117 silly resolved        'hybrid',
+117 silly resolved        'cordova',
+117 silly resolved        'phonegap' ],
+117 silly resolved     repository:
+117 silly resolved      { type: 'git',
+117 silly resolved        url: 'https://github.com/driftyco/ionic-cli.git' },
+117 silly resolved     contributors: [ [Object], [Object], [Object], [Object] ],
+117 silly resolved     license: 'MIT',
+117 silly resolved     dependencies:
+117 silly resolved      { archiver: '0.5.1',
+117 silly resolved        async: '^0.9.0',
+117 silly resolved        cheerio: '^0.19.0',
+117 silly resolved        'cli-table': '^0.3.1',
+117 silly resolved        colors: '0.6.2',
+117 silly resolved        connect: '3.1.1',
+117 silly resolved        'connect-livereload': '0.5.2',
+117 silly resolved        crc: '3.2.1',
+117 silly resolved        'cross-spawn': '0.2.3',
+117 silly resolved        'event-stream': '3.0.x',
+117 silly resolved        finalhandler: '0.2.0',
+117 silly resolved        'form-data': '0.1.4',
+117 silly resolved        gulp: '3.8.8',
+117 silly resolved        'ionic-app-lib': '0.1.0',
+117 silly resolved        ncp: '0.4.2',
+117 silly resolved        npm: '2.1.3',
+117 silly resolved        'opbeat-ionic': '^1.1.3',
+117 silly resolved        open: '0.0.5',
+117 silly resolved        optimist: '0.6.0',
+117 silly resolved        progress: '1.1.7',
+117 silly resolved        prompt: '0.2.12',
+117 silly resolved        'proxy-middleware': '^0.7.0',
+117 silly resolved        q: '1.0.1',
+117 silly resolved        request: '2.51.0',
+117 silly resolved        semver: '^4.2.0',
+117 silly resolved        'serve-static': '1.7.1',
+117 silly resolved        shelljs: '0.2.6',
+117 silly resolved        'tiny-lr-fork': '0.0.5',
+117 silly resolved        underscore: '~1.7.0',
+117 silly resolved        unzip: '0.1.9',
+117 silly resolved        'vinyl-fs': '0.3.7',
+117 silly resolved        xml2js: '0.4.4' },
+117 silly resolved     devDependencies: { 'jasmine-node': '^1.14.5' },
+117 silly resolved     readme: 'Ionic-Cli\n=========\n\nThe Ionic Framework command line utility makes it easy to start, build, run, and emulate [Ionic](http://ionicframework.com/) apps. In the future, it will also have support for our mobile development services and tools that make Ionic even more powerful.\n\nUse the `ionic --help` command for more detailed task information.\n\n## Installing\n\n```bash\n$ npm install -g ionic\n```\n\n*Note: For a global install of `-g ionic`, OSX/Linux users may need to prefix the command with `sudo` or can setup [proper file permissions on OSX for npm](http://www.johnpapa.net/how-to-use-npm-global-without-sudo-on-osx/) to install without `sudo`. *\n\n\n## Starting an Ionic App\n\n```bash\n$ ionic start myapp [template]\n```\n\nStarter templates can either come from a named template, a Github repo, a Codepen, or a local directory. A starter template is what becomes the `www` directory within the Cordova project.\n\n__Named template starters:__\n\n* [tabs](https://github.com/driftyco/ionic-starter-tabs) (Default)\n* [sidemenu](https://github.com/driftyco/ionic-starter-sidemenu)\n* [maps](https://github.com/driftyco/ionic-starter-maps)\n* [salesforce](https://github.com/driftyco/ionic-starter-salesforce)\n* [tests](https://github.com/driftyco/ionic-starter-tests)\n* [complex-list](https://github.com/driftyco/ionic-starter-complex-list)\n* [blank](https://github.com/driftyco/ionic-starter-blank)\n\n__Github Repo starters:__\n\n* Any Github repo url, ex: [https://github.com/driftyco/ionic-starter-tabs](https://github.com/driftyco/ionic-starter-tabs)\n* Named templates are simply aliases to Ionic starter repos\n\n__Codepen URL starters:__\n\n* Any Codepen url, ex: [http://codepen.io/ionic/pen/odqCz](http://codepen.io/ionic/pen/odqCz)\n* [Ionic Codepen Demos](http://codepen.io/ionic/public-list/)\n\n__Plunker URL starters:__\n\n* Any Plunker url, ex: [http://embed.plnkr.co/dFvL8n/preview](http://embed.plnkr.co/dFvL8n/preview)\n\n__Local directory starters:__\n\n* Relative or absolute path to a local directory\n\n__Command-line flags/options:__\n\n    [--appname|-a]  .......  Human readable name for the app\n                             (Use quotes around the name)\n    [--id|-i]  ............  Package name set in the <widget id> config\n                             ex: com.mycompany.myapp\n    [--no-cordova|-w]  ....  Do not create an app targeted for Cordova\n    [--sass|-s] ...........  Setup the project to use Sass CSS precompiling\n    [--list|-l]  ..........  List starter templates available\n    \n    [--io-app-id] .........  The Ionic.io app ID to use\n\n## Adding a platform target\n\n```bash\n$ ionic platform ios android\n```\n\n## Testing in a Browser\n\nUse `ionic serve` to start a local development server for app dev and testing. This is useful for both desktop browser testing, and to test within a device browser which is connected to the same network. Additionally, this command starts LiveReload which is used to monitor changes in the file system. As soon as you save a file the browser is refreshed automatically. View [Using Sass](https://github.com/driftyco/ionic-cli/blob/master/README.md#using-sass) if you would also like to have `ionic serve` watch the project\'s Sass files.\n\n```bash\n$ ionic serve [options]\n```\n\n## Building your app\n\n```bash\n$ ionic build ios\n```\n\n## Live Reload App During Development (beta)\n\nThe `run` or `emulate` command will deploy the app to the specified platform devices/emulators. You can also run __live reload__ on the specified platform device by adding the `--livereload` option. The live reload functionality is similar to `ionic serve`, but instead of developing and debugging an app using a standard browser, the compiled hybrid app itself is watching for any changes to its files and reloading the app when needed. This reduces the requirement to constantly rebuild the app for small changes. However, any changes to plugins will still require a full rebuild. For live reload to work, the dev machine and device must be on the same local network, and the device must support [web sockets](http://caniuse.com/websockets).\n\nWith live reload enabled, an app\'s console logs can also be printed to the terminal/command prompt by including the `--consolelogs` or `-c` option. Additionally, the development server\'s request logs can be printed out using `--serverlogs` or `-s` options.\n\n__Command-line flags/options for `run` and `emulate`:__\n\n    [--livereload|-l] .......  Live Reload app dev files from the device (beta)\n    [--consolelogs|-c] ......  Print app console logs to Ionic CLI (live reload req.)\n    [--serverlogs|-s] .......  Print dev server logs to Ionic CLI (live reload req.)\n    [--port|-p] .............  Dev server HTTP port (8100 default, live reload req.)\n    [--livereload-port|-i] ..  Live Reload port (35729 default, live reload req.)\n    [--all|-a] ..............  Specify to run on all addresses, 0.0.0.0, so you can view externally\n    [--browser|-w] ..........  Specifies the browser to use (safari, firefox, chrome)\n    [--browseroption|-o] ....  Specifies a path to open to (/#/tab/dash)\n    [--debug|--release]\n\nWhile the server is running for live reload, you can use the following commands within the CLI:\n\n    restart or r to restart the client app from the root\n    goto or g and a url to have the app navigate to the given url\n    consolelogs or c to enable/disable console log output\n    serverlogs or s to enable/disable server log output\n    quit or q to shutdown the server and exit\n\n\n## Emulating your app\n\nDeploys the Ionic app on specified platform emulator. This is simply an alias for `run --emulator`.\n\n```bash\n$ ionic emulate ios [options]\n```\n\n## Running your app\n\nDeploys the Ionic app on specified platform devices. If a device is not found it\'ll then deploy to an emulator/simulator.\n\n```bash\n$ ionic run ios [options]\n```\n\n## Icon and Splash Screen Image Generation\n\n[Automatically generate icons and splash screens](http://ionicframework.com/blog/automating-icons-and-splash-screens/) from source images to create each size needed for each platform, in addition to copying each resized and cropped image into each platform\'s resources directory. Source images can either be a `png`, `psd` __Photoshop__ or `ai` __Illustrator__ file. Images are generated using Ionic\'s image resizing and cropping server, instead of requiring special libraries and plugins to be installed locally.\n\nSince each platform has different image requirements, it\'s best to make a source image for the largest size needed, and let the CLI do all the resizing, cropping and copying for you. Newly generated images will be placed in the `resources` directory at the root of the Cordova project. Additionally, the CLI will update and add the correct `<platform>` configs to the project\'s [config.xml](http://cordova.apache.org/docs/en/edge/config_ref_images.md.html#Icons%20and%20Splash%20Screens) file.\n\nDuring the build process, Cordova (v3.6 or later) will look through the project\'s [config.xml](http://cordova.apache.org/docs/en/edge/config_ref_images.md.html#Icons%20and%20Splash%20Screens) file and copy the newly created resource images to the platform\'s specific resource folder. For example, Android\'s resource folder can be found in `platforms/android/res`, and iOS uses `platforms/ios/APP_NAME/Resources`.\n\n\n### Icon Source Image\n\nSave an `icon.png`, `icon.psd` or `icon.ai` file within the `resources` directory at the root of the Cordova project. The icon image\'s minimum dimensions should be 192x192 px, and should have __no__ rounded corners. Note that each platform will apply it\'s own mask and effects to the icons. For example, iOS will automatically apply it\'s custom rounded corners, so the source file should not already come with rounded corners. This [Photoshop icon template](http://code.ionicframework.com/resources/icon.psd) provides the recommended size and guidelines of the artwork\'s safe zone.\n\n```bash\n$ ionic resources --icon\n```\n\n- [Photoshop Icon Template](http://code.ionicframework.com/resources/icon.psd)\n\n\n### Splash Screen Source Image\n\nSave a `splash.png`, `splash.psd` or `splash.ai` file within the `resources` directory at the root of the Cordova project. Splash screen dimensions vary for each platform, device and orientation, so a square source image is required the generate each of various sizes. The source image\'s minimum dimensions should be 2208x2208 px, and its artwork should be centered within the square, knowning that each generated image will be center cropped into landscape and portait images. The splash screen\'s artwork should roughly fit within a center square (1200x1200 px). This [Photoshop splash screen template](http://code.ionicframework.com/resources/splash.psd) provides the recommended size and guidelines of the artwork\'s safe zone. Additionally, when the `Orientation` [preference config](http://cordova.apache.org/docs/en/edge/config_ref_index.md.html#The%20config.xml%20File_global_preferences) is set to either `landscape` or `portrait` mode, then only the necessary images will be generated.\n\n```bash\n$ ionic resources --splash\n```\n\n- [Photoshop Splash Screen Template](http://code.ionicframework.com/resources/splash.psd)\n\n\n### Generating Icons and Splash Screens\n\nTo generate both icons and splash screens, follow the instructions above and run:\n\n```bash\n$ ionic resources\n```\n\n### Platform Specific Resource Images\n\nOne source image can be used to generate images for each platform by placing the file within the `resources` directory, such as `resources/icon.png`. To use different source images for individual platforms, place the source image in the respective platform\'s directory. For example, to use a different icon for Android, it should follow this path: `resources/android/icon.png`, and a different image for iOS would use this path: `resources/ios/icon.png`.\n\n### Generating Exact Platform Resources\n\nBy default the `ionic resources` command will automatically figure out which platforms it should generate according to what platforms have been added to your project. However, you can also explicitly state which resources should be built by providing a platform name in the command. The example below would generate only `ios` resources (even if the platform hasn\'t been added to the project).\n\n```bash\n$ ionic resources ios\n```\n\n### Default Ionic Resources\n\nIonic provides you some default icons and splash screens to give you a better idea of how to size your icons and splashscreen, as well as how to modify your config.xml file for your own icons.\n\n```bash\n$ ionic resources --default\n```\n\nIf you already have a resources directory, the command above will not over write your files. If you wish to force an over write, use `ionic resources --default --force`.\n\nWhen starting a new app and adding a platform `ionic platform add ios` - the default icons and splashscreens will be downloaded and your config.xml will be modified to set up the default resources. This should help you identify your Ionic apps easier as well as help you get the file structure and configuration correct.\n\n\n## Crosswalk for Android\n\nIn v1.3.0 and later, you can now specify which browser to use in your Cordova Android projects. Currently we only support [Crosswalk](https://crosswalk-project.org/) and have plans to support more browsers later.\n\nExecute `ionic browser add crosswalk` to add the Crosswalk browser to your Android project. By default, this will install the `12.41.296.5` version of Crosswalk.\n\nIf you\'d like to specify a different version of Crosswalk, run `ionic browser list` to see which browsers are available and what versions. Then run `ionic browser add crosswalk@10.39.235.15`.\n\nAll that is left is to run the project as normal - `ionic run android`.\n\nIf you\'d like to build without Crosswalk for Android SDK 21 or later, do the following:\n\n```\nionic browser revert android\nionic build android --release -- --minSdkVersion 21\n```\n\n## Advanced serve options\n\n__LiveReload__\n\nBy default, LiveReload will watch for changes in your `www/` directory,\nexcluding `www/lib/`.  To change this, you can specify a `watchPatterns`\nproperty in the `ionic.project` file located in your project root to watch\n(or not watch) for specific changes.\n\n```json\n{\n  "name": "myApp",\n  "app_id": "",\n  "watchPatterns": [\n    "www/js/*",\n    "!www/css/**/*"\n  ]\n}\n```\n\nFor a reference on glob pattern syntax, check out\n[globbing patterns](http://gruntjs.com/configuring-tasks#globbing-patterns) on\nthe Grunt website.\n\n__Gulp Integration__\n\nWhen running `ionic serve`, you can have Ionic run any Gulp tasks you specify by putting them into your `ionic.project` as a `gulpStartupTasks` property as follows:\n\n```json\n{\n  "name": "SmoothRiders",\n   "gulpStartupTasks": [\n    "watch"\n  ]\n}\n\n```\n\nNow, when you run `ionic serve`, it will run the `watch` task while starting the Ionic server.\n\nIf you would like to disable gulp from running during serve, pass the `--nogulp` option.\n\nNOTE:\n\n```bash\n$ ionic setup sass\n```\n\nwill add a `watchPatterns` propery with the default values to your `ionic.project`\nfile that you can then edit, in addition to the `gulpStartupTasks` property\ndescribed in the [Using Sass](https://github.com/driftyco/ionic-cli/blob/master/README.md#using-sass) section.\n\n\n__Service Proxies:__\n\nThe `serve` command can add some proxies to the http server. These proxies are useful if you are developing in the browser and you need to make calls to an external API. With this feature you can proxy request to the external api through the ionic http server preventing the `No \'Access-Control-Allow-Origin\' header is present on the requested resource` error.\n\nIn the `ionic.project` file you can add a property with an array of proxies you want to add. The proxies are object with the following properties:\n\n* `path`: string that will be matched against the beginning of the incoming request URL.\n* `proxyUrl`: a string with the url of where the proxied request should go.\n* `proxyNoAgent`: (optional) true/false, if true opts out of connection pooling, see [HttpAgent](http://nodejs.org/api/http.html#http_class_http_agent)\n\n```json\n{\n  "name": "appname",\n  "email": "",\n  "app_id": "",\n  "proxies": [\n    {\n      "path": "/v1",\n      "proxyUrl": "https://api.instagram.com/v1"\n    }\n  ]\n}\n\n```\n\nUsing the above configuration, you can now make requests to your local server at `http://localhost:8100/v1` to have it proxy out requests to `https://api.instagram.com/v1`\n\nFor example:\n\n```js\nangular.module(\'starter.controllers\', [])\n.constant(\'InstagramApiUrl\', \'\')\n// .contant(\'InstagramApiUrl\',\'https://api.instagram.com\')\n//In production, make this the real URL\n\n.controller(\'FeedCtrl\', function($scope, $http, InstagramApiUrl) {\n\n  $scope.feed = null;\n\n  $http.get(InstagramApiUrl + \'/v1/media/search?client_id=1&lat=48&lng=2.294351\').then(function(data) {\n    console.log(\'data \' , data)\n    $scope.feed = data;\n  })\n\n})\n```\n\nSee also [this gist](https://gist.github.com/jbavari/d9c1c94058c4fdd4e935) for more help.\n\n__Command-line flags/options:__\n\n    [--consolelogs|-c] ......  Print app console logs to Ionic CLI\n    [--serverlogs|-s] .......  Print dev server logs to Ionic CLI\n    [--port|-p] .............  Dev server HTTP port (8100 default)\n    [--livereload-port|-i] ..  Live Reload port (35729 default)\n    [--nobrowser|-b] ........  Disable launching a browser\n    [--nolivereload|-r] .....  Do not start live reload\n    [--noproxy|-x] ..........  Do not add proxies\n    [--address] .............  Serves in the browser at the specified address\n    [--lab] .................  Serves both iOS and Android in the browser\n    [--nogulp] ..............  Serve without running gulp tasks\n    [--platform|-t] .........  Serve the platform specific styles in the browser (ios/android)\n\n## Using Ionic Labs\n\nWe\'ve extended the serve command to open the new Lab UI that features iOS and Android side-by-side.\n\n```bash\n$ ionic serve --lab\n```\n\nIf you\'ve used the serve command before, you\'ll feel right at home with this one. Just like serve, it opens your app in a browser, but now it shows you what your app will look like on a phone, with both iOS and Android side by side.\n\nAnd of course, it supports Live Reload and all the other goodies we\'ve added over the last couple of months.\n\n## Serving an alternate document root\n\nIf you\'d like to test your app in the browser and you use a folder other than the default of `www`, you can specify this folder in your `ionic.project` file.\n\nYou might also want to have the document root be created if you use some sort of build system, we suggest using `createDocumentRoot` for that so that `ionic serve` will create that folder for you.\n\nIt is also advised you specify the watch patterns for this document root as well, as follows:\n\n```json\n{\n  "name": "SmoothRiders",\n   "gulpStartupTasks": [\n    "watch"\n  ],\n  "documentRoot": "app",\n  "createDocumentRoot": "app",\n  "watchPatterns": [\n    "app/js/*",\n    "!app/css/**/*"\n  ]\n}\n\n```\n\n## Update Ionic lib\n\nUpdate Ionic library files, which are found in the `www/lib/ionic` directory. If bower is being used\nby the project, this command will automatically run `bower update ionic`, otherwise this command updates\nthe local static files from Ionic\'s CDN.\n\n```bash\n$ ionic lib update\n```\n*Note: Using bower? This command does not update Ionic\'s dependencies. Run `bower update` to update Ionic and all of it\'s dependencies defined in `bower.json`.*\n\n## Packaging an app (beta)\n\nUsing Ionic\'s service, you can compile and package your project into an app-store ready app without\nrequiring native SDKs on your machine.\n\n```bash\n$ ionic package debug android\n```\n\nThe third argument can be either `debug` or `release`, and the last argument can be either `android` or `ios`.\n\n\n## Cordova Commands\n\nIonic uses Cordova underneath, so you can also substitute Cordova commands to prepare/build/emulate/run, or to add additional plugins.\n\n*Note: we occasionally send anonymous usage statistics to the Ionic team to make the tool better.*\n\n## Working around proxies\n\nIf you have a proxy you need to get around, you can pass that proxy with the default `http_proxy` [node environment variable](https://www.npmjs.org/doc/misc/npm-config.html#proxy) or an environment variable `proxy`.\n\nA few ways to set up and use the environment variable:\n\n```bash\nexport http_proxy=internal.proxy.com\n# Or\nexport PROXY=internal.proxy.com\n\nionic start my_app\n\n# Additionally, pass in line\nPROXY=internal.proxy.com ionic start my_app\n```\n\n\n## Using Sass\n\nBy default, starter projects are hooked up to Ionic\'s precompiled CSS file, which is found in the project\'s `www/lib/ionic/css` directory, and is linked to the app in the head of the root `index.html` file. However, Ionic projects can also be customized using [Sass](http://sass-lang.com/), which gives developers and designers "superpowers" in terms of creating and maintaining CSS. Below are two ways to setup Sass for your Ionic project (the `ionic setup sass` command simply does the manual steps for you). Once Sass has been setup for your Ionic project, then the `ionic serve` command will also watch for Sass changes.\n\n#### Setup Sass Automatically\n\n    ionic setup sass\n\n\n#### Setup Sass Manually\n\n1. Run `npm install` from the working directory of an Ionic project. This will install [gulp.js](http://gulpjs.com/) and a few handy tasks, such as [gulp-sass](https://www.npmjs.org/package/gulp-sass) and [gulp-minify-css](https://www.npmjs.org/package/gulp-minify-css).\n2. Remove `<link href="lib/ionic/css/ionic.css" rel="stylesheet">` from the `<head>` of the root `index.html` file.\n3. Remove `<link href="css/style.css" rel="stylesheet">` from the `<head>` of the root `index.html` file.\n4. Add `<link href="css/ionic.app.css" rel="stylesheet">` to the `<head>` of the root `index.html` file.\n5. In the `ionic.project` file, add the JavaScript property `"gulpStartupTasks": ["sass", "watch"]` (this can also be customized to whatever gulp tasks you\'d like).\n\n\n# Ionic.io services\n\nThe CLI supports operations to use backend services for your Ionic app. To get started, [visit the ionic.io homepage](http://ionic.io) and [sign up there](https://apps.ionic.io/signup).\n\nThere are a few things you can utilize the CLI for to support ease of development.\n\n## Login\n\nType `ionic login` to get logged in the CLI.\n\n## Upload your Ionic app\n\nUse the `ionic upload` command to take your current application you are developing and upload it to the Ionic.io servers. \n\nNow you can use [the ionic view app](http://view.ionic.io/) to view that application or have others view the application.\n\nAfter uploading the application, you will see a message:\n\n\n```\nUploading app....\n\nSuccessfully uploaded (f23j9fjs)\n```\n\nThis indicates you uploaded the application correctly, and the App ID is set to `f23j9fjs`.\n\nYou can then view that App ID from the View app or the application listing on ionic.io.\n\n### Adding a note with your upload\n\nTo add a note to your build, pass the `--note` option as follows: \n\n`ionic upload --note "This version of the application fixes the menu selections"`.\n\n## Set your Ionic Project App ID manually\n\nUse the `ionic link <appId>` command to set your Ionic App ID to continue working with the same app with the Ionic platform across development enviroments.\n\n## Share the application with another user\n\nUse the `ionic share <email>` command to have an email sent to another person to have them view the Ionic application you are using. Note: You must have an ionic.io account as well as the user you are sharing with.\n\n# Ionic Docs\n\nTo get Ionic documentation from the Ionic CLI, try using the `ionic docs` command. The command will look up your currently used Ionic version and open the docs specific for that version. Ex: RC0, RC1, etc.\n\nTo view all docs, `ionic docs ls`.\n\nTo get help with a doc you may not remember, just type the name close enough: `ionic docs list` and you will be prompted for suggestions that may match.\n\n\n# Ionic Hooks\n\nIonic provides some default hooks for you to use in your Cordova application. In versions prior to 1.3.18, these hooks were automatically installed via the `ionic platform` command. \n\nIn 1.3.18, the hooks were automatically removed due to some errors users were having with Crosswalk and other plugins with variables. \n\nIf you were a user who would still like to use those hooks, you can re-install these hooks with the `ionic hooks add` command.\n\nIf you would like to remove these hooks yourself, use `ionic hooks remove` to get rid of them.\n\n\n# Ionic State\n\nIonic now provides a command to help you manage the state of your Ionic application. Previously Cordova hooks were used to save platforms and plugins to your `package.json` file.\n\nNow when using `ionic platform add`, `ionic platform rm`, `ionic plugin add`, or `ionic plugin rm`, the state command will automatically be used to save the platform or plugin state to the `package.json` file.\n\nIf you would like to avoid saving plugins or platforms to the `package.json` file - pass in the `--nosave` option. (`ionic plugin add org.apache.cordova.file --nosave`).\n\nYour package.json file might look something like the following:\n\n```json\n"cordovaPlatforms": [\n  "ios",\n  {\n    "android": {\n      "id": "android",\n      "locator": "https://github.com/apache/cordova-android.git"\n    }\n  }\n],\n"cordovaPlugins": [\n  "org.apache.cordova.device",\n  "org.apache.cordova.console",\n  "com.ionic.keyboard",\n  "org.apache.cordova.splashscreen",\n  {\n    "locator": "https://github.com/MobileChromeApps/cordova-crosswalk-engine.git",\n    "id": "org.cordova.croswalk"\n  },\n  {\n    "locator": "/path/to/cloned/phonegap-facebook-plugin",\n    "id": "",\n    "variables": {\n        "APP_ID": "some_id",\n        "APP_NAME": "some_name"\n    }\n  }\n]\n```\n\n## ionic state save\n\nThe `ionic state save` command does some lookup in your platforms and plugins to save the current state of your cordova application. \n\nFirst it looks in your platforms folder to see which platforms are installed, and saves the name and version in your `package.json` file under the `cordovaPlatforms` attribute.\n\nSecond it looks at your plugins `fetch.json` file to save the plugins installed both from the Cordova registry, locally installed plugins, as well as remote plugins from github or a remote HTTP url.\n\n## ionic state restore\n\nThe `ionic state restore` command looks at the `cordovaPlugins` and `cordovaPlatforms` attributes in your `package.json` file to restore your application with those platforms and plugins.\n\nIn the package.json file, `cordovaPlugins` will be stored as just their `ID` if they are installed from the Cordova registry. However, if they are local or remote, they will be stored as an object with those properties. Also to note, variables are stored for plugins with variables like the Facebook connect plugin.\n\nThe `cordovaPlatforms` follow the same convention of either an `ID` for the platform name, if they are local or remote, they will be stored as an object with those properties.\n\nIf you\'d like, you can populate the `cordovaPlugins` and `cordovaPlatforms` by hand, then use the `ionic state restore` command to get your app ready to go.\n\n## ionic state clear\n\nThe `ionic state clear` method will clear out your platforms and plugins directories, as well as removing the `cordovaPlugins` and `cordovaPlaforms` attributes in your `package.json` file.\n\n## ionic state reset\n\nThe `ionic state reset` method will first remove your platforms and plugins folders. Then it will look at your `package.json` file to re-install the platforms and plugins as specified there.\n\nThis command can be helpful for you to reinstall your plugins and platforms to get a fresh start.\n',
+117 silly resolved     readmeFilename: 'README.md',
+117 silly resolved     bugs: { url: 'https://github.com/driftyco/ionic-cli/issues' },
+117 silly resolved     _id: 'ionic@1.5.0',
+117 silly resolved     _shasum: '9777e0724a447f277c2e51c89f550e2f5ea54c35',
+117 silly resolved     _from: 'ionic@',
+117 silly resolved     _resolved: 'https://registry.npmjs.org/ionic/-/ionic-1.5.0.tgz' } ]
+118 info install ionic@1.5.0 into /usr/local/lib
+119 info installOne ionic@1.5.0
+120 info /usr/local/lib/node_modules/ionic unbuild
+121 info preuninstall ionic@1.4.5
+122 info uninstall ionic@1.4.5
+123 verbose true,/usr/local/lib/node_modules,/usr/local/lib/node_modules unbuild ionic@1.4.5
+124 verbose /usr/local/bin,[object Object] binRoot
+125 info /usr/local/lib/node_modules/ionic unbuild
+126 info preuninstall ionic@1.4.5
+127 info uninstall ionic@1.4.5
+128 verbose true,/usr/local/lib/node_modules,/usr/local/lib/node_modules unbuild ionic@1.4.5
+129 verbose /usr/local/bin,[object Object] binRoot
+130 error error rolling back Error: EACCES, unlink '/usr/local/bin/ionic'
+130 error error rolling back     at Error (native)
+130 error error rolling back  ionic@1.5.0 { [Error: EACCES, unlink '/usr/local/bin/ionic']
+130 error error rolling back   stack: 'Error: EACCES, unlink \'/usr/local/bin/ionic\'\n    at Error (native)',
+130 error error rolling back   errno: -13,
+130 error error rolling back   code: 'EACCES',
+130 error error rolling back   path: '/usr/local/bin/ionic' }
+131 error Error: EACCES, unlink '/usr/local/bin/ionic'
+131 error     at Error (native)
+131 error  { [Error: EACCES, unlink '/usr/local/bin/ionic']
+131 error   stack: 'Error: EACCES, unlink \'/usr/local/bin/ionic\'\n    at Error (native)',
+131 error   errno: -13,
+131 error   code: 'EACCES',
+131 error   path: '/usr/local/bin/ionic' }
+132 error Please try running this command again as root/Administrator.
+133 error System Linux 3.2.0-4-amd64
+134 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "-g" "ionic"
+135 error cwd /home/humberth/Documentos/thesis/techoSurveyMobile
+136 error node -v v0.11.14-pre
+137 error npm -v 1.4.10
+138 error path /usr/local/bin/ionic
+139 error code EACCES
+140 error errno -13
+141 error stack Error: EACCES, unlink '/usr/local/bin/ionic'
+141 error stack     at Error (native)
+142 verbose exit [ -13, true ]

@@ -7,10 +7,10 @@ angular.module('starter.controllers', ['ngCordova'])
 			$scope.showList = true;
 		}else{
 			$scope.showList = false;
-		}	
+		}
 
-	$scope.sync = function(){		
-		$scope.getSurveyCode();		// servicio 
+	$scope.sync = function(){
+		$scope.getSurveyCode();		// servicio
 	}
 
 	$scope.viewSurveys = function() {
@@ -32,7 +32,7 @@ angular.module('starter.controllers', ['ngCordova'])
 			 	} else {
 			 		$scope.showAlert('Para iniciar una encuesta <br/> debe ingresar un token valido.');
 			 		console.log('No escribio el token');
-			 	}		 	
+			 	}
 			 });
 	};
 
@@ -58,40 +58,40 @@ angular.module('starter.controllers', ['ngCordova'])
 
 	   $http.get('http://104.236.99.15/api/v1/sync/survey/' + context.surveyID).
 	   success(function(data, status, headers, config) {
-	   	//console.log(data);	   	
-   		if($localstorage.getObject('surveys') != null) {   			
-   			for(i = 0; i < $localstorage.getObject('surveys').length; i++){   				
+	   	//console.log(data);
+   		if($localstorage.getObject('surveys') != null) {
+   			for(i = 0; i < $localstorage.getObject('surveys').length; i++){
    				console.log(data.sid + '==' + $localstorage.getObject('surveys')[i].sid);
    				if(data.sid == $localstorage.getObject('surveys')[i].sid){
-   					//ya existe   					
-   						//$scope.showAlert('La encuesta ya existe en su dispositivo.'); 
-   						alertPopup.close();  						
-   						$state.go('survey-volunteer-data');   					
-   						break;   							
+   					//ya existe
+   						//$scope.showAlert('La encuesta ya existe en su dispositivo.');
+   						alertPopup.close();
+   						$state.go('survey-volunteer-data');
+   						break;
    				}else{
-   					//no existe   					
+   					//no existe
    					if(i == ($localstorage.getObject('surveys').length-1)) {
    						var localList = $localstorage.getObject('surveys');
    						localList.push(data);
-   						$localstorage.setObject('surveys', localList);   						
+   						$localstorage.setObject('surveys', localList);
    						console.log($localstorage.getObject('surveys'));
    					}else{
    						console(i + "==" + ($localstorage.getObject('surveys').length-1));
    					}
    					alertPopup.close();
-	   				$state.go('survey-volunteer-data');   					
+	   				$state.go('survey-volunteer-data');
    				}
-   			}   			
+   			}
    		}else {
    			console.log('No existe');
    			var listt = [];
    			listt.push(data);
-   			$localstorage.setObject('surveys', listt);   			
+   			$localstorage.setObject('surveys', listt);
    			alertPopup.close();
 	   		$state.go('survey-volunteer-data');
    			console.log($localstorage.getObject('surveys'));
    			console.log('No habian surveys, se creo y se agrego ' + data);
-   		}	    			  
+   		}
 	   }).
 	   error(function(data, status, headers, config) {
 		   	if (status === 500) {
@@ -100,21 +100,21 @@ angular.module('starter.controllers', ['ngCordova'])
 		   		console.log('Error');
 		   	}
 	   });
-	 };	
+	 };
 })
 
-.controller('surveyController', function($scope, context, $state, $localstorage, $http, $ionicPopup){
-	$scope.surveys = $localstorage.getObject('surveys'); 
+.controller('surveyController', function($scope, context, $state, $localstorage, $http, $ionicPopup, $answers){
+	$scope.surveys = $localstorage.getObject('surveys');
 
-	$scope.viewSections = function (survey) {		
-		context.setSurvey(survey);				
+	$scope.viewSections = function (survey) {
+		context.setSurvey(survey);
 		$state.go('sections');
 	};
 
 	$scope.goBack = function() {
 		$state.go('survey-volunteer-data');
 	};
-	
+
 	$scope.showAlert = function(mensaje) {
 	   var alertPopup = $ionicPopup.alert({
 	     title: 'Alerta',
@@ -126,10 +126,13 @@ angular.module('starter.controllers', ['ngCordova'])
 	 };
 
 	 $scope.sendData = function(surveyID) {
-	 	var json = {sid: surveyID, answers: $localstorage.getObject(surveyID), volunteer: $localstorage.getObject('volunteer')};
-	 	if($localstorage.getObject(surveyID) != null) {	 		
-				console.log(json);
-			   var alertPopup = $ionicPopup.alert({
+
+
+
+	 	var json = {sid: surveyID, answers: $localstorage.getObject(''), volunteer: $localstorage.getObject('volunteer')};
+		console.log(json);
+	 	/*if($localstorage.getObject(surveyID) != null) {
+			  var alertPopup = $ionicPopup.alert({
 			     title: 'Enviando',
 			     template: '<center><ion-spinner icon="android" class="bigger-2"></ion-spinner></center>',
 			     scope: $scope,
@@ -137,27 +140,27 @@ angular.module('starter.controllers', ['ngCordova'])
 			   });
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
-		 	.success(function(data, status, headers, config) {		 		
+		 	.success(function(data, status, headers, config) {
 		 		alertPopup.close();
-		 		$scope.showAlert('Respuestas enviadas correctamente.');		 		
-		 		$localstorage.removeObject(surveyID);	   			
+		 		$scope.showAlert('Respuestas enviadas correctamente.');
+		 		$localstorage.removeObject(surveyID);
 			}).error(function(data, status, headers, config) {
 				alertPopup.close();
-				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');				
+				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');
 		   });
 	 	} else {
 	 		$scope.showAlert('Este instrumento no contiene respuestas para enviar.');
-	 	}
+	 	}*/
 	};
 
-	$scope.gps = function() {
-		$state.go('gps');
-	};
-	
 })
 
 .controller('sectionsController', function($scope, context, $state, $localstorage){
-	$scope.sections = context.getSurvey().sections;	
+	$scope.sections = context.getSurvey().sections;
+
+  $scope.$on('$ionicView.enter', function() {
+
+	});
 
 	$scope.initQuestions = function(section) {
 		//console.log(section);
@@ -177,7 +180,7 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('endController', function($scope, $state, context) {
-	$scope.begin = function() {		
+	$scope.begin = function() {
 		$state.go('sections');
 	}
 })
@@ -187,7 +190,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
 	$scope.viewSurveys = function(form) {
 		if(form.$valid){
-			$localstorage.setObject('volunteer', $scope.volunteer);		
+			$localstorage.setObject('volunteer', $scope.volunteer);
 			$state.go('surveys');
 		}else{
 			$scope.showAlert('Ingrese sus datos, para iniciar la encuesta.');
@@ -209,33 +212,40 @@ angular.module('starter.controllers', ['ngCordova'])
 	 };
 })
 
-.controller('questionController', function($scope, $state, context, $localstorage, $cordovaGeolocation, $ionicPopup) {		
-	$scope.section = context.getSection();	
-	$scope.question = context.getQuestion();	
+.controller('questionController', function($scope, $state, context, $answers, $cordovaGeolocation, $ionicPopup, $localstorage) {
+	$scope.section = context.getSection();
+	$scope.question = context.getQuestion();
 
-	$scope.nextQuestion = function() {					
-		if($scope.question.preg != ''){ // answered question 
-				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
-				var value = $scope.question.preg;
-				if($localstorage.getObject(context.getSurvey().sid) != null) {   			
-		   			var answerslist = $localstorage.getObject(context.getSurvey().sid);
-		   			console.log(answerslist);
-		   			answerslist[key] = value;
-		   			$localstorage.setObject(context.getSurvey().sid, answerslist);
-		   		}else {
-		   			console.log('No existe');
-		   			var answerslist = {};
-		   			answerslist[key] = value;
-		   			$localstorage.setObject(context.getSurvey().sid, answerslist);   					   						   		
-		   		}
-		}
+	$scope.nextQuestion = function() {
+			console.log($scope.question.type);
+				if($scope.question.type == 'M' || $scope.question.type == 'P') {
+					for(i = 0; i< $scope.question.subquestions.length; i++){
 
-		if(context.changeQuestion(1)) {			
-			// verificar si la pregunta es obligatoria			
-			$scope.question = context.getQuestion();			
+							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
+							var value = 'Y';
+							if($scope.question.subquestions[i].checked){
+								$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+							}
+					}
+				}else if($scope.question.type == 'U') {
+					if($localstorage.getObject('gps') != null) {
+						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+						var value = $localstorage.getObject('gps')[key];
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+					}
+				}else{
+					if($scope.question.preg != ''){ // answered question
+						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+						var value = $scope.question.preg;
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+					}
+				}
+
+		if(context.changeQuestion(1)) {
+			// verificar si la pregunta es obligatoria
+			$scope.question = context.getQuestion();
 			$state.go('survey-question');
-		}else {		
-			console.log($localstorage.getObject('answers'));
+		}else {
 			$state.go('sections');
 		}
 	};
@@ -253,39 +263,49 @@ angular.module('starter.controllers', ['ngCordova'])
 		$state.go('sections');
 	};
 
-	  	if($localstorage.getObject('gps') != null) {
+	$scope.$on('$ionicView.enter', function() {
+		var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+		if($localstorage.getObject('gps') != null) {
 			$scope.showGpsList = true;
+			var tmp = $localstorage.getObject('gps');
+			$scope.gps = tmp[key];
 		}else{
 			$scope.showGpsList = false;
+			$scope.gps = [];
 		}
-  
+	});
+
 	  $scope.getPosition = function() {
 	  	var posOptions = {timeout: 10000, enableHighAccuracy: true};
 	  	$cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
 	      var latitude  = position.coords.latitude;
 	      var longitude = position.coords.longitude;
-
+				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 	      	if($localstorage.getObject('gps') != null) {
-				$scope.gps = $localstorage.getObject('gps');
-				$scope.gps.push(latitude + "," + longitude);
-				$localstorage.setObject('gps', $scope.gps);
-			}else {
-				var positions = [];				
-				positions.push(latitude + "," + longitude);
-				$localstorage.setObject('gps', positions);
-				console.log(positions);
-			}
-
-		    if($localstorage.getObject('gps') != null) {
-				$scope.showGpsList = true;
-			}else{
-				$scope.showGpsList = false;
-			}
-
+						var jsonPos = $localstorage.getObject('gps');
+						jsonPos[key].push(latitude + "," + longitude);
+						$localstorage.setObject('gps', jsonPos);
+					}else {
+						var positions = [];
+						positions.push(latitude + "," + longitude);
+						var jsonPos = {};
+						jsonPos[key] = positions;
+						$localstorage.setObject('gps', jsonPos);
+						console.log(jsonPos);
+					}
 	    }, function(err) {
-	      //error      
+	      //error
 	      $scope.showAlert("Verifique que el GPS de su dispositivo este encendido.");
 	    });
+			if($localstorage.getObject('gps') != null) {
+				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+				$scope.showGpsList = true;
+				var tmp = $localstorage.getObject('gps');
+				$scope.gps = tmp[key];
+			}else{
+				$scope.showGpsList = false;
+				$scope.gps = [];
+			}
 	  };
 
 	  	$scope.showAlert = function(mensaje) {

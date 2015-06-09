@@ -1,34 +1,32 @@
 <ion-view view-title="surveys" ng-controller="sectionsController">
-<ion-header-bar align-title="center" class="bar-positive">  
+<ion-header-bar align-title="center" class="bar-positive">
   <div class="buttons">
     <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">volver</button>
   </div>
   <h1 class="title">Secciones</h1>
 </ion-header-bar>
   <ion-content>
-  <div ng-repeat="section in sections | filter: search_section">  
+    
+  <div ng-repeat="section in sections | filter: search_section">
     <div class="list card">
-      <div class="item item-icon-left">
+      <div class="item item-icon-left stado">
       <i class="icon ion-ios-book-outline"></i>
         <h2>{{section.group_name}}</h2>
-      </div>    
+      </div>
       <div class="item item-body">
         <p>{{section.description}}</p>
       </div>
-     <a class="item item-icon-right positive" ng-click="initQuestions({{section}})">
+      <a class="item item-icon-right positive" ng-click="initQuestions({{section}})">
         <i class="icon ion-ios-arrow-forward"></i>
         Comenzar Sección
       </a>
     </div>
-  </div>  	
+  </div>
   </ion-content>
 <div class="bar bar-footer item-input-inset">
   <label class="item-input-wrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
     <input type="search" placeholder="Buscar" ng-model="search_section">
-  </label>
-  <label class="item-input bigger-2" ng-click="help()">
-    <i class="icon ion-ios-information-empty placeholder-icon"></i>    
   </label>
 </div>
 </ion-view>

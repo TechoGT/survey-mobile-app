@@ -1,5 +1,5 @@
 <ion-view view-title="surveys" ng-controller="surveyController">
-<ion-header-bar align-title="center" class="bar-positive">  
+<ion-header-bar align-title="center" class="bar-positive">
   <div class="buttons">
     <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">volver</button>
   </div>
@@ -9,11 +9,11 @@
   	<ion-list>
   		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" ng-click="viewSections({{survey}})">
   			<img ng-src="img/techo_logo.png">
-  			<h2>Encuesta</h2>
-  			<p>{{survey.sid}}</p>
-        <i class="icon ion-ios-arrow-right icon-accessory"></i>  			
+  			<h2>{{survey.surveyls_title}}</h2>
+  			<p>{{survey.sid}} - {{surveyls_description}}</p>
+        <i class="icon ion-ios-arrow-right icon-accessory"></i>
         <ion-option-button class="button-calm ion-ios-cloud-upload bigger-2" ng-click="sendData({{survey.sid}})"></ion-option-button>
-  		</ion-item>      
+  		</ion-item>
   	</ion-list>
 
   </ion-content>

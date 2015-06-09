@@ -1,6 +1,6 @@
 angular.module('starter.services',[])
 
-.factory('$localstorage', ['$window', function($window) {		
+.factory('$localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {
       $window.localStorage[key] = value;
@@ -10,13 +10,42 @@ angular.module('starter.services',[])
     },
     setObject: function(key, value) {
       $window.localStorage[key] = angular.toJson(value);
-     
+
     },
     getObject: function(key) {
       return angular.fromJson($window.localStorage[key] || null);
     },
     removeObject: function(key) {
     	$window.localStorage.removeItem(key);
+    }
+  }
+}])
+
+.factory('$answers', ['$localstorage', function($localstorage) {
+  return {
+    addAnswer: function(sid, gid, key, value) {
+      if($localstorage.getObject('actual') == null) {
+        var survey = {};
+        var sections = {};
+        var questions = {};
+        questions[key] = value;
+        sections[gid] = questions;
+        survey[sid] = sections;
+        $localstorage.setObject('actual', survey);
+        //console.log(survey);
+      }else {
+        var survey = $localstorage.getObject('actual');
+        var sections = survey[sid];
+        if(typeof sections[gid] === "undefined") {
+          var questions = {};
+          questions[key] = value;
+          sections[gid] = questions;
+        }else {
+            sections[gid][key] = value;
+        }
+        survey[sid] = sections;
+        $localstorage.setObject('actual', survey);
+      }
     }
   }
 }])
@@ -28,7 +57,7 @@ angular.module('starter.services',[])
 	var question = {};
 	var currentQuestion = 0;
 	var volunteer = {name:'', phone:'', email:''};
-	surveyID = 0;	
+	surveyID = 0;
 
 	return {
 		getSurvey: function (){
@@ -74,7 +103,7 @@ angular.module('starter.services',[])
 				} else {
 					currentQuestion = 0;
 					return false;
-				}				
+				}
 			} else if (direction === -1) {
 				if (section.questions[currentQuestion-1]) {
 					question = section.questions[currentQuestion-1];
