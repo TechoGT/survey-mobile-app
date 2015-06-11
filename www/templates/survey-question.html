@@ -1,14 +1,14 @@
 <ion-view view-title="question" ng-controller="questionController">
 <ion-header-bar align-title="center" class="bar-positive">
 	<div class="buttons">
-    	<button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">volver</button>
+    	<button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()"></button>
   	</div>
   <h1 class="title">{{section.group_name}}</h1>
 </ion-header-bar>
   <ion-content>
   	<div class="list card">
 	  <div class="item item-body">
-	    <center><p>{{question.question}}</p></center>
+	    <center><p>{{question.question}} <a ng-if="question.mandatory == 'Y'">*</a></p></center>
 	  </div>
 	  <div class="item item-body">
 	  	<form class="css-form" novalidate name="answerForm">
@@ -82,20 +82,22 @@
         </form>
 		</div>
 	  </div>
-	  	<div class="row">
-		  <div class="col">
-		  	<a class="item item-icon-left positive" ng-click="prevQuestion()">
-		        <i class="icon ion-ios-arrow-back"></i>
-		        Anterior
-    		</a>
-    	  </div>
-		  <div class="col">
-		  	<a class="item item-icon-right positive" ng-click="nextQuestion()">
-		        <i class="icon ion-ios-arrow-forward"></i>
-		        Siguiente
-    		</a>
-    	   </div>
-		</div>
 	</div>
   </ion-content>
+
+	<ion-footer-bar align-title="left" class="bar">
+	  <div class="buttons">
+	    <button class="button icon-left ion-chevron-left button-clear button-positive" ng-click="prevQuestion()">Anterior</button>
+	  </div>
+	  <h1 class="title"></h1>
+	  <div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'N' && (question.preg == '' || question.preg != '')">
+			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
+	  </div>
+		<div class="buttons" ng-if="question.mandatory == 'Y' && (question.preg == '' && (question.type != 'M' && question.type != 'P'))">
+			<button class="button icon-right ion-chevron-right button-clear">Siguiente</button>
+	  </div>
+		<div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'Y' && (question.preg != '' || (question.type == 'M' || question.type == 'P'))">
+			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
+	  </div>
+</ion-footer-bar>
 </ion-view>

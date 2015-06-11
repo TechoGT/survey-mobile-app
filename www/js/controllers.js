@@ -129,7 +129,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
 
 
-	 	var json = {sid: surveyID, answers: $localstorage.getObject(''), volunteer: $localstorage.getObject('volunteer')};
+	 	var json = {sid: surveyID, answers: $localstorage.getObject('answers'), volunteer: $localstorage.getObject('volunteer')};
 		console.log(json);
 	 	/*if($localstorage.getObject(surveyID) != null) {
 			  var alertPopup = $ionicPopup.alert({
@@ -155,12 +155,99 @@ angular.module('starter.controllers', ['ngCordova'])
 
 })
 
-.controller('sectionsController', function($scope, context, $state, $localstorage){
-	$scope.sections = context.getSurvey().sections;
+.controller('sectionsController', function($scope, context, $state, $localstorage, $ionicPopup){
 
   $scope.$on('$ionicView.enter', function() {
-
+		$scope.sections = context.getSurvey().sections;
+		$scope.count = $localstorage.getObject(context.getSurvey().sid);
+		if($scope.count == null){
+			$scope.count = 0;
+		}
 	});
+
+	$scope.showAlert = function(mensaje) {
+		var alertPopup = $ionicPopup.alert({
+			title: 'Alerta',
+			template: mensaje
+		});
+		alertPopup.then(function(res) {
+			console.log('Gracias');
+		});
+	};
+
+	$scope.newSurvey = function() {
+		var survey = $localstorage.getObject('actual');
+		if(survey != null) {
+				for(i = 0; i < $scope.sections.length; i++){
+					var gid = $scope.sections[i].gid;
+					if(typeof survey[context.getSurvey().sid][gid] !== "undefined"){
+						if(survey[context.getSurvey().sid][gid]['completed'] == false){
+							$scope.showAlert('Existen una o mas secciones incompletas, por favor ingrese todos los datos obligatorios.');
+							break;
+						}else{
+							//console.log(survey[context.getSurvey().sid][gid]);
+							if(i == ($scope.sections.length-1)){
+								// agregar actual a answers y limpiar $localstorage
+								$scope.count = $localstorage.getObject(context.getSurvey().sid);
+								if($scope.count == null){
+									$scope.count = 1;
+								}else {
+									$scope.count++;
+								}
+								$localstorage.setObject(context.getSurvey().sid, $scope.count)
+								$scope.addNew();
+								break;
+							}
+						}
+					}else{
+						$scope.showAlert('Existen una o mas secciones incompletas, por favor ingrese todos los datos obligatorios.');
+						break;
+					}
+				}
+		}else {
+			$scope.showAlert('Para agregar otra encuesta, <br/> primero llene la encuesta actual.');
+		}
+	};
+
+	$scope.addNew = function() {
+		var answers =$localstorage.getObject('answers');
+		if(answers == null){
+			answers = [];
+		}
+		var survey = $localstorage.getObject('actual');
+		if(survey != null) {
+				for(i = 0; i < $scope.sections.length; i++){
+					var gid = $scope.sections[i].gid;
+					if(typeof survey[context.getSurvey().sid][gid] !== "undefined"){
+						for(var k in survey[context.getSurvey().sid][gid]) {
+							if(k != "completed"){
+								answers.push(k +":"+ survey[context.getSurvey().sid][gid][k]);
+							}
+						}
+					}
+				}
+		}
+		$localstorage.setObject('answers', answers);
+		$localstorage.removeObject('actual');
+		$localstorage.removeObject('gps');
+	};
+
+	$scope.progress = function(gid) {
+		var survey = $localstorage.getObject('actual');
+		if(survey != null){
+			if (typeof survey[context.getSurvey().sid][gid] === "undefined") {
+				return false;
+			}else {
+				if(typeof survey[context.getSurvey().sid][gid]['completed'] === "undefined"){
+					return false;
+				}else {
+					return survey[context.getSurvey().sid][gid]['completed'];
+				}
+			}
+		}else {
+			return false;
+		}
+	}
 
 	$scope.initQuestions = function(section) {
 		//console.log(section);
@@ -174,15 +261,6 @@ angular.module('starter.controllers', ['ngCordova'])
 		$state.go('surveys');
 	}
 
-	$scope.help = function() {
-		console.log('informacion');
-	}
-})
-
-.controller('endController', function($scope, $state, context) {
-	$scope.begin = function() {
-		$state.go('sections');
-	}
 })
 
 .controller('volunteerDataController', function($scope, $state, $ionicPopup, $http, $localstorage, context) {
@@ -219,8 +297,7 @@ angular.module('starter.controllers', ['ngCordova'])
 	$scope.nextQuestion = function() {
 			console.log($scope.question.type);
 				if($scope.question.type == 'M' || $scope.question.type == 'P') {
-					for(i = 0; i< $scope.question.subquestions.length; i++){
-
+					for(i = 0; i< $scope.question.subquestions.length; i++){     // verifica las opciones marcadas
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
 							var value = 'Y';
 							if($scope.question.subquestions[i].checked){
@@ -243,9 +320,36 @@ angular.module('starter.controllers', ['ngCordova'])
 
 		if(context.changeQuestion(1)) {
 			// verificar si la pregunta es obligatoria
+
 			$scope.question = context.getQuestion();
 			$state.go('survey-question');
 		}else {
+			var survey = $localstorage.getObject('actual');
+			if(survey != null){
+				var requiredQuestions = 0;
+				for(i = 0; i < $scope.section.questions.length; i++){
+						if($scope.section.questions[i].mandatory == 'Y'){
+							requiredQuestions++;
+						}
+				}
+
+				if (typeof survey[context.getSurvey().sid][$scope.section.gid]['completed'] === "undefined") {
+					if(requiredQuestions <= Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)
+					{
+						survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
+					}else {
+						survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
+					}
+				}else {
+					if(requiredQuestions <= (Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)-1)
+					{
+						survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
+					}else {
+						survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
+					}
+				}
+				$localstorage.setObject('actual',survey);
+			}
 			$state.go('sections');
 		}
 	};

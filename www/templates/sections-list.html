@@ -1,16 +1,22 @@
 <ion-view view-title="surveys" ng-controller="sectionsController">
 <ion-header-bar align-title="center" class="bar-positive">
   <div class="buttons">
-    <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">volver</button>
+    <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()"></button>
   </div>
   <h1 class="title">Secciones</h1>
+  <div class="buttons">
+    <button class="button icon-right ion-ios-plus-empty button-clear " ng-click="newSurvey()"></button>
+  </div>
+</ion-header-bar>
+<ion-header-bar align-title="right" class="bar bar-subheader b-gray">
+  <center><div class="font-brown">{{count}} encuestas Llenas. </div></center>
 </ion-header-bar>
   <ion-content>
-    
   <div ng-repeat="section in sections | filter: search_section">
     <div class="list card">
       <div class="item item-icon-left stado">
-      <i class="icon ion-ios-book-outline"></i>
+      <i ng-show="progress({{section.gid}})" class="icon ion-ios-checkmark-outline"></i>
+      <i ng-hide="progress({{section.gid}})" class="icon ion-ios-circle-outline"></i>
         <h2>{{section.group_name}}</h2>
       </div>
       <div class="item item-body">
