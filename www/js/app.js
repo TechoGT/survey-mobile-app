@@ -11,10 +11,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.geolocation.then(success, error);
     }
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
   });
 })
 
@@ -40,16 +42,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/surveys/data',
     templateUrl: 'templates/survey-volunteer-data.html'    
   })
-
-  .state('survey-finale', {
-    url: '/surveys/sections/question/end',
-    templateUrl: 'templates/survey-finale.html'    
-  })
   
   .state('survey-question', {
     url: '/surveys/sections/question',
     templateUrl: 'templates/survey-question.html'    
-  });
+  })
+
 
   $urlRouterProvider.otherwise('/init');
 });

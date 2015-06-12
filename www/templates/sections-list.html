@@ -1,30 +1,39 @@
 <ion-view view-title="surveys" ng-controller="sectionsController">
-<ion-header-bar align-title="center" class="bar-positive">  
+<ion-header-bar align-title="center" class="bar-positive">
   <div class="buttons">
-    <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()">atrás</button>
+    <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()"></button>
   </div>
-  <h1 class="title">Secciones</h1>  
+  <h1 class="title">Secciones</h1>
+  <div class="buttons">
+    <button class="button icon-right ion-ios-plus-empty button-clear " ng-click="newSurvey()"></button>
+  </div>
 </ion-header-bar>
-  <ion-content>
-  <div ng-repeat="section in sections | filter: search_section">  
+<ion-header-bar align-title="right" class="bar bar-subheader scroll-content">
+  <center><div class="font-brown">{{count}} encuestas Llenas. </div></center>
+</ion-header-bar>
+  <ion-content overflow-scroll = "true">
+  <div ng-repeat="section in sections | filter: search_section">
     <div class="list card">
-      <div class="item item-icon-left">
-      <i class="icon ion-ios-book-outline"></i>
+      <div class="item item-icon-left stado">
+      <i ng-if="progress(section.gid) == -1" class="icon ion-ios-circle-outline"></i>
+      <i ng-if="progress(section.gid) == 0" class="icon ion-ios-checkmark-outline"></i>
+      <i ng-if="progress(section.gid) == 1" class="icon ion-ios-checkmark"></i>
         <h2>{{section.group_name}}</h2>
-      </div>    
+      </div>
       <div class="item item-body">
         <p>{{section.description}}</p>
       </div>
-     <a class="item item-icon-right positive" ng-click="initQuestions({{section}})">
+      <a class="item item-icon-right positive" ng-click="initQuestions({{section}})">
         <i class="icon ion-ios-arrow-forward"></i>
         Comenzar Sección
       </a>
     </div>
-  </div>  	
+  </div>
   </ion-content>
 <div class="bar bar-footer item-input-inset">
   <label class="item-input-wrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
     <input type="search" placeholder="Buscar" ng-model="search_section">
-  </label></div>
+  </label>
+</div>
 </ion-view>
