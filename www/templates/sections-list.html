@@ -15,8 +15,9 @@
   <div ng-repeat="section in sections | filter: search_section">
     <div class="list card">
       <div class="item item-icon-left stado">
-      <i ng-show="progress({{section.gid}})" class="icon ion-ios-checkmark-outline"></i>
-      <i ng-hide="progress({{section.gid}})" class="icon ion-ios-circle-outline"></i>
+      <i ng-if="progress(section.gid) == -1" class="icon ion-ios-circle-outline"></i>
+      <i ng-if="progress(section.gid) == 0" class="icon ion-ios-checkmark-outline"></i>
+      <i ng-if="progress(section.gid) == 1" class="icon ion-ios-checkmark"></i>
         <h2>{{section.group_name}}</h2>
       </div>
       <div class="item item-body">

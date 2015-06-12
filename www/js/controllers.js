@@ -2,7 +2,6 @@ angular.module('starter.controllers', ['ngCordova'])
 
 .controller('initController', function($scope, $ionicPopup, $timeout, $state, $http, context, $localstorage) {
 	// Aca se sincronizara con el api
-
 		if($localstorage.getObject('surveys') != null) {
 			$scope.showList = true;
 		}else{
@@ -11,11 +10,11 @@ angular.module('starter.controllers', ['ngCordova'])
 
 	$scope.sync = function(){
 		$scope.getSurveyCode();		// servicio
-	}
+	};
 
 	$scope.viewSurveys = function() {
 		$state.go('survey-volunteer-data');
-	}
+	};
 
 	//tomando el id de el survey
 	$scope.getSurveyCode = function() {
@@ -104,7 +103,9 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('surveyController', function($scope, context, $state, $localstorage, $http, $ionicPopup, $answers){
-	$scope.surveys = $localstorage.getObject('surveys');
+	$scope.$on('$ionicView.enter', function() {
+		$scope.surveys = $localstorage.getObject('surveys');
+	})
 
 	$scope.viewSections = function (survey) {
 		context.setSurvey(survey);
@@ -126,31 +127,38 @@ angular.module('starter.controllers', ['ngCordova'])
 	 };
 
 	 $scope.sendData = function(surveyID) {
+		var ans = $localstorage.getObject('answers');
+		console.log(ans);
 
-
-
-	 	var json = {sid: surveyID, answers: $localstorage.getObject('answers'), volunteer: $localstorage.getObject('volunteer')};
-		console.log(json);
-	 	/*if($localstorage.getObject(surveyID) != null) {
+	 	if(ans != null) {
 			  var alertPopup = $ionicPopup.alert({
 			     title: 'Enviando',
 			     template: '<center><ion-spinner icon="android" class="bigger-2"></ion-spinner></center>',
 			     scope: $scope,
 			     buttons: {}
 			   });
+				var json = {answers: ans[surveyID], volunteer: $localstorage.getObject('volunteer')};
+				console.log(json);
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
 		 	.success(function(data, status, headers, config) {
 		 		alertPopup.close();
 		 		$scope.showAlert('Respuestas enviadas correctamente.');
-		 		$localstorage.removeObject(surveyID);
+				delete ans[surveyID];
+				if(Object.keys(ans).length === 0 ){
+					$localstorage.removeObject('answers');
+				}else{
+					$localstorage.setObject('answers', ans);
+				}
+				$localstorage.removeObject(surveyID);
+				console.log(status);
 			}).error(function(data, status, headers, config) {
 				alertPopup.close();
 				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');
 		   });
 	 	} else {
-	 		$scope.showAlert('Este instrumento no contiene respuestas para enviar.');
-	 	}*/
+	 		$scope.showAlert('No hay respuestas de ningun tipo de encuesta.');
+	 	}
 	};
 
 })
@@ -194,8 +202,8 @@ angular.module('starter.controllers', ['ngCordova'])
 								}else {
 									$scope.count++;
 								}
-								$localstorage.setObject(context.getSurvey().sid, $scope.count)
 								$scope.addNew();
+								$localstorage.setObject(context.getSurvey().sid, $scope.count)
 								break;
 							}
 						}
@@ -210,10 +218,14 @@ angular.module('starter.controllers', ['ngCordova'])
 	};
 
 	$scope.addNew = function() {
-		var answers =$localstorage.getObject('answers');
-		if(answers == null){
-			answers = [];
+		var surveyAns =$localstorage.getObject('answers');
+		var answersJSON = {};
+		if(surveyAns == null){
+			surveyAns = {};
+		}else{
+		  answersJSON = surveyAns[context.getSurvey().sid];
 		}
+		var answers = {};
 		var survey = $localstorage.getObject('actual');
 		if(survey != null) {
 				for(i = 0; i < $scope.sections.length; i++){
@@ -221,13 +233,17 @@ angular.module('starter.controllers', ['ngCordova'])
 					if(typeof survey[context.getSurvey().sid][gid] !== "undefined"){
 						for(var k in survey[context.getSurvey().sid][gid]) {
 							if(k != "completed"){
-								answers.push(k +":"+ survey[context.getSurvey().sid][gid][k]);
+								answers[k] = survey[context.getSurvey().sid][gid][k];
 							}
 						}
 					}
 				}
+				answersJSON[$scope.count-1] = answers;
+				surveyAns[context.getSurvey().sid] = answersJSON;
+				console.log($scope.count);
+				console.log(surveyAns);
 		}
-		$localstorage.setObject('answers', answers);
+		$localstorage.setObject('answers', surveyAns);
 		$localstorage.removeObject('actual');
 		$localstorage.removeObject('gps');
 	};
@@ -236,16 +252,20 @@ angular.module('starter.controllers', ['ngCordova'])
 		var survey = $localstorage.getObject('actual');
 		if(survey != null){
 			if (typeof survey[context.getSurvey().sid][gid] === "undefined") {
-				return false;
+				return -1;
 			}else {
 				if(typeof survey[context.getSurvey().sid][gid]['completed'] === "undefined"){
-					return false;
+					return -1;
 				}else {
-					return survey[context.getSurvey().sid][gid]['completed'];
+					if(survey[context.getSurvey().sid][gid]['completed'] == true) {
+						return 1;
+					}else {
+						return 0;
+					}
 				}
 			}
 		}else {
-			return false;
+			return -1;
 		}
 	}
 
@@ -257,8 +277,28 @@ angular.module('starter.controllers', ['ngCordova'])
 		$state.go('survey-question');
 	}
 
+	$scope.showConfirm = function(message) {
+			var confirmPopup = $ionicPopup.confirm({
+				title: 'Confirmar',
+				template: message
+			});
+			confirmPopup.then(function(res) {
+				if(res) {
+					$localstorage.removeObject('actual');
+					$state.go('surveys');
+				} else {
+					console.log('NO borre');
+				}
+			});
+		};
+
 	$scope.goBack = function() {
-		$state.go('surveys');
+		var survey = $localstorage.getObject('actual');
+		if(survey != null) {
+			$scope.showConfirm('Si regresa se perderan todos los avances, guarde la encuesta antes de regresar. <br/> Presione \'OK\' para regresar o \'Cancelar\' para continuar.');
+			}else {
+				$state.go('surveys');
+			}
 	}
 
 })
@@ -364,6 +404,32 @@ angular.module('starter.controllers', ['ngCordova'])
 	};
 
 	$scope.goBack = function () {
+		var survey = $localstorage.getObject('actual');
+		if(survey != null){
+			var requiredQuestions = 0;
+			for(i = 0; i < $scope.section.questions.length; i++){
+					if($scope.section.questions[i].mandatory == 'Y'){
+						requiredQuestions++;
+					}
+			}
+
+			if (typeof survey[context.getSurvey().sid][$scope.section.gid]['completed'] === "undefined") {
+				if(requiredQuestions <= Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)
+				{
+					survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
+				}else {
+					survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
+				}
+			}else {
+				if(requiredQuestions <= (Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)-1)
+				{
+					survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
+				}else {
+					survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
+				}
+			}
+			$localstorage.setObject('actual',survey);
+		}
 		$state.go('sections');
 	};
 
