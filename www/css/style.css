@@ -15,6 +15,15 @@
   height: 60px;
 }
 
+i.icon.ion-ios-checkmark.valid {
+  color: green;
+  padding-right: 5px;
+}
+
+i.icon.ion-ios-close.invalid {
+  color: red;
+  padding-right: 5px;
+}
 .spinner {
 	stroke: #0083A9;
 }
@@ -27,4 +36,10 @@
 	color:#387ef5;
 }
 
+.scroll-content {
+	background-color: #e5e5e5;
+}
 
+.font-brown {
+	color: #4B3832;
+}
