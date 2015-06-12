@@ -8,10 +8,10 @@
     <button class="button icon-right ion-ios-plus-empty button-clear " ng-click="newSurvey()"></button>
   </div>
 </ion-header-bar>
-<ion-header-bar align-title="right" class="bar bar-subheader b-gray">
+<ion-header-bar align-title="right" class="bar bar-subheader scroll-content">
   <center><div class="font-brown">{{count}} encuestas Llenas. </div></center>
 </ion-header-bar>
-  <ion-content>
+  <ion-content overflow-scroll = "true">
   <div ng-repeat="section in sections | filter: search_section">
     <div class="list card">
       <div class="item item-icon-left stado">
