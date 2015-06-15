@@ -1,0 +1,55 @@
+<div class="modal">
+    <ion-header-bar align-title="center" class="bar-positive">
+      <div class="buttons">
+        <button class="button" ng-click="closeModal()">Cancelar</button>
+      </div>
+      <h1 class="title">Nuevo Ingreso</h1>
+      <div class="buttons">
+        <button class="button" ng-click="add()">Agregar</button>
+      </div>
+    </ion-header-bar>
+    <ion-content>
+      <div class="card">
+        <div class="item item-body">
+          {{question.question}}
+        </div>
+        <div class="item item-body">
+          <p>{{row.question}}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div ng-repeat="field in columns">
+          <div class="item item-divider">
+            {{field.question}}
+          </div>
+          <label class="item item-input" ng-if="field.type == 'S'"> <!--SIMPLE TEXT-->
+            <input type="text" ng-model="field.answer">
+          </label>
+          <label class="item item-input" ng-if="field.type == 'D'"> <!--DATE-->
+           <input type="date" ng-model="field.answer">
+         </label>
+         <div class="list" ng-if="field.type == 'G'">	 <!--GENDER-->
+           <ion-radio ng-model="field.answer" ng-value="'M'" name="gender">Hombre</ion-radio>
+          <ion-radio ng-model="field.answer" ng-value="'F'" name="gender">Mujer</ion-radio>
+         </div>
+         <label class="item item-input" ng-if="field.type == 'N'">  <!--NUMBER-->
+            <input type="number" ng-model="field.answer">
+         </label>
+         <div class="list" ng-if="field.type == 'Y'">		       	<!--YES/NO-->
+           <ion-radio ng-model="field.answer" ng-value="'Y'" name="yesno">Si</ion-radio>
+          <ion-radio ng-model="field.answer" ng-value="'N'" name="yesno">No</ion-radio>
+         </div>
+         <div class="list" ng-if="field.type == '5'"> <!--1 TO 5 -->
+ 				  <ion-radio ng-model="field.answer" ng-value="'1'" name="number">1</ion-radio>
+ 				  <ion-radio ng-model="field.answer" ng-value="'2'" name="number">2</ion-radio>
+ 				  <ion-radio ng-model="field.answer" ng-value="'3'" name="number">3</ion-radio>
+ 				  <ion-radio ng-model="field.answer" ng-value="'4'" name="number">4</ion-radio>
+ 				  <ion-radio ng-model="field.answer" ng-value="'5'" name="number">5</ion-radio>
+ 				</div>
+         <label class="item item-input" ng-if="field.type == 'T'"> <!--TEXT-->
+           <input type="text" ng-model="field.answer">
+         </label>
+        </div>
+      </div>
+    </ion-content>
+</div>
