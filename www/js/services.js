@@ -47,7 +47,7 @@ angular.module('starter.services',[])
         $localstorage.setObject('actual', survey);
       }
     }
-  }
+};
 }])
 
 .factory('context', function() {
@@ -96,7 +96,7 @@ angular.module('starter.services',[])
 
 		changeQuestion: function(direction) {
 			if (direction === 1) {
-				if(section.questions[currentQuestion+1]) {          
+				if(section.questions[currentQuestion+1]) {
 					question = section.questions[currentQuestion+1];
 					currentQuestion++;
 					return true;

@@ -342,23 +342,65 @@ angular.module('starter.controllers', ['ngCordova'])
 	$scope.question = context.getQuestion();
 
 	$scope.evaluate = function(string) {
-		var key = string.split(".NAOK");
-		/*var parser = math.parser();
-		var b	= parser.set("S", "A4");
-		var a = parser.eval("not(S == \"A4\") and false");*/
-		var str = "";
-		for(var k in key){
-			str += key[k];
+
+		var lsValue = $localstorage.getObject('actual');
+		if(lsValue != null){
+			/*****************************************
+			*  Operates And's & Or's
+			******************************************/
+
+			if(string.indexOf('and') > 0){
+				console.log(string.split('and')[0]+" && "+string.split('and')[1]);
+				return $scope.evaluate(string.split('and')[0]+")") && $scope.evaluate("("+string.split('and')[1]);
+			}else if(string.indexOf('or') > 0){
+				console.log(string.split('or')[0]+" || "+string.split('or')[1]);
+				return $scope.evaluate(string.split('or')[0]+")") || $scope.evaluate("("+string.split('or')[1]);
+			}
+
+
+			/*****************************************
+			*  Gets the id's of the evaluated question
+			******************************************/
+
+			var init = (string.indexOf("X") - context.getSurvey().sid.length);
+			var end = string.indexOf(".");
+			var key = string.slice(init, end);
+
+			/*****************************************
+			*  finds the value of the conditioned answer
+			******************************************/
+
+			var positions = key.split("X");
+			var survey = lsValue[positions[0]];
+			var section = survey[positions[1]];
+			var questionValue = section[key];
+
+			/*****************************************
+			*  replace functions to change symbols
+			******************************************/
+			if(typeof questionValue !== "undefined" && typeof survey !== "undefined" && typeof section !== "undefined") {
+				var operator = operator = string.replace(key + ".NAOK", "\"" +questionValue + "\"");
+				var op2 = operator.replace("!(", "not(");
+				console.log(op2);
+
+				/*****************************************
+				*  evaluates de logical expression
+				******************************************/
+				var parser = math.parser();
+				var value = parser.eval(op2);
+				console.log(op2 + " = " + value);
+
+				return value;
+			}else {
+				return false;
+			}
+
 		}
-
-		var id = str.split("X");
-		console.log(str);
-		console.log(id);
-
+		return false;
 	};
 
 	$scope.nextQuestion = function() {
-		$scope.evaluate("((949485X15X183.NAOK == \"A4\"))");
+		//console.log($scope.evaluate("!((949485X15X183.NAOK < \"A3\") and !(949485X15X183.NAOK != \"A3\"))"));
 				if($scope.question.type == 'M' || $scope.question.type == 'P') {
 					for(i = 0; i< $scope.question.subquestions.length; i++){     // verifica las opciones marcadas
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
@@ -381,83 +423,73 @@ angular.module('starter.controllers', ['ngCordova'])
 					}
 				}
 
-		if(context.changeQuestion(1)) {
+		$scope.changeQuestion(1);
+	};
+
+	$scope.changeQuestion = function (direction) {
+		if(context.changeQuestion(direction)) {
 			// verificar si la pregunta es obligatoria
 			$scope.question = context.getQuestion();
-			$state.go('survey-question');
-		}else {
-			var survey = $localstorage.getObject('actual');
-			if(survey != null){
-				var requiredQuestions = 0;
-				for(i = 0; i < $scope.section.questions.length; i++){
-						if($scope.section.questions[i].mandatory == 'Y'){
-							requiredQuestions++;
-						}
-				}
-
-				if (typeof survey[context.getSurvey().sid][$scope.section.gid]['completed'] === "undefined") {
-					if(requiredQuestions <= Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)
-					{
-						survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
-					}else {
-						survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
-					}
+			if($scope.question.relevance != '1') {
+				if($scope.evaluate($scope.question.relevance) == true){
+					$state.go('survey-question');
+					$scope.recurrentExecution();
 				}else {
-					if(requiredQuestions <= (Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)-1)
-					{
-						survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
-					}else {
-						survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
-					}
+					$scope.changeQuestion(direction);
+					$scope.recurrentExecution();
 				}
-				$localstorage.setObject('actual',survey);
+			}else{
+				$state.go('survey-question');
+				$scope.recurrentExecution();
 			}
+
+		}else {
 			$state.go('sections');
+			$scope.sectionState();
 		}
 	};
 
 	$scope.prevQuestion = function() {
-		if(context.changeQuestion(-1)) {
-			$scope.question = context.getQuestion();
-			$state.go('survey-question');
-		}else {
-			$state.go('sections');
-		}
+		$scope.changeQuestion(-1);
 	};
+
+$scope.sectionState = function() {
+	var survey = $localstorage.getObject('actual');
+	if(survey != null && (typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined")){
+		var requiredQuestions = 0;
+		for(i = 0; i < $scope.section.questions.length; i++){
+				if($scope.section.questions[i].mandatory == 'Y'){
+					requiredQuestions++;
+				}
+		}
+
+		if (typeof survey[context.getSurvey().sid][$scope.section.gid]['completed'] === "undefined") {
+			if(requiredQuestions <= Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)
+			{
+				survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
+			}else {
+				survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
+			}
+		}else {
+			if(requiredQuestions <= (Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)-1)
+			{
+				survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
+			}else {
+				survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
+			}
+		}
+		$localstorage.setObject('actual',survey);
+	}
+};
 
 	$scope.goBack = function () {
-		var survey = $localstorage.getObject('actual');
-		if(survey != null){
-			var requiredQuestions = 0;
-			for(i = 0; i < $scope.section.questions.length; i++){
-					if($scope.section.questions[i].mandatory == 'Y'){
-						requiredQuestions++;
-					}
-			}
-
-			if (typeof survey[context.getSurvey().sid][$scope.section.gid]['completed'] === "undefined") {
-				if(requiredQuestions <= Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)
-				{
-					survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
-				}else {
-					survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
-				}
-			}else {
-				if(requiredQuestions <= (Object.keys(survey[context.getSurvey().sid][$scope.section.gid]).length)-1)
-				{
-					survey[context.getSurvey().sid][$scope.section.gid]['completed'] = true;
-				}else {
-					survey[context.getSurvey().sid][$scope.section.gid]['completed'] = false;
-				}
-			}
-			$localstorage.setObject('actual',survey);
-		}
 		$state.go('sections');
+		$scope.sectionState();
 	};
 
-	$scope.$on('$ionicView.enter', function() {
+	$scope.recurrentExecution = function() {
 		var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
-		if($localstorage.getObject('gps') != null) {
+		if($localstorage.getObject('gps') != null && $scope.question.type == "U") {
 			$scope.showGpsList = true;
 			var tmp = $localstorage.getObject('gps');
 			$scope.gps = tmp[key];
@@ -469,7 +501,7 @@ angular.module('starter.controllers', ['ngCordova'])
 		if($scope.question.type == ';'){
 			$scope.filas = [];
 			$scope.columnas = [];
-			for (var obj in $scope.questions.subquestions){
+			for (var obj in $scope.question.subquestions){
 					if(obj.scale_id == 0){
 						$scope.filas.push(obj);
 					}else if(obj.scale_id == 1){
@@ -478,6 +510,10 @@ angular.module('starter.controllers', ['ngCordova'])
 			}
 		}
 		console.log($scope.question);
+	}
+
+	$scope.$on('$ionicView.enter', function() {
+		$scope.recurrentExecution();
 	});
 
 	  $scope.getPosition = function() {
@@ -488,6 +524,7 @@ angular.module('starter.controllers', ['ngCordova'])
 				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 	      	if($localstorage.getObject('gps') != null) {
 						var jsonPos = $localstorage.getObject('gps');
+						console.log(jsonPos);
 						jsonPos[key].push(latitude + "," + longitude);
 						$localstorage.setObject('gps', jsonPos);
 					}else {

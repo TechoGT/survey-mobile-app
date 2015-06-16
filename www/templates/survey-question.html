@@ -47,9 +47,12 @@
 				  <ion-radio ng-model="question.preg" ng-value="'4'">4</ion-radio>
 				  <ion-radio ng-model="question.preg" ng-value="'5'">5</ion-radio>
 				</div>
-		       	<label class="item item-input" ng-if="question.type == 'S'"> <!--SIMPLE TEXT-->
+		       	<label class="item item-input" ng-if="question.type == 'S' && question.attributes.location_mapservice != '1'"> <!--SIMPLE TEXT-->
 		       		<input type="text" ng-model="question.preg">
 		       	</label>
+						<label class="item item-input" ng-if="question.type == 'U'"> <!--HUGE TEXT-->
+							<input type="text" ng-model="question.preg">
+						</label>
 		       	<label class="item item-input" ng-if="question.type == 'T'"> <!--TEXT-->
 		       		<input type="text" ng-model="question.preg">
 		       	</label>
@@ -70,7 +73,7 @@
 						<input type="text">
 					</label>
 				</div>
-				<div ng-if="question.type == 'U'">      <!--GEOLOCATION -->
+				<div ng-if="question.type == 'S' && question.attributes.location_mapservice == '1'" >      <!--GEOLOCATION -->
 					  <center><div class="item item-icon ion-ios-plus bigger-2" ng-click="getPosition()"></div></center>
 					  <div ng-show="showGpsList" class="item item-text-wrap row" ng-repeat="(index,pos) in gps track by $index">
 					  	<div class="col">{{index}}</div>
@@ -102,10 +105,10 @@
 	  <div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'N' && (question.preg == '' || question.preg != '')">
 			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
 	  </div>
-		<div class="buttons" ng-if="question.mandatory == 'Y' && (question.preg == '' && (question.type != 'M' && question.type != 'P' && question.type != ';'))">
+		<div class="buttons" ng-if="question.mandatory == 'Y' && (question.preg == '' && (question.type != 'M' && question.type != 'P' && question.type != ';' && question.attributes.location_mapservice != '1'))">
 			<button class="button icon-right ion-chevron-right button-clear">Siguiente</button>
 	  </div>
-		<div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'Y' && (question.preg != '' || (question.type == 'M' || question.type == 'P' || question.type == ';'))">
+		<div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'Y' && (question.preg != '' || (question.type == 'M' || question.type == 'P' || question.type == ';' || question.attributes.location_mapservice == '1'))">
 			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
 	  </div>
 </ion-footer-bar>
