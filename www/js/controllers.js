@@ -9,11 +9,15 @@ angular.module('starter.controllers', ['ngCordova'])
 		}
 
 	$scope.sync = function(){
-		$scope.getSurveyCode();		// servicio
+		$scope.getSurveyCode();
 	};
 
 	$scope.viewSurveys = function() {
-		$state.go('survey-volunteer-data');
+		if($localstorage.getObject('surveys') != null){
+			$state.go('survey-volunteer-data');
+		}else {
+			$scope.showAlert('No tiene encuestas descargadas, primero descargue una encuesta.');
+		}
 	};
 
 	//tomando el id de el survey
@@ -110,7 +114,17 @@ angular.module('starter.controllers', ['ngCordova'])
 .controller('surveyController', function($scope, context, $state, $localstorage, $http, $ionicPopup, $answers){
 	$scope.$on('$ionicView.enter', function() {
 		$scope.surveys = $localstorage.getObject('surveys');
-	})
+	});
+
+	$scope.reloadSurveys = function(){
+		if($localstorage.getObject('answers') == null){
+			$localstorage.removeObject('surveys');
+			$localstorage.removeObject('volunteer');
+			$state.go('init');
+		}else {
+			$scope.showAlert('Aun no ha enviado las encuestas, envielas antes de borrar los datos de la aplicacion.');
+		}
+	};
 
 	$scope.viewSections = function (survey) {
 		context.setSurvey(survey);
@@ -149,8 +163,8 @@ angular.module('starter.controllers', ['ngCordova'])
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
 		 	.success(function(data, status, headers, config) {
-		 		alertPopup.close();
-		 		$scope.showAlert('Respuestas enviadas correctamente.');
+		 		alertPopup.close();				
+		 		$scope.showAlert('Respuestas enviadas correctamente');
 				delete ans[surveyID];
 				if(Object.keys(ans).length === 0 ){
 					$localstorage.removeObject('answers');
@@ -509,7 +523,7 @@ $scope.sectionState = function() {
 					}
 			}
 		}
-		console.log($scope.question);
+		console.log($scope.columnas);
 	}
 
 	$scope.$on('$ionicView.enter', function() {
@@ -573,10 +587,11 @@ $scope.sectionState = function() {
 				var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
 				var value = tmp.answer;
 				$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
-				//console.log(key + ":" + value);
+				$scope.columns[k].answer = "";
 			}
+			$scope.recurrentExecution();
 			$scope.closeModal();
-		}
+		};
 
 		$scope.openModal = function(row) {
 			$scope.row = row;
@@ -589,6 +604,7 @@ $scope.sectionState = function() {
 			}
 			$scope.modal.show();
 	  };
+
 	  $scope.closeModal = function() {
 	    $scope.modal.hide();
 	  };
@@ -604,11 +620,4 @@ $scope.sectionState = function() {
 	  $scope.$on('modal.removed', function() {
 	    // Execute action
 	  });
-})
-
-.directive('gMatrix', function() {
-	return{
-		templateUrl: 'templates/matrix.html',
-		scope: '='
-	}
 });

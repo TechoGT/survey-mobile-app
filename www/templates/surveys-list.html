@@ -4,6 +4,9 @@
     <button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()"></button>
   </div>
   <h1 class="title">Encuestas</h1>
+  <div class="buttons">
+    <button class="button icon-left ion-ios-reload button-clear " ng-click="reloadSurveys()"></button>
+  </div>
 </ion-header-bar>
   <ion-content overflow-scroll = "true">
   	<ion-list>
@@ -21,5 +24,6 @@
   <label class="item-input-wrapper">
     <i class="icon ion-ios-search placeholder-icon"></i>
     <input type="search" placeholder="Buscar" ng-model="search_survey">
-  </label></div>
+  </label>
+</div>
 </ion-view>
