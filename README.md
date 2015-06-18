@@ -7,7 +7,7 @@
 - Fork this repo
 
 ```bash
-$ git clone <repository url> && cd $_
+$ git clone https://github.com/TechoGT/survey-mobile-app.git 
 ```
 - Check your development dependencies
 
