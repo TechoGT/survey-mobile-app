@@ -47,7 +47,7 @@ angular.module('starter.services',[])
         $localstorage.setObject('actual', survey);
       }
     }
-  }
+};
 }])
 
 .factory('context', function() {
