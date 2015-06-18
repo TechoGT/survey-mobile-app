@@ -1,3 +1,6 @@
 {
-  "directory": "www/lib"
+  "directory": "www/lib",
+  "proxy":"http://root:M1cr0soft@192.168.18.15:2001",
+  "http-proxy":"http://root:M1cr0soft@192.168.18.15:2001",
+  "strict-ssl": false
 }
