@@ -163,7 +163,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
 		 	.success(function(data, status, headers, config) {
-		 		alertPopup.close();				
+		 		alertPopup.close();
 		 		$scope.showAlert('Respuestas enviadas correctamente');
 				delete ans[surveyID];
 				if(Object.keys(ans).length === 0 ){
@@ -503,7 +503,7 @@ $scope.sectionState = function() {
 
 	$scope.recurrentExecution = function() {
 		var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
-		if($localstorage.getObject('gps') != null && $scope.question.type == "U") {
+		if($localstorage.getObject('gps') != null && $scope.question.type == "S" && $scope.question.attributes.location_mapservice == '1') {
 			$scope.showGpsList = true;
 			var tmp = $localstorage.getObject('gps');
 			$scope.gps = tmp[key];
@@ -521,6 +521,24 @@ $scope.sectionState = function() {
 					}else if(obj.scale_id == 1){
 						$scope.columnas.push(obj);
 					}
+			}
+		}
+
+		var survey = $localstorage.getObject('actual');
+		if(survey != null){
+			if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
+				var key = context.getSurvey().sid + 'X' + $scope.section.gid + 'X' + $scope.question.id;
+				$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][key];
+				if(typeof $scope.actualAnswer === "undefined"){
+					$scope.actualAnswer = "";
+				}
+			}
+
+			if($scope.question.type == 'D') {
+				var date = new Date($scope.actualAnswer);
+				$scope.question.preg = date;
+			}else{
+				$scope.question.preg = $scope.actualAnswer;
 			}
 		}
 		console.log($scope.columnas);
@@ -599,6 +617,23 @@ $scope.sectionState = function() {
 			for(var q in $scope.question.subquestions){
 				var tmp = $scope.question.subquestions[q];
 				if(tmp.scale_id == 1){
+					var survey = $localstorage.getObject('actual');
+					if(survey != null){
+						if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
+							var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
+							$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][key];
+							if(typeof $scope.actualAnswer === "undefined"){
+								$scope.actualAnswer = "";
+							}
+							if(tmp.type == 'D') {
+								var date = new Date($scope.actualAnswer);
+								tmp.answer = date;
+							}else{
+								tmp.answer = $scope.actualAnswer;
+							}
+
+						}
+					}
 					$scope.columns.push(tmp);
 				}
 			}
