@@ -1,20 +1,5 @@
 angular.module('starter.services',[])
 
-.factory('volunteers', function() {
-	var volunteer = [
-	{
-		name: '',
-		email: '',
-		phone: ''
-	}];
-
-	return {
-		all: function() {
-			return volunteer;
-		}
-	};
-})
-
 .factory('$localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {
@@ -24,19 +9,55 @@ angular.module('starter.services',[])
       return $window.localStorage[key] || defaultValue;
     },
     setObject: function(key, value) {
-      $window.localStorage[key] = JSON.stringify(value);
+      $window.localStorage[key] = angular.toJson(value);
+
     },
     getObject: function(key) {
-      return JSON.parse($window.localStorage[key] || '{}');
+      return angular.fromJson($window.localStorage[key] || null);
+    },
+    removeObject: function(key) {
+    	$window.localStorage.removeItem(key);
     }
   }
 }])
 
+.factory('$answers', ['$localstorage', function($localstorage) {
+  return {
+    addAnswer: function(sid, gid, key, value) {
+      if($localstorage.getObject('actual') == null) {
+        var survey = {};
+        var sections = {};
+        var questions = {};
+        questions[key] = value;
+        sections[gid] = questions;
+        survey[sid] = sections;
+        $localstorage.setObject('actual', survey);
+        //console.log(survey);
+      }else {
+        var survey = $localstorage.getObject('actual');
+        var sections = survey[sid];
+        if(typeof sections[gid] === "undefined") {
+          var questions = {};
+          questions[key] = value;
+          sections[gid] = questions;
+        }else {
+            sections[gid][key] = value;
+        }
+        survey[sid] = sections;
+        $localstorage.setObject('actual', survey);
+      }
+    }
+};
+}])
+
 .factory('context', function() {
+	var avaliableSurveys = [];
 	var survey = {};
 	var section = {};
 	var question = {};
 	var currentQuestion = 0;
+	var volunteer = {name:'', phone:'', email:''};
+	surveyID = 0;
 
 	return {
 		getSurvey: function (){
@@ -66,6 +87,12 @@ angular.module('starter.services',[])
 		setCurrentQuestion: function(cq) {
 			currentQuestion = cq;
 		},
+		setVolunteer: function(v) {
+			volunteer = v;
+		},
+		getVolunteer: function() {
+			return volunteer;
+		},
 
 		changeQuestion: function(direction) {
 			if (direction === 1) {
@@ -76,7 +103,7 @@ angular.module('starter.services',[])
 				} else {
 					currentQuestion = 0;
 					return false;
-				}				
+				}
 			} else if (direction === -1) {
 				if (section.questions[currentQuestion-1]) {
 					question = section.questions[currentQuestion-1];
@@ -86,46 +113,6 @@ angular.module('starter.services',[])
 					currentQuestion = 0;
 					return false;
 				}
-			}
-		}
-	};
-})
-
-.factory('surveys', function(){
-	var surveysCollection = [];// End of survey
-	
-
-	return {
-		all: function() {
-			return surveysCollection;
-		},
-
-	    add: function(survey) {
-	      surveysCollection.push(survey);
-	    },    
-
-		remove: function(survey) {
-			surveysCollection.splice(surveysCollection.indexOf(survey), 1);
-		}
-	};
-})
-
-.factory('data', function() {
-	var filledSurveys = [];
-
-	return {
-		all: function() {
-			return filledSurveys;	
-		},
-		remove: function(survey) {
-			surveysCollection.splice(surveysCollection.indexOf(survey), 1);
-		},
-		get: function(surveyId) {
-			for (var i = 0; i < surveysCollection.length; i++) {
-				if (surveysCollection[i].id === parseInt(surveyId)) {
-					return surveysCollection[i];
-				}
-				return null;
 			}
 		}
 	};
