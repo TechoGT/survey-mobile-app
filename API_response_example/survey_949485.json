@@ -1,0 +1,499 @@
+{
+   "surveyls_title":"Simple para respuesta",
+   "surveyls_description":"Encuesta simple para verificar respuestas",
+   "surveyls_welcometext":"",
+   "surveyls_endtext":"",
+   "sid":"949485",
+   "active":"Y",
+   "autonumber_start":"8",
+   "owner_id":"1",
+   "admin":"Administrator",
+   "expires":null,
+   "adminemail":"your-email@example.net",
+   "startdate":null,
+   "format":"G",
+   "tokenlength":"15",
+   "usetokens":"N",
+   "datecreated":"2015-05-27",
+   "showprogress":"Y",
+   "datestamp":"N",
+   "sections":[
+      {
+         "gid":"13",
+         "group_order":"10",
+         "description":"",
+         "sid":"949485",
+         "group_name":"Seccion 1",
+         "questions":[
+            {
+               "type":"N",
+               "help":"",
+               "parent_qid":"0",
+               "title":"P3",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"El jefe de la familia que edad tiene?",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"13",
+               "preg":"",
+               "question_order":"3",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"180"
+            },
+            {
+               "type":"Y",
+               "help":"",
+               "parent_qid":"0",
+               "title":"P4",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"El terreno donde se situa su lugar de vivienda es de su propiedad?",
+               "mandatory":"N",
+               "same_default":"0",
+               "gid":"13",
+               "preg":"",
+               "question_order":"4",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"181"
+            },
+            {
+               "type":"5",
+               "help":"",
+               "parent_qid":"0",
+               "title":"P5",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"En su vivienda cuantos dormitorios existen?",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"13",
+               "preg":"",
+               "question_order":"5",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"182"
+            },
+            {
+               "type":"G",
+               "help":"",
+               "parent_qid":"0",
+               "title":"P2",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"El jefe en la familia es Hombre o Mujer?",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"13",
+               "preg":"",
+               "question_order":"2",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"179"
+            },
+            {
+               "type":"D",
+               "help":"",
+               "parent_qid":"0",
+               "title":"P1",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"Fecha de inicio de encuesta",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"13",
+               "preg":"",
+               "question_order":"1",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"177"
+            },
+            {
+               "type":";",
+               "help":"",
+               "parent_qid":"0",
+               "title":"S1",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"Por favor d\u00edgame los nombres de las personas que habitualmente viven en este hogar. Comience la lista con el jefe\/a del hogar.\r\n\r\n\t\u00a0\r\n",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"13",
+               "preg":"",
+               "question_order":"8",
+               "relevance":"1",
+               "subquestions":[
+                  {
+                     "title":"SQ001",
+                     "question":"1",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ002",
+                     "question":"2",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ003",
+                     "question":"3",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ004",
+                     "question":"4",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ005",
+                     "question":"5",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ006",
+                     "question":"6",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ007",
+                     "question":"7",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ008",
+                     "question":"8",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ009",
+                     "question":"9",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ010",
+                     "question":"10",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ011",
+                     "question":"11",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ012",
+                     "question":"12",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ013",
+                     "question":"13",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ014",
+                     "question":"14",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ015",
+                     "question":"15",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ015",
+                     "question":"Nombre Completo ",
+                     "scale_id":"1",
+                     "checked":false,
+                     "answer":"",
+                     "type":"S"
+                  },
+                  {
+                     "title":"SQ016",
+                     "question":"Esta embarazada ",
+                     "scale_id":"1",
+                     "checked":false,
+                     "answer":"",
+                     "type":"Y"
+                  },
+                  {
+                     "title":"SQ017",
+                     "question":"Genero ",
+                     "scale_id":"1",
+                     "checked":false,
+                     "answer":"",
+                     "type":"G"
+                  },
+                  {
+                     "title":"SQ018",
+                     "question":"Fecha de nacimiento ",
+                     "scale_id":"1",
+                     "checked":false,
+                     "answer":"",
+                     "type":"D"
+                  },
+                  {
+                     "title":"SQ019",
+                     "question":"Apellido Completo ",
+                     "scale_id":"1",
+                     "checked":false,
+                     "answer":"",
+                     "type":"S"
+                  }
+               ],
+               "attributes":{
+                  "em_validation_q_tip":"Ayuda sobre la validadcion de la pregunta???",
+                  "em_validation_sq_tip":"Consejo de validacion de la pregunta",
+                  "min_answers":"1",
+                  "numbers_only":"1"
+               },
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"268"
+            }
+         ]
+      },
+      {
+         "gid":"15",
+         "group_order":"12",
+         "description":"Esta es la seccion numero 2 de pruebas",
+         "sid":"949485",
+         "group_name":"Seccion 2",
+         "questions":[
+            {
+               "type":"T",
+               "help":"",
+               "parent_qid":"0",
+               "title":"s2p3",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"Explique la razon principal por la cual \u00a0asentaron en esta area de vivienda?",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"15",
+               "preg":"",
+               "question_order":"3",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"185"
+            },
+            {
+               "type":"U",
+               "help":"",
+               "parent_qid":"0",
+               "title":"s2p4",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"Si sus hijos estudian en alguna institucion explique porque porque cree que es importante que ellos acudan a la escuela",
+               "mandatory":"N",
+               "same_default":"0",
+               "gid":"15",
+               "preg":"",
+               "question_order":"4",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"186"
+            },
+            {
+               "type":"T",
+               "help":"",
+               "parent_qid":"0",
+               "title":"s2p5",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"Cual es la razon, principal, por la que no tiene documentos que certifiquen el terreno de su vivienda?",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"15",
+               "preg":"",
+               "question_order":"5",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"187"
+            },
+            {
+               "type":"L",
+               "help":"",
+               "parent_qid":"0",
+               "title":"S2p1",
+               "other":"Y",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"A que actividades se dedica mayoritariamente su familia?",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"15",
+               "preg":"",
+               "question_order":"1",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":{
+                  "A1":{
+                     "answer":"Agricultura",
+                     "assessment_value":"0",
+                     "scale_id":"0"
+                  },
+                  "A2":{
+                     "answer":"Ganaderia",
+                     "assessment_value":"1",
+                     "scale_id":"0"
+                  },
+                  "A3":{
+                     "answer":"Industria",
+                     "assessment_value":"1",
+                     "scale_id":"0"
+                  },
+                  "A4":{
+                     "answer":"Comercio",
+                     "assessment_value":"1",
+                     "scale_id":"0"
+                  }
+               },
+               "id":"183"
+            },
+            {
+               "type":"T",
+               "help":"",
+               "parent_qid":"0",
+               "title":"s2p2",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"Explique brevemente porque se dedica a esa activadad mayoritariamente su familia",
+               "mandatory":"N",
+               "same_default":"0",
+               "gid":"15",
+               "preg":"",
+               "question_order":"2",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":"No available attributes",
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"184"
+            },
+            {
+               "type":"M",
+               "help":"",
+               "parent_qid":"0",
+               "title":"p16",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"Seleccione almenos uno de los servicios basicos que posee en su vivienda",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"15",
+               "preg":"",
+               "question_order":"6",
+               "relevance":"((949485X15X183.NAOK == \"A4\"))",
+               "subquestions":[
+                  {
+                     "title":"SQ001",
+                     "question":"Agua potable",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ002",
+                     "question":"Energia electrica",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ003",
+                     "question":"Servicio de extracci\u00f3n de basura",
+                     "scale_id":"0",
+                     "checked":false
+                  },
+                  {
+                     "title":"SQ004",
+                     "question":"Manejo de aguas servidas",
+                     "scale_id":"0",
+                     "checked":false
+                  }
+               ],
+               "attributes":{
+                  "min_answers":"2"
+               },
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"198"
+            },
+            {
+               "type":"S",
+               "help":"Por favor utilice el simbolo + para agregar un conjunto de coordenadas de la ubicacion de la vivienda. Sea paciente mientras el dispositivo obtiene una lectura del GPS",
+               "parent_qid":"0",
+               "title":"P6",
+               "other":"N",
+               "scale_id":"0",
+               "sid":"949485",
+               "question":"Coordenadas de la vivienda",
+               "mandatory":"Y",
+               "same_default":"0",
+               "gid":"15",
+               "preg":"",
+               "question_order":"7",
+               "relevance":"1",
+               "subquestions":"No available answers",
+               "attributes":{
+                  "location_mapservice":"1"
+               },
+               "attributes_lang":"No available attributes",
+               "answeroptions":"No available answer options",
+               "id":"203"
+            }
+         ]
+      }
+   ]
+}
