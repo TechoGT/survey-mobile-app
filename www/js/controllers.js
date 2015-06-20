@@ -158,21 +158,25 @@ angular.module('starter.controllers', ['ngCordova'])
 			   });
 
 				var ans2 = ans[surveyID];
-				var json = {sid: surveyID, answers: ans2[0], volunteer: $localstorage.getObject('volunteer')};
+				var json = {sid: surveyID, answers: ans2, volunteer: $localstorage.getObject('volunteer')};
 				console.log(json);
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
 		 	.success(function(data, status, headers, config) {
-		 		alertPopup.close();
-		 		$scope.showAlert('Respuestas enviadas correctamente');
-				delete ans[surveyID];
-				if(Object.keys(ans).length === 0 ){
-					$localstorage.removeObject('answers');
-				}else{
-					$localstorage.setObject('answers', ans);
+		 		console.log(data);
+				alertPopup.close();
+				if(data.status == true){
+					$scope.showAlert(data.inserted + ' encuestas enviadas correctamente');
+					delete ans[surveyID];
+					if(Object.keys(ans).length === 0 ){
+						$localstorage.removeObject('answers');
+					}else{
+						$localstorage.setObject('answers', ans);
+					}
+					$localstorage.removeObject(surveyID);
+				}else {
+					$scope.showAlert('Las encuestas no fueron insertadas correctamente, porfavor avoquese con un administrador');
 				}
-				$localstorage.removeObject(surveyID);
-				console.log(status);
 			}).error(function(data, status, headers, config) {
 				alertPopup.close();
 				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');
@@ -423,7 +427,7 @@ angular.module('starter.controllers', ['ngCordova'])
 								$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 							}
 					}
-				}else if($scope.question.type == 'U') {
+				}else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
 					if($localstorage.getObject('gps') != null) {
 						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 						var value = $localstorage.getObject('gps')[key];
