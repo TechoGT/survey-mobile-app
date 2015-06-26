@@ -51,3 +51,15 @@ a.item.item-icon-right.positive {
 .font-brown {
 	color: #4B3832;
 }
+
+.font-dark-gray {
+	color: #585858;
+	text-align: center;
+	font-weight: bold;
+	padding-top: 20px;
+}
+
+.font-light-gray {
+	color: #2E2E2E;
+	text-align: center;
+}
