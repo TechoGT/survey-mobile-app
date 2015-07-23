@@ -6,6 +6,15 @@
 	font-size: 200%;
 }
 
+.bigger-22 {
+	color: #61aa7c;
+	font-size: 27px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
 .center {
 	align: center;
 }
@@ -48,6 +57,21 @@ a.item.item-icon-right.positive {
 	background-color: #e5e5e5;
 }
 
+.back-gray{
+	padding: 15px 10px 15px 10px;
+	background-color: #e5e5e5;
+}
+
 .font-brown {
 	color: #4B3832;
+}
+
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.inner-input {
+	border: 0.5px solid #dddddd;
 }

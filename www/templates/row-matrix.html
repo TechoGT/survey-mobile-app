@@ -1,27 +1,24 @@
 <div class="modal">
     <ion-header-bar align-title="center" class="bar-positive">
       <div class="buttons">
-        <button class="button" ng-click="closeModal()">Cancelar</button>
+        <button class="button button-assertive" ng-click="closeModal()">Cancelar</button>
       </div>
-      <h1 class="title">Nuevo Ingreso</h1>
+      <h1 class="title bold">Nuevo Ingreso</h1>
       <div class="buttons">
-        <button class="button" ng-click="add()">Agregar</button>
+        <button class="button button-balanced" ng-click="add()">Agregar</button>
       </div>
     </ion-header-bar>
     <ion-content>
-      <div class="card">
-        <div class="item item-body">
-          {{question.question}}
-        </div>
-        <div class="item item-body">
-          <p>{{row.question}}</p>
-        </div>
+      <div>
+        <p class="font-dark-gray back-gray" align="center">{{question.question}}</p>
+        <hr class="style-two"/>
+        <p class="font-light-gray" align="center">{{row.question}}</p>
       </div>
-      <div class="card">
+      <div class="card" ng-if="question.type == ';' || question.type == ':'">
         <div ng-repeat="field in columns">
-          <div class="item item-divider">
+          <p class="back-gray" align="center">
             {{field.question}}
-          </div>
+          </p>
           <label class="item item-input" ng-if="field.type == 'S'"> <!--SIMPLE TEXT-->
             <input type="text" ng-model="field.answer">
           </label>
@@ -46,9 +43,77 @@
  				  <ion-radio ng-model="field.answer" ng-value="'4'" name="number">4</ion-radio>
  				  <ion-radio ng-model="field.answer" ng-value="'5'" name="number">5</ion-radio>
  				</div>
+         <div class="list" ng-if="field.type == '10'"> <!--1 TO 5 -->
+           <label class="item item-input item-select">
+              <select ng-model="field.answer" convert-to-number>
+               <option value="1" selected>1</option>
+               <option value="2">2</option>
+               <option value="3">3</option>
+               <option value="4">4</option>
+               <option value="5">5</option>
+               <option value="6">6</option>
+               <option value="7">7</option>
+               <option value="8">8</option>
+               <option value="9">9</option>
+               <option value="10">10</option>
+             </select>
+         </label>
+ 				</div>
          <label class="item item-input" ng-if="field.type == 'T'"> <!--TEXT-->
            <input type="text" ng-model="field.answer">
          </label>
+        </div>
+      </div>
+      <div class="card" ng-if="question.type == 'F'">
+        <div class="list"> <!--RADIO OPTIONS-->
+          <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
+            <ion-radio ng-model="row.checked" ng-value="key">{{option.answer}}</ion-radio>
+          </label>
+        </div>
+      </div>
+      <div class="card" ng-if="question.type == 'E'">
+        <div class="list"> <!--RADIO OPTIONS-->
+          <label class="item item-radio">
+            <ion-radio ng-model="row.checked" ng-value="'I'">Aumento</ion-radio>
+            <ion-radio ng-model="row.checked" ng-value="'S'">Mismo</ion-radio>
+            <ion-radio ng-model="row.checked" ng-value="'D'">Disminucion</ion-radio>
+          </label>
+        </div>
+      </div>
+      <div class="card" ng-if="question.type == 'B'">
+        <div class="list"> <!--RADIO OPTIONS-->
+          <label class="item item-radio">
+            <ion-radio ng-model="row.checked" ng-value="'1'" name="number">1</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'2'" name="number">2</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'3'" name="number">3</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'4'" name="number">4</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'5'" name="number">5</ion-radio>
+            <ion-radio ng-model="row.checked" ng-value="'6'" name="number">6</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'7'" name="number">7</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'8'" name="number">8</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'9'" name="number">9</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'10'" name="number">10</ion-radio>
+          </label>
+        </div>
+      </div>
+      <div class="card" ng-if="question.type == 'C'">
+        <div class="list"> <!--RADIO OPTIONS-->
+          <label class="item item-radio">
+            <ion-radio ng-model="row.checked" ng-value="'Y'" name="number">Si</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'N'" name="number">No</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'U'" name="number">No Se</ion-radio>
+          </label>
+        </div>
+      </div>
+      <div class="card" ng-if="question.type == 'A'">
+        <div class="list"> <!--RADIO OPTIONS-->
+          <label class="item item-radio">
+            <ion-radio ng-model="row.checked" ng-value="'1'" name="number">1</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'2'" name="number">2</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'3'" name="number">3</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'4'" name="number">4</ion-radio>
+  				  <ion-radio ng-model="row.checked" ng-value="'5'" name="number">5</ion-radio>
+          </label>
         </div>
       </div>
     </ion-content>

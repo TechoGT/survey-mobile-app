@@ -76,6 +76,15 @@ angular.module('starter.controllers', ['ngCordova'])
 						//no existe
 						if(i == ($localstorage.getObject('surveys').length-1)) {
 							var localList = $localstorage.getObject('surveys');
+
+							// sort questions
+							for (section in data.sections) {
+								data.sections[section].questions = data.sections[section].questions.sort(function (a, b) { return a.question_order - b.question_order; });
+							}
+
+							// sort sections
+							data.sections = data.sections.sort(function (a, b) { return a.group_order - b.group_order; });						
+
 							localList.push(data);
 							$localstorage.setObject('surveys', localList);
 							console.log($localstorage.getObject('surveys'));
@@ -158,21 +167,25 @@ angular.module('starter.controllers', ['ngCordova'])
 			   });
 
 				var ans2 = ans[surveyID];
-				var json = {sid: surveyID, answers: ans2[0], volunteer: $localstorage.getObject('volunteer')};
+				var json = {sid: surveyID, answers: ans2, volunteer: $localstorage.getObject('volunteer')};
 				console.log(json);
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
 		 	.success(function(data, status, headers, config) {
-		 		alertPopup.close();
-		 		$scope.showAlert('Respuestas enviadas correctamente');
-				delete ans[surveyID];
-				if(Object.keys(ans).length === 0 ){
-					$localstorage.removeObject('answers');
-				}else{
-					$localstorage.setObject('answers', ans);
+		 		console.log(data);
+				alertPopup.close();
+				if(data.status == true){
+					$scope.showAlert(data.inserted + ' encuestas enviadas correctamente');
+					delete ans[surveyID];
+					if(Object.keys(ans).length === 0 ){
+						$localstorage.removeObject('answers');
+					}else{
+						$localstorage.setObject('answers', ans);
+					}
+					$localstorage.removeObject(surveyID);
+				}else {
+					$scope.showAlert('Las encuestas no fueron insertadas correctamente, porfavor avoquese con un administrador');
 				}
-				$localstorage.removeObject(surveyID);
-				console.log(status);
 			}).error(function(data, status, headers, config) {
 				alertPopup.close();
 				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');
@@ -355,6 +368,13 @@ angular.module('starter.controllers', ['ngCordova'])
 	$scope.section = context.getSection();
 	$scope.question = context.getQuestion();
 
+	$scope.getTime = function() {
+		var date = new Date();
+		var hours = date.now().getHours();
+		var minutes = date.now().getMinutes();
+		$scope.question.preg = hours + ":" + minutes;
+	}
+
 	$scope.evaluate = function(string) {
 
 		var lsValue = $localstorage.getObject('actual');
@@ -423,7 +443,7 @@ angular.module('starter.controllers', ['ngCordova'])
 								$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 							}
 					}
-				}else if($scope.question.type == 'U') {
+				}else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
 					if($localstorage.getObject('gps') != null) {
 						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 						var value = $localstorage.getObject('gps')[key];
@@ -436,7 +456,7 @@ angular.module('starter.controllers', ['ngCordova'])
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 					}
 				}
-
+				console.log($scope.question);
 		$scope.changeQuestion(1);
 	};
 
@@ -600,13 +620,25 @@ $scope.sectionState = function() {
 	  });
 
 		$scope.add = function() {
-			for(var k in $scope.columns){
-				var tmp = $scope.columns[k];
-				var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
-				var value = tmp.answer;
-				$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
-				$scope.columns[k].answer = "";
+			if($scope.question.type == ';' || $scope.question.type == ':') {
+				for(var k in $scope.columns){
+					var tmp = $scope.columns[k];
+					var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
+					var value = tmp.answer;
+					$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+					$scope.columns[k].answer = "";
+				}
+			}else if($scope.question.type == 'F' || $scope.question.type == 'E' || $scope.question.type == 'B' || $scope.question.type == 'A' || $scope.question.type == 'C'){
+				for(var l in $scope.question.subquestions) {
+					var tmp = $scope.question.subquestions[l];
+					var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title;
+					var value = tmp.checked;
+					if(value != false){
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+					}
+				}
 			}
+
 			$scope.recurrentExecution();
 			$scope.closeModal();
 		};
@@ -614,27 +646,32 @@ $scope.sectionState = function() {
 		$scope.openModal = function(row) {
 			$scope.row = row;
 			$scope.columns = [];
-			for(var q in $scope.question.subquestions){
-				var tmp = $scope.question.subquestions[q];
-				if(tmp.scale_id == 1){
-					var survey = $localstorage.getObject('actual');
-					if(survey != null){
-						if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
-							var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
-							$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][key];
-							if(typeof $scope.actualAnswer === "undefined"){
-								$scope.actualAnswer = "";
-							}
-							if(tmp.type == 'D') {
-								var date = new Date($scope.actualAnswer);
-								tmp.answer = date;
-							}else{
-								tmp.answer = $scope.actualAnswer;
-							}
+			if($scope.question.type == ';' || $scope.question.type == ':') {
+				for(var q in $scope.question.subquestions){
+					var tmp = $scope.question.subquestions[q];
+					if(tmp.scale_id == 1){
+						var survey = $localstorage.getObject('actual');
+						if(survey != null){
+							if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
+								var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
+								$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][key];
+								if(typeof $scope.actualAnswer === "undefined"){
+									$scope.actualAnswer = "";
+								}
+								if(tmp.type == 'D') {
+									var date = new Date($scope.actualAnswer);
+									tmp.answer = date;
+								}else{
+									tmp.answer = $scope.actualAnswer;
+								}
 
+							}
 						}
+						if($scope.question.type == ':') {
+							tmp.type = '10';
+						}
+						$scope.columns.push(tmp);
 					}
-					$scope.columns.push(tmp);
 				}
 			}
 			$scope.modal.show();
