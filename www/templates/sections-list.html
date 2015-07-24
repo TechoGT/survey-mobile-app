@@ -5,7 +5,7 @@
   </div>
   <h1 class="title">Secciones</h1>
   <div class="buttons">
-    <button class="button icon-right ion-ios-plus-empty button-clear " ng-click="newSurvey()"></button>
+    <button class="button button-assertive" ng-click="newSurvey()">Finalizar</button>
   </div>
 </ion-header-bar>
 <ion-header-bar align-title="right" class="bar bar-subheader scroll-content">
@@ -18,7 +18,7 @@
       <i ng-if="progress(section.gid) == -1" class="icon ion-ios-circle-outline"></i>
       <i ng-if="progress(section.gid) == 0" class="icon ion-ios-checkmark-outline"></i>
       <i ng-if="progress(section.gid) == 1" class="icon ion-ios-checkmark"></i>
-        <h2>{{section.group_name}}</h2>
+        <p>{{section.group_name}}</p>
       </div>
       <div class="item item-body">
         <p>{{section.description}}</p>

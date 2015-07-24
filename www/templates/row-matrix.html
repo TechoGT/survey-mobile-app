@@ -1,23 +1,27 @@
 <div class="modal">
     <ion-header-bar align-title="center" class="bar-positive">
       <div class="buttons">
-        <button class="button" ng-click="closeModal()">Cancelar</button>
+        <button class="button button-assertive" ng-click="closeModal()">Cancelar</button>
       </div>
-      <h1 class="title">Nuevo Ingreso</h1>
+      <h1 class="title bold">Nuevo Ingreso</h1>
       <div class="buttons">
-        <button class="button" ng-click="add()">Agregar</button>
+        <button class="button button-balanced" ng-click="add()">Agregar</button>
       </div>
     </ion-header-bar>
     <ion-content>
       <div>
+
         <p class="font-dark-gray">{{question.question}}</p>
         <p class="font-light-gray">{{row.question}}</p>
+        <p class="font-dark-gray back-gray" align="center">{{question.question}}</p>
+        <hr class="style-two"/>
+        <p class="font-light-gray" align="center">{{row.question}}</p>
       </div>
       <div class="card" ng-if="question.type == ';' || question.type == ':'">
         <div ng-repeat="field in columns">
-          <div class="item item-divider">
+          <p class="back-gray" align="center">
             {{field.question}}
-          </div>
+          </p>
           <label class="item item-input" ng-if="field.type == 'S'"> <!--SIMPLE TEXT-->
             <input type="text" ng-model="field.answer">
           </label>
