@@ -30,10 +30,13 @@
     </div>
   </div>
   </ion-content>
-<div class="bar bar-footer item-input-inset">
-  <label class="item-input-wrapper">
-    <i class="icon ion-ios-search placeholder-icon"></i>
-    <input type="search" placeholder="Buscar" ng-model="search_section">
-  </label>
-</div>
+  <ion-footer-bar align-title="left" class="item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios7-search placeholder-icon"></i>
+        <input type="search" placeholder="Buscar" ng-model="search_section">
+      </label>
+      <button class="button button-clear">
+        Cancelar
+      </button>
+    </ion-footer-bar>
 </ion-view>
