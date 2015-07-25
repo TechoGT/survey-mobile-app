@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ngCordova'])
 
-.controller('initController', function($scope, $ionicPopup, $timeout, $state, $http, context, $localstorage) {
+.controller('initController', function($scope, $ionicPopup, $timeout, $state, $http, context, $localstorage, $timeout) {
 	// Aca se sincronizara con el api
 		if($localstorage.getObject('surveys') != null) {
 			$scope.showList = true;
@@ -30,11 +30,9 @@ angular.module('starter.controllers', ['ngCordova'])
 			 }).then(function(res) {
 			 	if (res > 0) {
 			 		context.surveyID = res;
-			   		console.log('Su token es:', context.surveyID);
 			   		$scope.syncronization();
 			 	} else {
 			 		$scope.showAlert('Para iniciar una encuesta <br/> debe ingresar un token valido.');
-			 		console.log('No escribio el token');
 			 	}
 			 });
 	};
@@ -46,7 +44,7 @@ angular.module('starter.controllers', ['ngCordova'])
 	     template: mensaje
 	   });
 	   alertPopup.then(function(res) {
-	     console.log('Gracias');
+
 	   });
 	 };
 
@@ -65,7 +63,6 @@ angular.module('starter.controllers', ['ngCordova'])
 			if(data.status != false) {
 				if($localstorage.getObject('surveys') != null) {
 				for(i = 0; i < $localstorage.getObject('surveys').length; i++){
-					console.log(data.sid + '==' + $localstorage.getObject('surveys')[i].sid);
 					if(data.sid == $localstorage.getObject('surveys')[i].sid){
 						//ya existe
 							//$scope.showAlert('La encuesta ya existe en su dispositivo.');
@@ -83,13 +80,10 @@ angular.module('starter.controllers', ['ngCordova'])
 							}
 
 							// sort sections
-							data.sections = data.sections.sort(function (a, b) { return a.group_order - b.group_order; });						
+							data.sections = data.sections.sort(function (a, b) { return a.group_order - b.group_order; });
 
 							localList.push(data);
 							$localstorage.setObject('surveys', localList);
-							console.log($localstorage.getObject('surveys'));
-						}else{
-							console(i + "==" + ($localstorage.getObject('surveys').length-1));
 						}
 						alertPopup.close();
 						$state.go('survey-volunteer-data');
@@ -101,8 +95,6 @@ angular.module('starter.controllers', ['ngCordova'])
 				$localstorage.setObject('surveys', listt);
 				alertPopup.close();
 				$state.go('survey-volunteer-data');
-				console.log($localstorage.getObject('surveys'));
-				console.log('No habian surveys, se creo y se agrego ' + data);
 			}
 		} else {
 			alertPopup.close();
@@ -114,8 +106,14 @@ angular.module('starter.controllers', ['ngCordova'])
 		   	if (status === 500) {
 		   		alertPopup.close();
 		   		$scope.showAlert('Token invalido, pruebe de nuevo.');
-		   		console.log('Error');
-		   	}
+		   	}else if(status === 0 && data == null) {
+					alertPopup.close();
+					$scope.showAlert('No esta conectado a internet, revise su conexion.');
+				}else {
+					$timeout(function() {
+			     $scope.syncronization.close(); //close the popup after 7 seconds
+					}, 30000);
+				}
 	   });
 	 };
 })
@@ -150,7 +148,6 @@ angular.module('starter.controllers', ['ngCordova'])
 	     template: mensaje
 	   });
 	   alertPopup.then(function(res) {
-	     console.log('Gracias');
 	   });
 	 };
 
@@ -165,7 +162,7 @@ angular.module('starter.controllers', ['ngCordova'])
 			     scope: $scope,
 			     buttons: {}
 			   });
-
+l
 				var ans2 = ans[surveyID];
 				var json = {sid: surveyID, answers: ans2, volunteer: $localstorage.getObject('volunteer')};
 				console.log(json);
@@ -213,7 +210,7 @@ angular.module('starter.controllers', ['ngCordova'])
 			template: mensaje
 		});
 		alertPopup.then(function(res) {
-			console.log('Gracias');
+
 		});
 	};
 
@@ -274,8 +271,6 @@ angular.module('starter.controllers', ['ngCordova'])
 				}
 				answersJSON[$scope.count-1] = answers;
 				surveyAns[context.getSurvey().sid] = answersJSON;
-				console.log($scope.count);
-				console.log(surveyAns);
 		}
 		$localstorage.setObject('answers', surveyAns);
 		$localstorage.removeObject('actual');
