@@ -74,14 +74,6 @@ angular.module('starter.controllers', ['ngCordova'])
 						if(i == ($localstorage.getObject('surveys').length-1)) {
 							var localList = $localstorage.getObject('surveys');
 
-							// sort questions
-							for (section in data.sections) {
-								data.sections[section].questions = data.sections[section].questions.sort(function (a, b) { return a.question_order - b.question_order; });
-							}
-
-							// sort sections
-							data.sections = data.sections.sort(function (a, b) { return a.group_order - b.group_order; });
-
 							localList.push(data);
 							$localstorage.setObject('surveys', localList);
 						}

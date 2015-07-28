@@ -13,8 +13,8 @@
   		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" ng-click="viewSections({{survey}})">
   			<img ng-src="img/techo_logo.png">
   			<h2>{{survey.surveyls_title}}</h2>
-  			<p>{{survey.sid}} - {{surveyls_description}}</p>
-        <i class="icon ion-ios-compose bigger-22"></i>        
+  			<p>{{survey.sid}} | {{survey.surveyls_description}}</p>
+        <i class="icon ion-ios-compose bigger-22"></i>
         <ion-option-button class="button-calm ion-ios-cloud-upload bigger-2" ng-click="sendData({{survey.sid}})"></ion-option-button>
   		</ion-item>
   	</ion-list>

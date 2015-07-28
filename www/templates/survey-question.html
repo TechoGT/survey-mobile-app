@@ -31,21 +31,24 @@
 		       	</div>
 			    <div class="list" ng-if="question.type == 'L'"> <!--RADIO OPTIONS-->
 					  <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
-					    <ion-radio ng-model="question.preg" ng-value="key">{{option.answer}}</ion-radio>
+					    <ion-radio ng-model="question.preg" ng-value="key"><p>{{option.answer}}</p></ion-radio>
 					  </label>
 						<label class="item item-radio" ng-if="question.mandatory == 'N'">
-					    <ion-radio ng-model="question.preg" ng-value="">Sin Respuesta</ion-radio>							
+					    <ion-radio ng-model="question.preg" ng-value="">Sin Respuesta</ion-radio>
 					  </label>
 						<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
 					</div>
-				<div class="list" ng-if="question.type == 'O'"> <!--RADIO OPTIONS WITH COMMENTS-->
-				  <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
-				    <ion-radio ng-model="question.preg" ng-value="key">{{option.answer}}</ion-radio>
-						<input type="text">
-						<hr/>
-				  </label>
-					<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
-				</div>
+					<div class="list" ng-if="question.type == 'O'"> <!--RADIO OPTIONS WITH COMMENTS-->
+						<div ng-repeat="(key, option) in question.answeroptions">
+						  <label class="item item-radio">
+						    <ion-radio ng-model="question.preg" ng-value="key"><p>{{option.answer}}</p></ion-radio>
+						  </label>
+							<label class="item item-input">
+								<input type="text" ng-disabled="option.checked">
+							</label>
+						</div>
+						<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
+					</div>
 				<div class="list" ng-if="question.type == '5'"> <!--1 TO 5 -->
 				  <ion-radio ng-model="question.preg" ng-value="'1'">1</ion-radio>
 				  <ion-radio ng-model="question.preg" ng-value="'2'">2</ion-radio>
@@ -72,24 +75,30 @@
 				</div>
 				<div ng-if="question.type == 'M'">		<!--CHECKBOX-->
 					<div ng-repeat="option in question.subquestions">
-						<ion-checkbox ng-model="option.checked" ng-checked="option.checked"> {{ option.question }}</ion-checkbox>
+						<ion-checkbox ng-model="option.checked" ng-checked="option.checked"> <p>{{ option.question }}</p></ion-checkbox>
 					</div>
 					<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
 				</div>
 				<div  class="list" ng-if="question.type == 'K'"> <!-- List of number inputs-->
 					<label class="item item-input" ng-repeat="option in question.subquestions">
-						{{option.question}} <input type="number" ng-model="option.checked">
+						{{option.question}}
+						<input type="number" ng-model="option.checked">
 					</label>
 				</div>
 				<div ng-if="question.type == 'P'">      <!--CHECKBOX WITH COMMENTS-->
 					<div ng-repeat="option in question.subquestions">
 						<ion-checkbox ng-model="option.checked" ng-checked="option.checked">
-							{{ option.question }}
+							<p>{{ option.question }}</p>
 						</ion-checkbox>
 						<input type="text">
 						<hr/>
 					</div>
 					<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
+				</div>
+				<div ng-if="question.type == 'Q'">      <!--MULTIPLE INPUTS-->
+					<div ng-repeat="option in question.subquestions">
+							{{option.question}} <input type="text" ng-model="option.checked">
+					</div>
 				</div>
 				<div ng-if="question.type == 'S' && question.attributes.location_mapservice == '1'" >      <!--GEOLOCATION -->
 					  <center><div class="item item-icon ion-ios-plus bigger-2" ng-click="getPosition()"></div></center>
