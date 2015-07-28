@@ -49,6 +49,11 @@ i.icon.ion-ios-close.invalid {
 	color:#387ef5;
 }
 
+.item p {
+	white-space: normal;
+}
+
+
 a.item.item-icon-right.positive {
 	color:#387ef5;
 }
@@ -85,4 +90,8 @@ hr.style-two {
 
 .inner-input {
 	border: 0.5px solid #dddddd;
+}
+
+.tiny {
+	font-size: 50%;
 }

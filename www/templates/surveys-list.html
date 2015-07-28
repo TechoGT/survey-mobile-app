@@ -9,21 +9,34 @@
   </div>
 </ion-header-bar>
   <ion-content overflow-scroll = "true">
-  	<ion-list>
-  		<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="survey in surveys | filter: search_survey" type="item-text-wrap" ng-click="viewSections({{survey}})">
-  			<img ng-src="img/techo_logo.png">
-  			<h2>{{survey.surveyls_title}}</h2>
-  			<p>{{survey.sid}} | {{survey.surveyls_description}}</p>
-        <i class="icon ion-ios-compose bigger-22"></i>
-        <ion-option-button class="button-calm ion-ios-cloud-upload bigger-2" ng-click="sendData({{survey.sid}})"></ion-option-button>
-  		</ion-item>
-  	</ion-list>
-
+    <div ng-repeat="survey in surveys | filter: search_survey">
+      <div class="list card">
+        <div class="item item-avatar">
+          <img ng-src="img/techo_logo.png">
+          <p class="bold">{{survey.surveyls_title}}</p>
+        </div>
+        <div class="item item-body">
+          <p>{{survey.sid}} | {{survey.surveyls_description}}</p>
+        </div>
+          <a class="item item-icon-left dark" ng-click="sendData({{survey.sid}})" style="font-size: 12px; padding-left: 45px;">
+            <i class="icon ion-ios-cloud-upload dark" style="font-size: 25px"></i>
+            Enviar
+          </a>
+        <a class="item item-icon-right positive" ng-click="viewSections({{survey}})">
+          <i class="icon ion-ios-arrow-forward"></i>
+          Comenzar encuesta
+        </a>
+      </div>
+    </div>
   </ion-content>
-<div class="bar bar-footer item-input-inset">
-  <label class="item-input-wrapper">
-    <i class="icon ion-ios-search placeholder-icon"></i>
-    <input type="search" placeholder="Buscar" ng-model="search_survey">
-  </label>
-</div>
+
+<ion-footer-bar align-title="left" class="item-input-inset">
+    <label class="item-input-wrapper">
+      <i class="icon ion-ios7-search placeholder-icon"></i>
+      <input type="search" placeholder="Buscar" ng-model="search_survey">
+    </label>
+    <button class="button button-clear">
+      Cancelar
+    </button>
+</ion-footer-bar>
 </ion-view>
