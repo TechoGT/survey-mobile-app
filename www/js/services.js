@@ -21,6 +21,21 @@ angular.module('starter.services',[])
   }
 }])
 
+.factory('$tracker', function() {
+  var trackedString = '';
+  return {
+    get: function() {
+      return trackedString;
+    },
+    set: function(excludes) {
+      trackedString = excludes;
+    },
+    remove: function(value) {
+      trackedString = trackedString.replace(value, "");      
+    }
+  };
+})
+
 .factory('$answers', ['$localstorage', function($localstorage) {
   return {
     addAnswer: function(sid, gid, key, value) {

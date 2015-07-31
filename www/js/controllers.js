@@ -351,9 +351,10 @@ l
 	 };
 })
 
-.controller('questionController', function($scope, $state, context, $answers, $cordovaGeolocation, $ionicPopup, $localstorage, $ionicModal) {
+.controller('questionController', function($scope, $state, context, $answers, $cordovaGeolocation, $ionicPopup, $localstorage, $ionicModal, $tracker) {
 	$scope.section = context.getSection();
 	$scope.question = context.getQuestion();
+
 
 	$scope.getTime = function() {
 		var date = new Date();
@@ -362,66 +363,41 @@ l
 		$scope.question.preg = hours + ":" + minutes;
 	}
 
+
 	$scope.evaluate = function(string) {
 
+
 		var lsValue = $localstorage.getObject('actual');
-		if(lsValue != null){
-			/*****************************************
-			*  Operates And's & Or's
-			******************************************/
+		if(typeof lsValue !== 'undefined' && lsValue != null){
 
-			if(string.indexOf('and') > 0){
-				console.log(string.split('and')[0]+" && "+string.split('and')[1]);
-				return $scope.evaluate(string.split('and')[0]+")") && $scope.evaluate("("+string.split('and')[1]);
-			}else if(string.indexOf('or') > 0){
-				console.log(string.split('or')[0]+" || "+string.split('or')[1]);
-				return $scope.evaluate(string.split('or')[0]+")") || $scope.evaluate("("+string.split('or')[1]);
+			var er = /((\w+)X(\w+)X\w+)/ig;
+			var key = er.exec(string);
+			console.log(key[2]);
+			var newStr = '';
+			var parser = math.parser();
+
+			var survey = lsValue[key[2]];
+			var section = survey[key[3]];
+			var questionValue = section[key[1]];
+
+			if(typeof survey !== 'undefined' && typeof section !== 'undefined' && typeof questionValue !== 'undefined') {
+				newStr = string.replace(key[1], "\"" + questionValue + "\"");
+
+				try{
+					var value = parser.eval(newStr);
+					return value;
+				}	catch(e) {
+					console.log(e);
+					$scope.evaluate(newStr);
+				}
 			}
-
-
-			/*****************************************
-			*  Gets the id's of the evaluated question
-			******************************************/
-
-			var init = (string.indexOf("X") - context.getSurvey().sid.length);
-			var end = string.indexOf(".");
-			var key = string.slice(init, end);
-
-			/*****************************************
-			*  finds the value of the conditioned answer
-			******************************************/
-
-			var positions = key.split("X");
-			var survey = lsValue[positions[0]];
-			var section = survey[positions[1]];
-			var questionValue = section[key];
-
-			/*****************************************
-			*  replace functions to change symbols
-			******************************************/
-			if(typeof questionValue !== "undefined" && typeof survey !== "undefined" && typeof section !== "undefined") {
-				var operator = operator = string.replace(key + ".NAOK", "\"" +questionValue + "\"");
-				var op2 = operator.replace("!(", "not(");
-				console.log(op2);
-
-				/*****************************************
-				*  evaluates de logical expression
-				******************************************/
-				var parser = math.parser();
-				var value = parser.eval(op2);
-				console.log(op2 + " = " + value);
-
-				return value;
-			}else {
-				return false;
-			}
-
+		}else {
+			return false;
 		}
-		return false;
 	};
 
 	$scope.nextQuestion = function() {
-		//console.log($scope.evaluate("!((949485X15X183.NAOK < \"A3\") and !(949485X15X183.NAOK != \"A3\"))"));
+
 				if($scope.question.type == 'M' || $scope.question.type == 'P') {
 					for(i = 0; i< $scope.question.subquestions.length; i++){     // verifica las opciones marcadas
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
@@ -531,6 +507,13 @@ $scope.sectionState = function() {
 			}
 		}
 
+		if($tracker.get() == '' && $scope.question.attributes.exclude_all_others) {
+			var tmp = $scope.question.attributes.exclude_all_others;
+			tmp.replace(';', ' ');
+			$tracker.set(tmp);
+			console.log('Set to tracker: ' + tmp);
+		}
+
 		var survey = $localstorage.getObject('actual');
 		if(survey != null){
 			if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
@@ -553,6 +536,7 @@ $scope.sectionState = function() {
 
 	$scope.$on('$ionicView.enter', function() {
 		$scope.recurrentExecution();
+
 	});
 
 	  $scope.getPosition = function() {
@@ -606,6 +590,15 @@ $scope.sectionState = function() {
 	    $scope.modal = modal;
 	  });
 
+
+		$scope.verify = function(key) {
+			try {
+				return ($tracker.get().indexOf(key) < 0);
+			}catch (e){
+				return false;
+			}
+		};
+
 		$scope.add = function() {
 			if($scope.question.type == ';' || $scope.question.type == ':') {
 				for(var k in $scope.columns){
@@ -621,7 +614,11 @@ $scope.sectionState = function() {
 					var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title;
 					var value = tmp.checked;
 					if(value != false){
-						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+						if($tracker.get().indexOf(value) >= 0) {
+							$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+							$tracker.remove(value);
+							console.log('removed?: ' + $tracker.get());
+						}
 					}
 				}
 			}
@@ -631,6 +628,7 @@ $scope.sectionState = function() {
 		};
 
 		$scope.openModal = function(row) {
+			console.log('initial ' + $tracker.get());
 			$scope.row = row;
 			$scope.columns = [];
 			if($scope.question.type == ';' || $scope.question.type == ':') {
