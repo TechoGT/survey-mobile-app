@@ -33,12 +33,14 @@
 		       	</div>
 			    <div class="list" ng-if="question.type == 'L'"> <!--RADIO OPTIONS-->
 					  <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
-					    <ion-radio ng-model="question.preg" ng-value="key"><p>{{option.answer}}</p></ion-radio>
+					    <ion-radio ng-model="question.preg" ng-value="key" name="radio"><p>{{option.answer}}</p></ion-radio>
 					  </label>
 						<label class="item item-radio" ng-if="question.mandatory == 'N'">
-					    <ion-radio ng-model="question.preg" ng-value="">Sin Respuesta</ion-radio>
+					    <ion-radio ng-model="question.preg" ng-value="" name="radio">Sin Respuesta</ion-radio>
 					  </label>
-						<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
+						<label class="item item-input" ng-if="question.other == 'Y'">
+								<input type="text" ng-model="question.preg" placeholder="Otro">
+						</label>
 					</div>
 					<div class="list" ng-if="question.type == 'O'"> <!--RADIO OPTIONS WITH COMMENTS-->
 						<div ng-repeat="(key, option) in question.answeroptions">
