@@ -356,12 +356,12 @@ l
 	$scope.question = context.getQuestion();
 
 
-	/*$scope.getTime = function() {
+	$scope.getTime = function() {
 		var date = new Date();
-		var hours = date.now().getHours();
-		var minutes = date.now().getMinutes();
+		var hours = date.getHours();
+		var minutes = date.getMinutes();		
 		$scope.question.preg = hours + ":" + minutes;
-	}*/
+	}
 
 
 	$scope.evaluate = function(string) {

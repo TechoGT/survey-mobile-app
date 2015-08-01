@@ -12,18 +12,20 @@
 	  </div>
 	  <div class="item item-body">
 	  	<form class="css-form" novalidate name="answerForm" ng-if="question.type != ';' && question.type != 'F' && question.type != 'E' && question.type != 'B' && question.type != 'A' && question.type != ':' && question.type != 'C'">
+						<div  align="center" ng-if="question.type == 'D' && question.attributes.date_format == 'HH:MM'">
+							<button align="center" class="button icon-left ion-ios-clock-outline positive" type="button" ng-click="getTime()">Obtener Hora ( {{question.preg}} )</button>
+						</div>
             <div class="list card">
             	<label class="item item-input" ng-if="question.type == 'D'"> <!--DATE-->
-								<input type="date" ng-if="question.attributes.date_format != 'yyyy' && question.attributes.date_format != 'HH:MM'" ng-model="question.preg">
-								<input type="number" ng-if="question.attributes.date_format == 'yyyy'" ng-model="question.preg">
-								<button class="button icon-right ion-ios-clock-outline" ng-click="getTime()" ng-if="question.attributes.date_format == 'HH:MM'">Obtener Hora</button>
-		       	</label>
+								<input type="date" ng-model="question.preg" ng-if="question.attributes.date_format != 'yyyy'">
+								<input type="number" ng-model="question.preg" ng-if="question.attributes.date_format == 'yyyy'">
+		       		</label>
 		       	<div class="list" ng-if="question.type == 'G'">	 <!--GENDER-->
 		       		<ion-radio ng-model="question.preg" ng-value="'M'">Hombre</ion-radio>
 							<ion-radio ng-model="question.preg" ng-value="'F'">Mujer</ion-radio>
 		       	</div>
 		    		<label class="item item-input" ng-if="question.type == 'N'">  <!--NUMBER-->
-		       		<input type="number" ng-model="question.preg">
+		       		<input type="number" string-to-number ng-model="question.preg">
 		       	</label>
 		       	<div class="list" ng-if="question.type == 'Y'">		       	<!--YES/NO-->
 		       		<ion-radio ng-model="question.preg" ng-value="'Y'">Si</ion-radio>
