@@ -154,7 +154,7 @@ angular.module('starter.controllers', ['ngCordova'])
 			     scope: $scope,
 			     buttons: {}
 			   });
-l
+
 				var ans2 = ans[surveyID];
 				var json = {sid: surveyID, answers: ans2, volunteer: $localstorage.getObject('volunteer')};
 				console.log(json);
