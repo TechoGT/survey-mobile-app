@@ -6,14 +6,7 @@
   <h1 class="title">{{section.group_name}}</h1>
 
 </ion-header-bar>
-<div class="bar bar-subheader">
-  <h2 class="title"></h2>
-	<div class="buttons">
-    	<button class="button icon-left ion-ios-help-outline button-clear " ng-if="question.help == ''"></button>
-    	<button class="button icon-left ion-ios-help button-clear " ng-if="question.help != ''" ng-click="showAlert(question.help)"></button>
-  	</div>
-</div>
-  <ion-content class="has-subheader" overflow-scroll = "true" has-header="true" has-footer="false" padding="false">
+  <ion-content overflow-scroll = "true" has-header="true" has-footer="true" padding="false">
   	<div class="list card">
 	  <div class="item item-body">
 	    <center><p>{{question.question}} <a ng-if="question.mandatory == 'Y'">*</a></p></center>
@@ -143,7 +136,7 @@
 	  <div class="buttons">
 	    <button class="button icon-left ion-chevron-left button-clear button-positive" ng-click="prevQuestion()">Anterior</button>
 	  </div>
-	  <h1 class="title"></h1>
+	  <h1 class="title"><button class="button icon-left ion-ios-help-empty button-clear button-positive" ng-if="question.help != ''" ng-click="showAlert(question.help)"></button></h1>
 	  <div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'N' && (question.preg == '' || question.preg != '')">
 			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
 	  </div>
