@@ -359,7 +359,7 @@ l
 	$scope.getTime = function() {
 		var date = new Date();
 		var hours = date.getHours();
-		var minutes = date.getMinutes();		
+		var minutes = date.getMinutes();
 		$scope.question.preg = hours + ":" + minutes;
 	}
 
@@ -398,12 +398,17 @@ l
 
 	$scope.nextQuestion = function() {
 
-				if($scope.question.type == 'M' || $scope.question.type == 'P') {
-					for(i = 0; i< $scope.question.subquestions.length; i++){     // verifica las opciones marcadas
+				if($scope.question.type == 'M' || $scope.question.type == 'P' || $scope.question.type == 'Q') {
+					for(var i in $scope.question.subquestions){     // verifica las opciones marcadas
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
-							var value = 'Y';
-							if($scope.question.subquestions[i].checked){
+							if($scope.question.type == 'Q') {
+								var value = $scope.question.subquestions[i].answer;
 								$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+							}else {
+								var value = 'Y';
+								if($scope.question.subquestions[i].checked){
+									$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+								}
 							}
 					}
 				}else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
@@ -419,8 +424,7 @@ l
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 					}
 				}
-				console.log($scope.question);
-		$scope.changeQuestion(1);
+				$scope.changeQuestion(1);
 	};
 
 	$scope.changeQuestion = function (direction) {
@@ -509,15 +513,16 @@ $scope.sectionState = function() {
 
 		if($tracker.get() == '' && $scope.question.attributes.exclude_all_others) {
 			var tmp = $scope.question.attributes.exclude_all_others;
-			tmp.replace(';', ' ');
-			$tracker.set(tmp);
-			console.log('Set to tracker: ' + tmp);
+			var newTmp = tmp.replace(';', ' ');
+			$tracker.set(newTmp);
+			console.log('Set to tracker: ' + newTmp);
 		}
 
 		var survey = $localstorage.getObject('actual');
 		if(survey != null){
+			var key = '';
 			if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
-				var key = context.getSurvey().sid + 'X' + $scope.section.gid + 'X' + $scope.question.id;
+				key = context.getSurvey().sid + 'X' + $scope.section.gid + 'X' + $scope.question.id;
 				$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][key];
 				if(typeof $scope.actualAnswer === "undefined"){
 					$scope.actualAnswer = "";
@@ -525,9 +530,21 @@ $scope.sectionState = function() {
 			}
 
 			if($scope.question.type == 'D') {
-				var date = new Date($scope.actualAnswer);
-				$scope.question.preg = date;
-			}else{
+				if ($scope.question.attributes.date_format == 'yyyy') {
+					$scope.question.preg = $scope.actualAnswer;
+				}else if($scope.question.attributes.date_format == 'HH:MM') {
+					$scope.question.preg = $scope.actualAnswer;
+				}else {
+					var date = new Date($scope.actualAnswer);
+					$scope.question.preg = date;
+				}
+			}else if($scope.question.type == 'Q') {
+					for(var obj in $scope.question.subquestions) {
+						var newKey = key + $scope.question.subquestions[obj].title;
+						$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][newKey];
+						$scope.question.subquestions[obj].answer = $scope.actualAnswer;
+					}
+			}else {
 				$scope.question.preg = $scope.actualAnswer;
 			}
 		}
