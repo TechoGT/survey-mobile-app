@@ -356,6 +356,7 @@ l
 	$scope.question = context.getQuestion();
 
 
+
 	$scope.getTime = function() {
 		var date = new Date();
 		var hours = date.getHours();
@@ -366,35 +367,32 @@ l
 
 	$scope.evaluate = function(string) {
 
-
 		var lsValue = $localstorage.getObject('actual');
 		if(typeof lsValue !== 'undefined' && lsValue != null){
 
 			var er = /((\w+)X(\w+)X\w+)/ig;
-			var key = er.exec(string);
+
+			while((key = er.exec(string)) != null){
 
 			var newStr = '';
 			var parser = math.parser();
-
 			var survey = lsValue[key[2]];
 			var section = survey[key[3]];
 			var questionValue = section[key[1]];
 
-			if(typeof survey !== 'undefined' && typeof section !== 'undefined' && typeof questionValue !== 'undefined') {
-				newStr = string.replace(key[1], "\"" + questionValue + "\"");
-
-				try{
-					var value = parser.eval(newStr);
-					return value;
-				}	catch(e) {
-					console.log(e);
-					$scope.evaluate(newStr);
-				}
+			if(typeof survey !== 'undefined' && typeof section !== 'undefined' && typeof questionValue !== 'undefined'){
+					string = string.replace(key[1], "\"" + questionValue + "\"");
 			}
-		}else {
-			return false;
+			else{
+				return false;
+			}
 		}
-	};
+		var value = parser.eval(string);
+		console.log(value);
+		return value;
+	}
+
+};
 
 	$scope.nextQuestion = function() {
 
@@ -592,7 +590,7 @@ $scope.sectionState = function() {
 
 	  	$scope.showAlert = function(mensaje) {
 		   var alertPopup = $ionicPopup.alert({
-		     title: 'Alerta',
+		     title: 'Información',
 		     template: mensaje
 		   });
 		   alertPopup.then(function(res) {
