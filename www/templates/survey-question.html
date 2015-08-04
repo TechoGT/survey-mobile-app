@@ -88,7 +88,7 @@
 				</div>
 				<div  class="list" ng-if="question.type == 'K'"> <!-- List of number inputs-->
 					<label class="item item-input" ng-repeat="option in question.subquestions">
-						{{option.question}}
+						{{option.question}}:&nbsp;&nbsp;&nbsp;&nbsp;
 						<input type="number" ng-model="option.checked">
 					</label>
 				</div>
