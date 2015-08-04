@@ -380,13 +380,18 @@ angular.module('starter.controllers', ['ngCordova'])
 			var section = survey[key[3]];
 			var questionValue = section[key[1]];
 
-			if(typeof survey !== 'undefined' && typeof section !== 'undefined' && typeof questionValue !== 'undefined'){
+			console.log(questionValue);
+			if(typeof survey !== 'undefined' && typeof section !== 'undefined'){
+					if(typeof questionValue === 'undefined'){
+						questionValue = "undefined";
+					}
 					string = string.replace(key[1], "\"" + questionValue + "\"");
 			}
 			else{
 				return false;
 			}
 		}
+		console.log(string);
 		var value = parser.eval(string);
 		console.log(value);
 		return value;
@@ -640,7 +645,7 @@ $scope.sectionState = function() {
 				}
 			}
 
-			
+
 			$scope.recurrentExecution();
 			$scope.closeModal();
 		};
