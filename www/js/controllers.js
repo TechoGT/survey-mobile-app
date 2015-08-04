@@ -125,6 +125,10 @@ angular.module('starter.controllers', ['ngCordova'])
 		}
 	};
 
+	$scope.getSurveys = function(survey) {
+		return $localstorage.getObject(survey);
+	}
+
 	$scope.viewSections = function (survey) {
 		context.setSurvey(survey);
 		$state.go('sections');
@@ -446,7 +450,6 @@ angular.module('starter.controllers', ['ngCordova'])
 				$state.go('survey-question');
 				$scope.recurrentExecution();
 			}
-
 		}else {
 			$state.go('sections');
 			$scope.sectionState();

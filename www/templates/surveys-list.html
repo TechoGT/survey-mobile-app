@@ -18,9 +18,9 @@
         <div class="item item-body">
           <p>{{survey.sid}} | {{survey.surveyls_description}}</p>
         </div>
-          <a class="item item-icon-left dark" ng-click="sendData({{survey.sid}})" style="font-size: 12px; padding-left: 45px;">
+          <a class="item item-icon-left dark" ng-click="sendData({{survey.sid}})" style="font-size: 12px; padding-left: 45px;" ng-if="getSurveys(survey.sid) > 0">
             <i class="icon ion-ios-cloud-upload dark" style="font-size: 25px"></i>
-            Enviar
+            Enviar {{getSurveys(survey.sid)}} encuesta(s) completa(s).
           </a>
         <a class="item item-icon-right positive" ng-click="viewSections({{survey}})">
           <i class="icon ion-ios-arrow-forward"></i>
