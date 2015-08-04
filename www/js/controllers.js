@@ -620,8 +620,10 @@ $scope.sectionState = function() {
 					var tmp = $scope.columns[k];
 					var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
 					var value = tmp.answer;
-					$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
-					$scope.columns[k].answer = "";
+					if(value != ''){
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+						$scope.columns[k].answer = "";
+					}
 				}
 			}else if($scope.question.type == 'F' || $scope.question.type == 'E' || $scope.question.type == 'B' || $scope.question.type == 'A' || $scope.question.type == 'C'){
 				for(var l in $scope.question.subquestions) {
@@ -638,6 +640,7 @@ $scope.sectionState = function() {
 				}
 			}
 
+			
 			$scope.recurrentExecution();
 			$scope.closeModal();
 		};
