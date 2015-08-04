@@ -405,12 +405,14 @@ angular.module('starter.controllers', ['ngCordova'])
 
 	$scope.nextQuestion = function() {
 
-				if($scope.question.type == 'M' || $scope.question.type == 'P' || $scope.question.type == 'Q') {
+				if($scope.question.type == 'M' || $scope.question.type == 'P' || $scope.question.type == 'Q' || $scope.question.type == 'K') {
 					for(var i in $scope.question.subquestions){     // verifica las opciones marcadas
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
-							if($scope.question.type == 'Q') {
+							if($scope.question.type == 'Q' || $scope.question.type == 'K') {
 								var value = $scope.question.subquestions[i].answer;
-								$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+								if(typeof value !== 'undefined' || value != null) {
+										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+								}
 							}else {
 								var value = 'Y';
 								if($scope.question.subquestions[i].checked){
@@ -544,7 +546,7 @@ $scope.sectionState = function() {
 					var date = new Date($scope.actualAnswer);
 					$scope.question.preg = date;
 				}
-			}else if($scope.question.type == 'Q') {
+			}else if($scope.question.type == 'Q' || $scope.question.type == 'K') {
 					for(var obj in $scope.question.subquestions) {
 						var newKey = key + $scope.question.subquestions[obj].title;
 						$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][newKey];
@@ -554,7 +556,6 @@ $scope.sectionState = function() {
 				$scope.question.preg = $scope.actualAnswer;
 			}
 		}
-		console.log($scope.columnas);
 	}
 
 	$scope.$on('$ionicView.enter', function() {
