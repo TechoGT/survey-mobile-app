@@ -16,7 +16,6 @@ $ git clone https://github.com/TechoGT/survey-mobile-app.git
 ```bash
 $ npm install
 $ bower install
-$ ionic state restore
 ```
 
 - Start the web server (for local testing)

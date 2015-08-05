@@ -4,6 +4,7 @@
     	<button class="button icon-left ion-ios-arrow-back button-clear " ng-click="goBack()"></button>
   	</div>
   <h1 class="title">{{section.group_name}}</h1>
+
 </ion-header-bar>
   <ion-content overflow-scroll = "true" has-header="true" has-footer="false" padding="false">
   	<div class="list card">
@@ -11,17 +12,19 @@
 	    <center><p>{{question.question}} <a ng-if="question.mandatory == 'Y'">*</a></p></center>
 	  </div>
 	  <div class="item item-body">
-	  	<form class="css-form" novalidate name="answerForm" ng-if="question.type != ';'">
+	  	<form class="css-form" novalidate name="answerForm" ng-if="question.type != ';' && question.type != 'F' && question.type != 'E' && question.type != 'B' && question.type != 'A' && question.type != ':' && question.type != 'C'">
             <div class="list card">
             	<label class="item item-input" ng-if="question.type == 'D'"> <!--DATE-->
-		       		<input type="date" ng-model="question.preg">
-		       	</label>
+								<input type="date" ng-model="question.preg" ng-if="question.attributes.date_format != 'yyyy' && question.attributes.date_format != 'HH:MM'">
+								<input type="number" ng-model="question.preg" ng-if="question.attributes.date_format == 'yyyy'">
+								<button align="center" class="button icon-left ion-ios-clock-outline positive" type="button" ng-if="question.attributes.date_format == 'HH:MM'" ng-click="getTime()">Obtener Hora ( {{question.preg}} )</button>
+		       		</label>
 		       	<div class="list" ng-if="question.type == 'G'">	 <!--GENDER-->
 		       		<ion-radio ng-model="question.preg" ng-value="'M'">Hombre</ion-radio>
 							<ion-radio ng-model="question.preg" ng-value="'F'">Mujer</ion-radio>
 		       	</div>
 		    		<label class="item item-input" ng-if="question.type == 'N'">  <!--NUMBER-->
-		       		<input type="number" ng-model="question.preg">
+		       		<input type="number" string-to-number ng-model="question.preg">
 		       	</label>
 		       	<div class="list" ng-if="question.type == 'Y'">		       	<!--YES/NO-->
 		       		<ion-radio ng-model="question.preg" ng-value="'Y'">Si</ion-radio>
@@ -29,17 +32,28 @@
 		       	</div>
 			    <div class="list" ng-if="question.type == 'L'"> <!--RADIO OPTIONS-->
 					  <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
-					    <ion-radio ng-model="question.preg" ng-value="key">{{option.answer}}</ion-radio>
+					    <ion-radio ng-model="question.preg" ng-value="key" name="radio"><p>{{option.answer}}</p></ion-radio>
 					  </label>
+						<label class="item item-radio" ng-if="question.mandatory == 'N'">
+					    <ion-radio ng-model="question.preg" ng-value="" name="radio">Sin Respuesta</ion-radio>
+					  </label>
+						<label class="item item-input" ng-if="question.other == 'Y'">
+								<input type="text" ng-model="question.preg" placeholder="Otro">
+						</label>
 					</div>
-				<div class="list" ng-if="question.type == 'O'"> <!--RADIO OPTIONS WITH COMMENTS-->
-				  <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
-				    <ion-radio ng-model="question.preg" ng-value="key">{{option.answer}}</ion-radio>
-				  </label>
-				  <label class="item item-input">
-				  	<input type="text">
-				  </label>
-				</div>
+					<div class="list" ng-if="question.type == 'O'"> <!--RADIO OPTIONS WITH COMMENTS-->
+						<div ng-repeat="(key, option) in question.answeroptions">
+						  <label class="item item-radio">
+						    <ion-radio ng-model="question.preg" ng-value="key"><p>{{option.answer}}</p></ion-radio>
+						  </label>
+						</div>
+						<label class="item item-input">
+							<input type="text" ng-disabled="option.checked" ng-model="question.preg">
+						</label>
+						<label class="item item-input">
+							<input type="text" placeholder="otro" ng-if="question.other == 'Y'" ng-model="question.preg">
+						</label>
+					</div>
 				<div class="list" ng-if="question.type == '5'"> <!--1 TO 5 -->
 				  <ion-radio ng-model="question.preg" ng-value="'1'">1</ion-radio>
 				  <ion-radio ng-model="question.preg" ng-value="'2'">2</ion-radio>
@@ -65,15 +79,36 @@
 					</label>
 				</div>
 				<div ng-if="question.type == 'M'">		<!--CHECKBOX-->
-					<ion-checkbox ng-repeat="option in question.subquestions" ng-model="option.checked" ng-checked="option.checked"> {{ option.question }}</ion-checkbox>
-				</div>
-				<div ng-if="question.type == 'P'">      <!--CHECKBOX WITH COMMENTS-->
-					<ion-checkbox ng-repeat="option in question.subquestions" ng-model="option.checked" ng-checked="option.checked"> {{ option.question }}</ion-checkbox>
+					<div ng-repeat="option in question.subquestions">
+						<ion-checkbox ng-model="option.checked" ng-checked="option.checked"> <p>{{ option.question }}</p></ion-checkbox>
+					</div>
 					<label class="item item-input">
-						<input type="text">
+						<input type="text" placeholder="Otro" ng-if="question.other == 'Y'">
 					</label>
 				</div>
-				<div ng-if="question.type == 'S' && question.attributes.location_mapservice == '1'" >      <!--GEOLOCATION -->
+				<div  class="list" ng-if="question.type == 'K'"> <!-- List of number inputs-->
+					<label class="item item-input" ng-repeat="option in question.subquestions">
+						{{option.question}}:&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="number" ng-model="option.checked">
+					</label>
+				</div>
+				<div ng-if="question.type == 'P'">      <!--CHECKBOX WITH COMMENTS-->
+					<div ng-repeat="option in question.subquestions">
+						<ion-checkbox ng-model="option.checked" ng-checked="option.checked">
+							<p>{{ option.question }}</p>
+						</ion-checkbox>
+						<input type="text">
+						<hr/>
+					</div>
+					<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
+				</div>
+				<div ng-if="question.type == 'Q'">      <!--MULTIPLE INPUTS-->
+					<label class="item item-input" ng-repeat="option in question.subquestions">
+							{{option.question}}:&nbsp;&nbsp;
+							<input type="text" ng-model="option.answer">
+					</label>
+				</div>
+				<div ng-if="question.type == 'S' && question.attributes.location_mapservice == '1'">      <!--GEOLOCATION -->
 					  <center><div class="item item-icon ion-ios-plus bigger-2" ng-click="getPosition()"></div></center>
 					  <div ng-show="showGpsList" class="item item-text-wrap row" ng-repeat="(index,pos) in gps track by $index">
 					  	<div class="col">{{index}}</div>
@@ -83,7 +118,7 @@
 
 		    </div>
 			</form>
-			<div ng-if="question.type == ';'">
+			<div ng-if="question.type == ';' || question.type == ':' || question.type == 'F' || question.type == 'E' || question.type == 'B' || question.type == 'A' || question.type == 'C'">   <!-- MATRIX -->
 				<ion-list>
 					<ion-item class="item-icon-right" ng-repeat="row in question.subquestions" type="item-text-wrap" ng-click="openModal(row)" ng-if="row.scale_id == 0">
 							<p>{{row.question}}</p>
@@ -101,14 +136,14 @@
 	  <div class="buttons">
 	    <button class="button icon-left ion-chevron-left button-clear button-positive" ng-click="prevQuestion()">Anterior</button>
 	  </div>
-	  <h1 class="title"></h1>
+	  <h1 class="title"><button class="button  icon-left ion-ios-help-empty button-clear button-positive" ng-if="question.help != ''" ng-click="showAlert(question.help)"></button></h1>
 	  <div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'N' && (question.preg == '' || question.preg != '')">
 			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
 	  </div>
-		<div class="buttons" ng-if="question.mandatory == 'Y' && (question.preg == '' && (question.type != 'M' && question.type != 'P' && question.type != ';' && question.attributes.location_mapservice != '1'))">
+		<div class="buttons" ng-if="question.mandatory == 'Y' && (question.preg == '' && (question.subquestions[0].answer == '' && question.type != 'C' && question.type != 'M' && question.type != 'P' && question.type != 'F' && question.type != 'E'  && question.type != 'B' && question.type != 'A' && question.type != ':' && question.type != ';' && question.attributes.location_mapservice != '1'))">
 			<button class="button icon-right ion-chevron-right button-clear">Siguiente</button>
 	  </div>
-		<div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'Y' && (question.preg != '' || (question.type == 'M' || question.type == 'P' || question.type == ';' || question.attributes.location_mapservice == '1'))">
+		<div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'Y' && (question.preg != '' || question.subquestions[0].answer != '' || (question.type == 'C' || question.type == 'M' || question.type == 'P' || question.type == ';' || question.type == 'F' || question.type == 'A' || question.type == ':' || question.type == 'B' || question.type == 'E' || question.attributes.location_mapservice == '1'))">
 			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
 	  </div>
 </ion-footer-bar>

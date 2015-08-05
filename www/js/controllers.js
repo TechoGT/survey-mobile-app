@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['ngCordova'])
 
-.controller('initController', function($scope, $ionicPopup, $timeout, $state, $http, context, $localstorage) {
+.controller('initController', function($scope, $ionicPopup, $timeout, $state, $http, context, $localstorage, $timeout) {
 	// Aca se sincronizara con el api
 		if($localstorage.getObject('surveys') != null) {
 			$scope.showList = true;
@@ -30,11 +30,9 @@ angular.module('starter.controllers', ['ngCordova'])
 			 }).then(function(res) {
 			 	if (res > 0) {
 			 		context.surveyID = res;
-			   		console.log('Su token es:', context.surveyID);
 			   		$scope.syncronization();
 			 	} else {
 			 		$scope.showAlert('Para iniciar una encuesta <br/> debe ingresar un token valido.');
-			 		console.log('No escribio el token');
 			 	}
 			 });
 	};
@@ -46,7 +44,7 @@ angular.module('starter.controllers', ['ngCordova'])
 	     template: mensaje
 	   });
 	   alertPopup.then(function(res) {
-	     console.log('Gracias');
+
 	   });
 	 };
 
@@ -65,7 +63,6 @@ angular.module('starter.controllers', ['ngCordova'])
 			if(data.status != false) {
 				if($localstorage.getObject('surveys') != null) {
 				for(i = 0; i < $localstorage.getObject('surveys').length; i++){
-					console.log(data.sid + '==' + $localstorage.getObject('surveys')[i].sid);
 					if(data.sid == $localstorage.getObject('surveys')[i].sid){
 						//ya existe
 							//$scope.showAlert('La encuesta ya existe en su dispositivo.');
@@ -76,11 +73,9 @@ angular.module('starter.controllers', ['ngCordova'])
 						//no existe
 						if(i == ($localstorage.getObject('surveys').length-1)) {
 							var localList = $localstorage.getObject('surveys');
+
 							localList.push(data);
 							$localstorage.setObject('surveys', localList);
-							console.log($localstorage.getObject('surveys'));
-						}else{
-							console(i + "==" + ($localstorage.getObject('surveys').length-1));
 						}
 						alertPopup.close();
 						$state.go('survey-volunteer-data');
@@ -92,8 +87,6 @@ angular.module('starter.controllers', ['ngCordova'])
 				$localstorage.setObject('surveys', listt);
 				alertPopup.close();
 				$state.go('survey-volunteer-data');
-				console.log($localstorage.getObject('surveys'));
-				console.log('No habian surveys, se creo y se agrego ' + data);
 			}
 		} else {
 			alertPopup.close();
@@ -105,8 +98,14 @@ angular.module('starter.controllers', ['ngCordova'])
 		   	if (status === 500) {
 		   		alertPopup.close();
 		   		$scope.showAlert('Token invalido, pruebe de nuevo.');
-		   		console.log('Error');
-		   	}
+		   	}else if(status === 0 && data == null) {
+					alertPopup.close();
+					$scope.showAlert('No esta conectado a internet, revise su conexion.');
+				}else {
+					$timeout(function() {
+			     $scope.syncronization.close(); //close the popup after 7 seconds
+					}, 30000);
+				}
 	   });
 	 };
 })
@@ -126,6 +125,10 @@ angular.module('starter.controllers', ['ngCordova'])
 		}
 	};
 
+	$scope.getSurveys = function(survey) {
+		return $localstorage.getObject(survey);
+	}
+
 	$scope.viewSections = function (survey) {
 		context.setSurvey(survey);
 		$state.go('sections');
@@ -141,7 +144,6 @@ angular.module('starter.controllers', ['ngCordova'])
 	     template: mensaje
 	   });
 	   alertPopup.then(function(res) {
-	     console.log('Gracias');
 	   });
 	 };
 
@@ -158,21 +160,25 @@ angular.module('starter.controllers', ['ngCordova'])
 			   });
 
 				var ans2 = ans[surveyID];
-				var json = {sid: surveyID, answers: ans2[0], volunteer: $localstorage.getObject('volunteer')};
+				var json = {sid: surveyID, answers: ans2, volunteer: $localstorage.getObject('volunteer')};
 				console.log(json);
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
 		 	.success(function(data, status, headers, config) {
-		 		alertPopup.close();
-		 		$scope.showAlert('Respuestas enviadas correctamente');
-				delete ans[surveyID];
-				if(Object.keys(ans).length === 0 ){
-					$localstorage.removeObject('answers');
-				}else{
-					$localstorage.setObject('answers', ans);
+		 		console.log(data);
+				alertPopup.close();
+				if(data.status == true){
+					$scope.showAlert(data.inserted + ' encuestas enviadas correctamente');
+					delete ans[surveyID];
+					if(Object.keys(ans).length === 0 ){
+						$localstorage.removeObject('answers');
+					}else{
+						$localstorage.setObject('answers', ans);
+					}
+					$localstorage.removeObject(surveyID);
+				}else {
+					$scope.showAlert('Las encuestas no fueron insertadas correctamente, porfavor avoquese con un administrador');
 				}
-				$localstorage.removeObject(surveyID);
-				console.log(status);
 			}).error(function(data, status, headers, config) {
 				alertPopup.close();
 				$scope.showAlert('Esta tarea no puede completarse, <br/> Verifique su conexion a internet. ');
@@ -200,7 +206,7 @@ angular.module('starter.controllers', ['ngCordova'])
 			template: mensaje
 		});
 		alertPopup.then(function(res) {
-			console.log('Gracias');
+
 		});
 	};
 
@@ -261,8 +267,6 @@ angular.module('starter.controllers', ['ngCordova'])
 				}
 				answersJSON[$scope.count-1] = answers;
 				surveyAns[context.getSurvey().sid] = answersJSON;
-				console.log($scope.count);
-				console.log(surveyAns);
 		}
 		$localstorage.setObject('answers', surveyAns);
 		$localstorage.removeObject('actual');
@@ -325,11 +329,11 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('volunteerDataController', function($scope, $state, $ionicPopup, $http, $localstorage, context) {
-	$scope.volunteer = context.getVolunteer();
+	$scope.volunteers = context.getVolunteers();
 
 	$scope.viewSurveys = function(form) {
 		if(form.$valid){
-			$localstorage.setObject('volunteer', $scope.volunteer);
+			$localstorage.setObject('volunteers', $scope.volunteers);
 			$state.go('surveys');
 		}else{
 			$scope.showAlert('Ingrese sus datos, para iniciar la encuesta.');
@@ -351,79 +355,72 @@ angular.module('starter.controllers', ['ngCordova'])
 	 };
 })
 
-.controller('questionController', function($scope, $state, context, $answers, $cordovaGeolocation, $ionicPopup, $localstorage, $ionicModal) {
+.controller('questionController', function($scope, $state, context, $answers, $cordovaGeolocation, $ionicPopup, $localstorage, $ionicModal, $tracker) {
 	$scope.section = context.getSection();
 	$scope.question = context.getQuestion();
+
+
+
+	$scope.getTime = function() {
+		var date = new Date();
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		$scope.question.preg = hours + ":" + minutes;
+	}
+
 
 	$scope.evaluate = function(string) {
 
 		var lsValue = $localstorage.getObject('actual');
-		if(lsValue != null){
-			/*****************************************
-			*  Operates And's & Or's
-			******************************************/
+		if(typeof lsValue !== 'undefined' && lsValue != null){
 
-			if(string.indexOf('and') > 0){
-				console.log(string.split('and')[0]+" && "+string.split('and')[1]);
-				return $scope.evaluate(string.split('and')[0]+")") && $scope.evaluate("("+string.split('and')[1]);
-			}else if(string.indexOf('or') > 0){
-				console.log(string.split('or')[0]+" || "+string.split('or')[1]);
-				return $scope.evaluate(string.split('or')[0]+")") || $scope.evaluate("("+string.split('or')[1]);
+			var er = /((\w+)X(\w+)X\w+)/ig;
+
+			while((key = er.exec(string)) != null){
+
+			var newStr = '';
+			var parser = math.parser();
+			var survey = lsValue[key[2]];
+			var section = survey[key[3]];
+			var questionValue = section[key[1]];
+
+			console.log(questionValue);
+			if(typeof survey !== 'undefined' && typeof section !== 'undefined'){
+					if(typeof questionValue === 'undefined'){
+						questionValue = "undefined";
+					}
+					string = string.replace(key[1], "\"" + questionValue + "\"");
 			}
-
-
-			/*****************************************
-			*  Gets the id's of the evaluated question
-			******************************************/
-
-			var init = (string.indexOf("X") - context.getSurvey().sid.length);
-			var end = string.indexOf(".");
-			var key = string.slice(init, end);
-
-			/*****************************************
-			*  finds the value of the conditioned answer
-			******************************************/
-
-			var positions = key.split("X");
-			var survey = lsValue[positions[0]];
-			var section = survey[positions[1]];
-			var questionValue = section[key];
-
-			/*****************************************
-			*  replace functions to change symbols
-			******************************************/
-			if(typeof questionValue !== "undefined" && typeof survey !== "undefined" && typeof section !== "undefined") {
-				var operator = operator = string.replace(key + ".NAOK", "\"" +questionValue + "\"");
-				var op2 = operator.replace("!(", "not(");
-				console.log(op2);
-
-				/*****************************************
-				*  evaluates de logical expression
-				******************************************/
-				var parser = math.parser();
-				var value = parser.eval(op2);
-				console.log(op2 + " = " + value);
-
-				return value;
-			}else {
+			else{
 				return false;
 			}
-
 		}
-		return false;
-	};
+		console.log(string);
+		var value = parser.eval(string);
+		console.log(value);
+		return value;
+	}
+
+};
 
 	$scope.nextQuestion = function() {
-		//console.log($scope.evaluate("!((949485X15X183.NAOK < \"A3\") and !(949485X15X183.NAOK != \"A3\"))"));
-				if($scope.question.type == 'M' || $scope.question.type == 'P') {
-					for(i = 0; i< $scope.question.subquestions.length; i++){     // verifica las opciones marcadas
+
+				if($scope.question.type == 'M' || $scope.question.type == 'P' || $scope.question.type == 'Q' || $scope.question.type == 'K') {
+					for(var i in $scope.question.subquestions){     // verifica las opciones marcadas
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
-							var value = 'Y';
-							if($scope.question.subquestions[i].checked){
-								$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+							if($scope.question.type == 'Q' || $scope.question.type == 'K') {
+								var value = $scope.question.subquestions[i].answer;
+								if(typeof value !== 'undefined' || value != null) {
+										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+								}
+							}else {
+								var value = 'Y';
+								if($scope.question.subquestions[i].checked){
+									$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+								}
 							}
 					}
-				}else if($scope.question.type == 'U') {
+				}else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
 					if($localstorage.getObject('gps') != null) {
 						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 						var value = $localstorage.getObject('gps')[key];
@@ -436,8 +433,7 @@ angular.module('starter.controllers', ['ngCordova'])
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 					}
 				}
-
-		$scope.changeQuestion(1);
+				$scope.changeQuestion(1);
 	};
 
 	$scope.changeQuestion = function (direction) {
@@ -456,7 +452,6 @@ angular.module('starter.controllers', ['ngCordova'])
 				$state.go('survey-question');
 				$scope.recurrentExecution();
 			}
-
 		}else {
 			$state.go('sections');
 			$scope.sectionState();
@@ -524,10 +519,18 @@ $scope.sectionState = function() {
 			}
 		}
 
+		if($tracker.get() == '' && $scope.question.attributes.exclude_all_others) {
+			var tmp = $scope.question.attributes.exclude_all_others;
+			var newTmp = tmp.replace(';', ' ');
+			$tracker.set(newTmp);
+			console.log('Set to tracker: ' + newTmp);
+		}
+
 		var survey = $localstorage.getObject('actual');
 		if(survey != null){
+			var key = '';
 			if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
-				var key = context.getSurvey().sid + 'X' + $scope.section.gid + 'X' + $scope.question.id;
+				key = context.getSurvey().sid + 'X' + $scope.section.gid + 'X' + $scope.question.id;
 				$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][key];
 				if(typeof $scope.actualAnswer === "undefined"){
 					$scope.actualAnswer = "";
@@ -535,17 +538,29 @@ $scope.sectionState = function() {
 			}
 
 			if($scope.question.type == 'D') {
-				var date = new Date($scope.actualAnswer);
-				$scope.question.preg = date;
-			}else{
+				if ($scope.question.attributes.date_format == 'yyyy') {
+					$scope.question.preg = $scope.actualAnswer;
+				}else if($scope.question.attributes.date_format == 'HH:MM') {
+					$scope.question.preg = $scope.actualAnswer;
+				}else {
+					var date = new Date($scope.actualAnswer);
+					$scope.question.preg = date;
+				}
+			}else if($scope.question.type == 'Q' || $scope.question.type == 'K') {
+					for(var obj in $scope.question.subquestions) {
+						var newKey = key + $scope.question.subquestions[obj].title;
+						$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][newKey];
+						$scope.question.subquestions[obj].answer = $scope.actualAnswer;
+					}
+			}else {
 				$scope.question.preg = $scope.actualAnswer;
 			}
 		}
-		console.log($scope.columnas);
 	}
 
 	$scope.$on('$ionicView.enter', function() {
 		$scope.recurrentExecution();
+
 	});
 
 	  $scope.getPosition = function() {
@@ -584,7 +599,7 @@ $scope.sectionState = function() {
 
 	  	$scope.showAlert = function(mensaje) {
 		   var alertPopup = $ionicPopup.alert({
-		     title: 'Alerta',
+		     title: 'Información',
 		     template: mensaje
 		   });
 		   alertPopup.then(function(res) {
@@ -599,42 +614,76 @@ $scope.sectionState = function() {
 	    $scope.modal = modal;
 	  });
 
-		$scope.add = function() {
-			for(var k in $scope.columns){
-				var tmp = $scope.columns[k];
-				var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
-				var value = tmp.answer;
-				$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
-				$scope.columns[k].answer = "";
+
+		$scope.verify = function(key) {
+			try {
+				return ($tracker.get().indexOf(key) < 0);
+			}catch (e){
+				return false;
 			}
+		};
+
+		$scope.add = function() {
+			if($scope.question.type == ';' || $scope.question.type == ':') {
+				for(var k in $scope.columns){
+					var tmp = $scope.columns[k];
+					var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
+					var value = tmp.answer;
+					if(value != ''){
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+						$scope.columns[k].answer = "";
+					}
+				}
+			}else if($scope.question.type == 'F' || $scope.question.type == 'E' || $scope.question.type == 'B' || $scope.question.type == 'A' || $scope.question.type == 'C'){
+				for(var l in $scope.question.subquestions) {
+					var tmp = $scope.question.subquestions[l];
+					var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title;
+					var value = tmp.checked;
+					if(value != false){
+						if($tracker.get().indexOf(value) >= 0) {
+							$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+							$tracker.remove(value);
+							console.log('removed?: ' + $tracker.get());
+						}
+					}
+				}
+			}
+
+
 			$scope.recurrentExecution();
 			$scope.closeModal();
 		};
 
 		$scope.openModal = function(row) {
+			console.log('initial ' + $tracker.get());
 			$scope.row = row;
 			$scope.columns = [];
-			for(var q in $scope.question.subquestions){
-				var tmp = $scope.question.subquestions[q];
-				if(tmp.scale_id == 1){
-					var survey = $localstorage.getObject('actual');
-					if(survey != null){
-						if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
-							var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
-							$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][key];
-							if(typeof $scope.actualAnswer === "undefined"){
-								$scope.actualAnswer = "";
-							}
-							if(tmp.type == 'D') {
-								var date = new Date($scope.actualAnswer);
-								tmp.answer = date;
-							}else{
-								tmp.answer = $scope.actualAnswer;
-							}
+			if($scope.question.type == ';' || $scope.question.type == ':') {
+				for(var q in $scope.question.subquestions){
+					var tmp = $scope.question.subquestions[q];
+					if(tmp.scale_id == 1){
+						var survey = $localstorage.getObject('actual');
+						if(survey != null){
+							if(typeof survey[context.getSurvey().sid][$scope.section.gid] !== "undefined"){
+								var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title + "_" + tmp.title;
+								$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][key];
+								if(typeof $scope.actualAnswer === "undefined"){
+									$scope.actualAnswer = "";
+								}
+								if(tmp.type == 'D') {
+									var date = new Date($scope.actualAnswer);
+									tmp.answer = date;
+								}else{
+									tmp.answer = $scope.actualAnswer;
+								}
 
+							}
 						}
+						if($scope.question.type == ':') {
+							tmp.type = '10';
+						}
+						$scope.columns.push(tmp);
 					}
-					$scope.columns.push(tmp);
 				}
 			}
 			$scope.modal.show();
