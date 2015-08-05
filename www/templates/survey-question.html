@@ -136,7 +136,14 @@
 	  <div class="buttons">
 	    <button class="button icon-left ion-chevron-left button-clear button-positive" ng-click="prevQuestion()">Anterior</button>
 	  </div>
-	  <h1 class="title"><button class="button  icon-left ion-ios-help-empty button-clear button-positive" ng-if="question.help != ''" ng-click="showAlert(question.help)"></button></h1>
+	  <h1 class="title">
+			<div class="tabs tabs-icon-top positive" ng-if="question.help != ''" ng-click="showAlert(question.help)">
+			  <a class="tab-item positive">
+			    <i class="icon ion-ios-help-empty positive"></i>
+			    Ayuda
+			  </a>
+			</div>
+		</h1>
 	  <div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'N' && (question.preg == '' || question.preg != '')">
 			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
 	  </div>
