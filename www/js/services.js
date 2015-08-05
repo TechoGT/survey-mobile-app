@@ -31,7 +31,7 @@ angular.module('starter.services',[])
       trackedString = excludes;
     },
     remove: function(value) {
-      trackedString = trackedString.replace(value, "");      
+      trackedString = trackedString.replace(value, "");
     }
   };
 })
@@ -71,7 +71,7 @@ angular.module('starter.services',[])
 	var section = {};
 	var question = {};
 	var currentQuestion = 0;
-	var volunteer = {name:'', phone:'', email:''};
+	var volunteers = [{name:'', phone:'', email:''}, {name:'', phone:'', email:''}];
 	surveyID = 0;
 
 	return {
@@ -102,11 +102,11 @@ angular.module('starter.services',[])
 		setCurrentQuestion: function(cq) {
 			currentQuestion = cq;
 		},
-		setVolunteer: function(v) {
-			volunteer = v;
+		setVolunteers: function(v) {
+			volunteers = v;
 		},
-		getVolunteer: function() {
-			return volunteer;
+		getVolunteers: function() {
+			return volunteers;
 		},
 
 		changeQuestion: function(direction) {

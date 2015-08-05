@@ -329,11 +329,11 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('volunteerDataController', function($scope, $state, $ionicPopup, $http, $localstorage, context) {
-	$scope.volunteer = context.getVolunteer();
+	$scope.volunteers = context.getVolunteers();
 
 	$scope.viewSurveys = function(form) {
 		if(form.$valid){
-			$localstorage.setObject('volunteer', $scope.volunteer);
+			$localstorage.setObject('volunteers', $scope.volunteers);
 			$state.go('surveys');
 		}else{
 			$scope.showAlert('Ingrese sus datos, para iniciar la encuesta.');
