@@ -336,7 +336,12 @@ angular.module('starter.controllers', ['ngCordova'])
 })
 
 .controller('volunteerDataController', function($scope, $state, $ionicPopup, $http, $localstorage, context) {
-	$scope.volunteers = context.getVolunteers();
+	var volTemp = $localstorage.getObject('volunteers');
+	if(volTemp != null) {
+		$scope.volunteers = volTemp;
+	}else {
+		$scope.volunteers = context.getVolunteers();
+	}
 
 	$scope.viewSurveys = function(form) {
 		if(form.$valid){
