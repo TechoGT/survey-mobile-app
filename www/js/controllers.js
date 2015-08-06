@@ -190,7 +190,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
 })
 
-.controller('sectionsController', function($scope, context, $state, $localstorage, $ionicPopup){
+.controller('sectionsController', function($scope, context, $state, $localstorage, $ionicPopup, $tracker){
 
   $scope.$on('$ionicView.enter', function() {
 		$scope.sections = context.getSurvey().sections;
@@ -298,6 +298,13 @@ angular.module('starter.controllers', ['ngCordova'])
 		//console.log(section);
 		context.setQuestion(section.questions[0]);
 		context.setSection(section);
+
+
+		if($tracker.get().trim() == '' && section.questions[0].attributes.exclude_all_others) {
+			var tmp = section.questions[0].attributes.exclude_all_others;
+			$tracker.set(tmp);
+			console.log('Set to tracker: ' + tmp);
+		}
 
 		$state.go('survey-question');
 	}
@@ -438,6 +445,12 @@ angular.module('starter.controllers', ['ngCordova'])
 					}
 				}
 				$scope.changeQuestion(1);
+
+								if($tracker.get().trim() == '' && $scope.question.attributes.exclude_all_others) {
+									var tmp = $scope.question.attributes.exclude_all_others;
+									$tracker.set(tmp);
+									console.log('Set to tracker: ' + tmp);
+								}
 	};
 
 	$scope.changeQuestion = function (direction) {
@@ -521,12 +534,6 @@ $scope.sectionState = function() {
 						$scope.columnas.push(obj);
 					}
 			}
-		}
-
-		if($tracker.get().trim() == '' && $scope.question.attributes.exclude_all_others) {
-			var tmp = $scope.question.attributes.exclude_all_others;
-			$tracker.set(tmp);
-			console.log('Set to tracker: ' + tmp);
 		}
 
 		var survey = $localstorage.getObject('actual');
