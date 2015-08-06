@@ -419,9 +419,16 @@ angular.module('starter.controllers', ['ngCordova'])
 				if($scope.question.type == 'M' || $scope.question.type == 'P' || $scope.question.type == 'Q' || $scope.question.type == 'K') {
 					for(var i in $scope.question.subquestions){     // verifica las opciones marcadas
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
-							if($scope.question.type == 'Q' || $scope.question.type == 'K') {
+							if($scope.question.type == 'Q' || $scope.question.type == 'K' || $scope.question.type == 'P') {
 								var value = $scope.question.subquestions[i].answer;
-								if(typeof value !== 'undefined' || value != null) {
+								if($scope.question.type == 'P') {
+									if(value != ''){
+										console.log(value);
+									}else {
+										console.log('VACIO');
+									}
+								}
+								if(typeof value !== 'undefined' && value != null && value != '') {
 										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 								}
 							}else {

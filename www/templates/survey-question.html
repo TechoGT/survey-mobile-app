@@ -94,11 +94,10 @@
 				</div>
 				<div ng-if="question.type == 'P'">      <!--CHECKBOX WITH COMMENTS-->
 					<div ng-repeat="option in question.subquestions">
-						<ion-checkbox ng-model="option.checked" ng-checked="option.checked">
+						<ion-checkbox ng-model="option.checked" ng-checked="option.answer">
 							<p>{{ option.question }}</p>
 						</ion-checkbox>
-						<input type="text">
-						<hr/>
+						<input type="text" ng-model="option.answer">
 					</div>
 					<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
 				</div>
