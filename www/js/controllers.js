@@ -118,7 +118,7 @@ angular.module('starter.controllers', ['ngCordova'])
 	$scope.reloadSurveys = function(){
 		if($localstorage.getObject('answers') == null){
 			$localstorage.removeObject('surveys');
-			$localstorage.removeObject('volunteer');
+			$localstorage.removeObject('volunteers');
 			$state.go('init');
 		}else {
 			$scope.showAlert('Aun no ha enviado las encuestas, envielas antes de borrar los datos de la aplicacion.');
@@ -381,13 +381,17 @@ angular.module('starter.controllers', ['ngCordova'])
 			var newStr = '';
 			var parser = math.parser();
 			var survey = lsValue[key[2]];
-			var section = survey[key[3]];
-			var questionValue = section[key[1]];
+			if(typeof survey !== 'undefined') {
+				var section = survey[key[3]];
+				if(typeof section !== 'undefined') {
+					var questionValue = section[key[1]];
+				}
+			}
 
 			console.log(questionValue);
 			if(typeof survey !== 'undefined' && typeof section !== 'undefined'){
 					if(typeof questionValue === 'undefined'){
-						questionValue = "undefined";
+						questionValue = "-1";
 					}
 					string = string.replace(key[1], "\"" + questionValue + "\"");
 			}
@@ -519,11 +523,10 @@ $scope.sectionState = function() {
 			}
 		}
 
-		if($tracker.get() == '' && $scope.question.attributes.exclude_all_others) {
+		if($tracker.get().trim() == '' && $scope.question.attributes.exclude_all_others) {
 			var tmp = $scope.question.attributes.exclude_all_others;
-			var newTmp = tmp.replace(';', ' ');
-			$tracker.set(newTmp);
-			console.log('Set to tracker: ' + newTmp);
+			$tracker.set(tmp);
+			console.log('Set to tracker: ' + tmp);
 		}
 
 		var survey = $localstorage.getObject('actual');
