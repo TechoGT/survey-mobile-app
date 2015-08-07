@@ -300,7 +300,7 @@ angular.module('starter.controllers', ['ngCordova'])
 		context.setSection(section);
 
 
-		if($tracker.get().trim() == '' && section.questions[0].attributes.exclude_all_others) {
+		if(section.questions[0].attributes.exclude_all_others) {
 			var tmp = section.questions[0].attributes.exclude_all_others;
 			$tracker.set(tmp);
 			console.log('Set to tracker: ' + tmp);
@@ -429,6 +429,13 @@ angular.module('starter.controllers', ['ngCordova'])
 								if($scope.question.subquestions[i].checked){
 									$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 								}
+								if($scope.question.other == 'Y') {
+									var newKey = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + 'other';
+									var value = $scope.question.preg;
+									if(typeof value !== 'undefined' && value != null && value != '') {
+										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+									}
+								}
 							}
 					}
 				}else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
@@ -446,7 +453,7 @@ angular.module('starter.controllers', ['ngCordova'])
 				}
 				$scope.changeQuestion(1);
 
-								if($tracker.get().trim() == '' && $scope.question.attributes.exclude_all_others) {
+								if($scope.question.attributes.exclude_all_others) {
 									var tmp = $scope.question.attributes.exclude_all_others;
 									$tracker.set(tmp);
 									console.log('Set to tracker: ' + tmp);

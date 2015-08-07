@@ -23,7 +23,7 @@
 							</label>
 
 							<label class="item item-input" ng-if="question.type == 'D' && (question.attributes.date_format == 'yyyy')">
-								<input type="number" ng-model="question.preg" min="1950" placeholder="1950">								
+								<input type="number" ng-model="question.preg" min="1950" placeholder="1950">
 							</label>
 
 		       	<div class="list" ng-if="question.type == 'G'">	 <!--GENDER-->
@@ -90,7 +90,7 @@
 						<ion-checkbox ng-model="option.checked" ng-checked="option.checked"> <p>{{ option.question }}</p></ion-checkbox>
 					</div>
 					<label class="item item-input">
-						<input type="text" placeholder="Otro" ng-if="question.other == 'Y'">
+						<input type="text" placeholder="Otro" ng-if="question.other == 'Y'" ng-model="question.preg">
 					</label>
 				</div>
 				<div  class="list" ng-if="question.type == 'K'"> <!-- List of number inputs-->
