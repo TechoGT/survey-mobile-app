@@ -371,8 +371,6 @@ angular.module('starter.controllers', ['ngCordova'])
 	$scope.section = context.getSection();
 	$scope.question = context.getQuestion();
 
-
-
 	$scope.getTime = function() {
 		var date = new Date();
 		var hours = date.getHours();
@@ -400,7 +398,6 @@ angular.module('starter.controllers', ['ngCordova'])
 				}
 			}
 
-			console.log(questionValue);
 			if(typeof survey !== 'undefined' && typeof section !== 'undefined'){
 					if(typeof questionValue === 'undefined'){
 						questionValue = "-1";
@@ -411,9 +408,7 @@ angular.module('starter.controllers', ['ngCordova'])
 				return false;
 			}
 		}
-		console.log(string);
 		var value = parser.eval(string);
-		console.log(value);
 		return value;
 	}
 
@@ -426,13 +421,6 @@ angular.module('starter.controllers', ['ngCordova'])
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
 							if($scope.question.type == 'Q' || $scope.question.type == 'K' || $scope.question.type == 'P') {
 								var value = $scope.question.subquestions[i].answer;
-								if($scope.question.type == 'P') {
-									if(value != ''){
-										console.log(value);
-									}else {
-										console.log('VACIO');
-									}
-								}
 								if(typeof value !== 'undefined' && value != null && value != '') {
 										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 								}

@@ -6,7 +6,7 @@
   <h1 class="title">{{section.group_name}}</h1>
 
 </ion-header-bar>
-  <ion-content overflow-scroll = "true" has-header="true" has-footer="false" padding="false">
+  <ion-content overflow-scroll = "true" has-header="true" has-footer="true" padding="false">
   	<div class="list card">
 	  <div class="item item-body">
 	    <center><p>{{question.question}} <a ng-if="question.mandatory == 'Y'">*</a></p></center>
@@ -14,11 +14,18 @@
 	  <div class="item item-body">
 	  	<form class="css-form" novalidate name="answerForm" ng-if="question.type != ';' && question.type != 'F' && question.type != 'E' && question.type != 'B' && question.type != 'A' && question.type != ':' && question.type != 'C'">
             <div class="list card">
-            	<label class="item item-input" ng-if="question.type == 'D'"> <!--DATE-->
-								<input type="date" ng-model="question.preg" ng-if="question.attributes.date_format != 'yyyy' && question.attributes.date_format != 'HH:MM'">
-								<input type="number" ng-model="question.preg" ng-if="question.attributes.date_format == 'yyyy'">
-								<button align="center" class="button icon-left ion-ios-clock-outline positive" type="button" ng-if="question.attributes.date_format == 'HH:MM'" ng-click="getTime()">Obtener Hora ( {{question.preg}} )</button>
+            	<label class="item item-input" ng-if="question.type == 'D' && (question.attributes.date_format != 'yyyy' && question.attributes.date_format != 'HH:MM')"> <!--DATE-->
+								<input type="date" ng-model="question.preg">
 		       		</label>
+
+							<label class="item item-input" ng-if="question.type == 'D' && question.attributes.date_format == 'HH:MM'">
+								<button align="center" class="button icon-left ion-ios-clock-outline positive" type="button" ng-click="getTime()">Obtener Hora ( {{question.preg}} )</button>
+							</label>
+
+							<label class="item item-input" ng-if="question.type == 'D' && (question.attributes.date_format == 'yyyy')">
+								<input type="number" ng-model="question.preg" min="1950" placeholder="1950">								
+							</label>
+
 		       	<div class="list" ng-if="question.type == 'G'">	 <!--GENDER-->
 		       		<ion-radio ng-model="question.preg" ng-value="'M'">Hombre</ion-radio>
 							<ion-radio ng-model="question.preg" ng-value="'F'">Mujer</ion-radio>
