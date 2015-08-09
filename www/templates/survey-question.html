@@ -41,9 +41,6 @@
 					  <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
 					    <ion-radio ng-model="question.preg" ng-value="key" name="radio"><p>{{option.answer}}</p></ion-radio>
 					  </label>
-						<label class="item item-radio" ng-if="question.mandatory == 'N'">
-					    <ion-radio ng-model="question.preg" ng-value="" name="radio">Sin Respuesta</ion-radio>
-					  </label>
 						<label class="item item-input" ng-if="question.other == 'Y'">
 								<input type="text" ng-model="question.preg" placeholder="Otro">
 						</label>
@@ -96,7 +93,7 @@
 				<div  class="list" ng-if="question.type == 'K'"> <!-- List of number inputs-->
 					<label class="item item-input" ng-repeat="option in question.subquestions">
 						{{option.question}}:&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="number" ng-model="option.checked">
+						<input type="number" ng-model="option.answer">
 					</label>
 				</div>
 				<div ng-if="question.type == 'P'">      <!--CHECKBOX WITH COMMENTS-->
@@ -150,13 +147,10 @@
 			  </a>
 			</div>
 		</h1>
-	  <div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'N' && (question.preg == '' || question.preg != '')">
-			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
-	  </div>
-		<div class="buttons" ng-if="question.mandatory == 'Y' && (question.preg == '' && (question.subquestions[0].answer == '' && question.type != 'C' && question.type != 'M' && question.type != 'P' && question.type != 'F' && question.type != 'E'  && question.type != 'B' && question.type != 'A' && question.type != ':' && question.type != ';' && question.attributes.location_mapservice != '1'))">
+		<div class="buttons" ng-if="!(validate())">
 			<button class="button icon-right ion-chevron-right button-clear">Siguiente</button>
 	  </div>
-		<div class="buttons" ng-click="nextQuestion()" ng-if="question.mandatory == 'Y' && (question.preg != '' || question.subquestions[0].answer != '' || (question.type == 'C' || question.type == 'M' || question.type == 'P' || question.type == ';' || question.type == 'F' || question.type == 'A' || question.type == ':' || question.type == 'B' || question.type == 'E' || question.attributes.location_mapservice == '1'))">
+		<div class="buttons" ng-click="nextQuestion()" ng-if="validate()">
 			<button class="button icon-right ion-chevron-right button-clear button-positive">Siguiente</button>
 	  </div>
 </ion-footer-bar>
