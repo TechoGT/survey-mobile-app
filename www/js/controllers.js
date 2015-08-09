@@ -597,6 +597,24 @@ $scope.sectionState = function() {
 					var date = new Date($scope.actualAnswer);
 					$scope.question.preg = date;
 				}
+			}else if($scope.question.type == 'M') {
+				for(var i in $scope.question.subquestions) {
+					var newKey = key + $scope.question.subquestions[i].title;
+					$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][newKey];
+					if($scope.actualAnswer == 'Y') {
+						$scope.actualAnswer = true;
+					}else {
+						$scope.actualAnswer = false;
+					}
+					$scope.question.subquestions[i].checked = $scope.actualAnswer;
+				}
+				if($scope.question.other == 'Y') {
+					var otherKey = key + 'other';
+					var other = survey[context.getSurvey().sid][$scope.section.gid][otherKey];
+					if(other != '' && typeof other != 'undefined') {
+						$scope.question.preg = other;
+					}
+				}
 			}else if($scope.question.type == 'Q' || $scope.question.type == 'K') {
 					for(var obj in $scope.question.subquestions) {
 						var newKey = key + $scope.question.subquestions[obj].title;
