@@ -600,19 +600,31 @@ $scope.sectionState = function() {
 			}else if($scope.question.type == 'M') {
 				for(var i in $scope.question.subquestions) {
 					var newKey = key + $scope.question.subquestions[i].title;
-					$scope.actualAnswer = survey[context.getSurvey().sid][$scope.section.gid][newKey];
-					if($scope.actualAnswer == 'Y') {
-						$scope.actualAnswer = true;
-					}else {
-						$scope.actualAnswer = false;
+					var sv = survey[context.getSurvey().sid];
+					if(typeof sv !== 'undefined') {
+						var sect = sv[$scope.section.gid];
+							if(typeof sect !== 'undefined') {
+								$scope.actualAnswer = sect[newKey];
+								if($scope.actualAnswer == 'Y') {
+									$scope.actualAnswer = true;
+								}else {
+									$scope.actualAnswer = false;
+								}
+								$scope.question.subquestions[i].checked = $scope.actualAnswer;
+							}
 					}
-					$scope.question.subquestions[i].checked = $scope.actualAnswer;
 				}
 				if($scope.question.other == 'Y') {
 					var otherKey = key + 'other';
-					var other = survey[context.getSurvey().sid][$scope.section.gid][otherKey];
-					if(other != '' && typeof other != 'undefined') {
-						$scope.question.preg = other;
+					var sv = survey[context.getSurvey().sid];
+					if(typeof sv !== 'undefined') {
+						var sect = sv[$scope.section.gid];
+						if(typeof sect !== 'undefined') {
+							var other = sect[otherKey];
+							if(other != '' && typeof other != 'undefined') {
+								$scope.question.preg = other;
+							}
+						}
 					}
 				}
 			}else if($scope.question.type == 'Q' || $scope.question.type == 'K') {
