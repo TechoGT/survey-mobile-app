@@ -465,10 +465,16 @@ angular.module('starter.controllers', ['ngCordova'])
 					for(var i in $scope.question.subquestions){     // verifica las opciones marcadas
 							var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + $scope.question.subquestions[i].title;
 
-							if($scope.question.type == 'Q' || $scope.question.type == 'K' || $scope.question.type == 'P') {
+							if($scope.question.type == 'Q' || $scope.question.type == 'K') {
 								var value = $scope.question.subquestions[i].answer;
 								if(typeof value !== 'undefined' && value != null && value != '') {
 										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+								}
+							}else if($scope.question.type == 'P') {
+								var newKey = key + 'comment';
+								var value = $scope.question.subquestions[i].answer;
+								if(typeof value !== 'undefined' && value != null && value != '') {
+										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, newKey, value);
 								}
 							}else {
 								var value = 'Y';
