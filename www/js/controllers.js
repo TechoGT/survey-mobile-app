@@ -397,8 +397,10 @@ angular.module('starter.controllers', ['ngCordova'])
 						}
 					}
 				}else if($scope.question.type == 'F') {
-					if($tracker.get().trim() == '') {
-						return true;
+					for(var i in $scope.question.subquestions) {
+						if($scope.question.subquestions[i].checked != false) {							
+							return true;
+						}
 					}
 				}else if($scope.question.type == 'Q' ||
 								 $scope.question.type == 'K' ||
