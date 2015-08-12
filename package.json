@@ -1,7 +1,7 @@
 {
   "name": "techosurveymobile",
-  "version": "1.0.0",
-  "description": "techoSurveyMobile: An Ionic project",
+  "version": "1.1.0",
+  "description": "Release for the pilot test.",
   "repository": {
     "type": "git",
     "url": "https://github.com/TechoGT/survey-mobile-app.git"
