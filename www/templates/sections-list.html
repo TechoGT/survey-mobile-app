@@ -11,8 +11,8 @@
 <ion-header-bar align-title="right" class="bar bar-subheader scroll-content">
   <center><div class="font-brown">{{count}} encuestas Llenas. </div></center>
 </ion-header-bar>
-  <ion-content overflow-scroll = "true">
-  <div ng-repeat="section in sections | filter: search_section">
+  <ion-content overflow-scroll = "true" has-header="true" has-footer="true">
+  <div ng-repeat="section in sections | filter: search_section" ng-if="section.type != 'volunteers'">
     <div class="list card">
       <div class="item item-icon-left stado">
       <i ng-if="progress(section.gid) == -1" class="icon ion-ios-circle-outline"></i>
