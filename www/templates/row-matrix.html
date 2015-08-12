@@ -33,8 +33,8 @@
             <input type="number" ng-model="field.answer">
          </label>
          <div class="list" ng-if="field.type == 'Y'">		       	<!--YES/NO-->
-           <ion-radio ng-model="field.answer" ng-value="'Y'" name="yesno">Si</ion-radio>
-          <ion-radio ng-model="field.answer" ng-value="'N'" name="yesno">No</ion-radio>
+           <ion-radio ng-model="field.answer" ng-value="'Y'" name="{{field.id}}">Si</ion-radio>
+          <ion-radio ng-model="field.answer" ng-value="'N'" name="{{field.id}}">No</ion-radio>
          </div>
          <div class="list" ng-if="field.type == '5'"> <!--1 TO 5 -->
  				  <ion-radio ng-model="field.answer" ng-value="'1'" name="number">1</ion-radio>
