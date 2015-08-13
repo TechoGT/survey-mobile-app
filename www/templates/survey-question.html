@@ -50,13 +50,10 @@
 						  <label class="item item-radio">
 						    <ion-radio ng-model="question.preg" ng-value="key"><p>{{option.answer}}</p></ion-radio>
 						  </label>
+							<label class="item item-input">
+								<input type="text" ng-disabled="option.checked" ng-model="option.scale_id" placeholder="Comentario">
+							</label>
 						</div>
-						<label class="item item-input">
-							<input type="text" ng-disabled="option.checked" ng-model="question.preg">
-						</label>
-						<label class="item item-input">
-							<input type="text" placeholder="otro" ng-if="question.other == 'Y'" ng-model="question.preg">
-						</label>
 					</div>
 				<div class="list" ng-if="question.type == '5'"> <!--1 TO 5 -->
 				  <ion-radio ng-model="question.preg" ng-value="'1'">1</ion-radio>
@@ -98,12 +95,13 @@
 				</div>
 				<div ng-if="question.type == 'P'">      <!--CHECKBOX WITH COMMENTS-->
 					<div ng-repeat="option in question.subquestions">
-						<ion-checkbox ng-model="option.checked" ng-checked="option.answer">
+						<ion-checkbox ng-model="option.checked" ng-checked="option.checked">
 							<p>{{ option.question }}</p>
 						</ion-checkbox>
-						<input type="text" ng-model="option.answer">
+						<label class="item item-input">
+							<input type="text" ng-model="option.answer">
+						</label>
 					</div>
-					<input type="text" placeholder="otro" ng-if="question.other == 'Y'">
 				</div>
 				<div ng-if="question.type == 'Q'">      <!--MULTIPLE INPUTS-->
 					<label class="item item-input" ng-repeat="option in question.subquestions">

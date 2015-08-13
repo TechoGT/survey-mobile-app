@@ -214,6 +214,7 @@ angular.module('starter.controllers', ['ngCordova'])
 		var survey = $localstorage.getObject('actual');
 		if(survey != null) {
 				for(i = 0; i < $scope.sections.length; i++){
+					var gid = $scope.sections[i].gid;
 					if(typeof survey[context.getSurvey().sid][gid] !== "undefined"){
 						if(survey[context.getSurvey().sid][gid]['completed'] == false){
 							$scope.showAlert('Existen una o mas secciones incompletas, por favor ingrese todos los datos obligatorios.');
@@ -474,8 +475,13 @@ angular.module('starter.controllers', ['ngCordova'])
 							}else if($scope.question.type == 'P') {
 								var newKey = key + 'comment';
 								var value = $scope.question.subquestions[i].answer;
+								var value2 = $scope.question.subquestions[i].checked;
+								console.log(value2);
 								if(typeof value !== 'undefined' && value != null && value != '') {
+									if(value2){
+										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, 'Y');
 										$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, newKey, value);
+									}
 								}
 							}else {
 								var value = 'Y';
@@ -495,6 +501,31 @@ angular.module('starter.controllers', ['ngCordova'])
 					if($localstorage.getObject('gps') != null) {
 						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 						var value = $localstorage.getObject('gps')[key];
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+					}
+				}else if($scope.question.type == 'L' && $scope.question.other == 'Y') {
+						var key1 = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+						var key2 = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + 'other';
+						if($scope.question.preg != '' && $scope.question.answeroptions[$scope.question.preg] == null) {
+							$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key1, '-oth-');
+							$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key2, $scope.question.preg);
+						}else if($scope.question.preg != '' && $scope.question.answeroptions[$scope.question.preg] != null) {
+							$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key1, $scope.question.preg);
+						}
+				}else if($scope.question.type == 'O') {
+					var key1 = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+					var key2 = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id + 'comment';
+					if($scope.question.preg != '') {
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key1, $scope.question.preg);
+						var comment = $scope.question.answeroptions[$scope.question.preg].scale_id;
+						if (comment != '0' && comment != '' && comment != '1') {
+							$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key2, comment);
+						}
+					}
+				}else if($scope.question.type == 'D' && $scope.question.attributes.date_format == 'yyyy') {
+					if($scope.question.preg != '' && $scope.question.preg != null && typeof $scope.question.preg !== 'undefined') {
+						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+						var value = $scope.question.preg + '-01-01 00:00:00';
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 					}
 				}else{
