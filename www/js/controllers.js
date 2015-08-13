@@ -398,7 +398,7 @@ angular.module('starter.controllers', ['ngCordova'])
 					}
 				}else if($scope.question.type == 'F') {
 					for(var i in $scope.question.subquestions) {
-						if($scope.question.subquestions[i].checked != false) {							
+						if($scope.question.subquestions[i].checked != false) {
 							return true;
 						}
 					}
@@ -730,8 +730,8 @@ $scope.sectionState = function() {
 					var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title;
 					var value = tmp.checked;
 					if(value != false){
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 						if($tracker.get().indexOf(value) >= 0) {
-							$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 							$tracker.remove(value);
 						}
 					}
