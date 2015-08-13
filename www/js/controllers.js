@@ -14,7 +14,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
 	$scope.viewSurveys = function() {
 		if($localstorage.getObject('surveys') != null){
-			$state.go('survey-volunteer-data');
+			$state.go('surveys');
 		}else {
 			$scope.showAlert('No tiene encuestas descargadas, primero descargue una encuesta.');
 		}
@@ -67,7 +67,7 @@ angular.module('starter.controllers', ['ngCordova'])
 						//ya existe
 							//$scope.showAlert('La encuesta ya existe en su dispositivo.');
 							alertPopup.close();
-							$state.go('survey-volunteer-data');
+							$state.go('surveys');
 							break;
 					}else{
 						//no existe
@@ -78,7 +78,7 @@ angular.module('starter.controllers', ['ngCordova'])
 							$localstorage.setObject('surveys', localList);
 						}
 						alertPopup.close();
-						$state.go('survey-volunteer-data');
+						$state.go('surveys');
 					}
 				}
 			}else {
@@ -86,7 +86,7 @@ angular.module('starter.controllers', ['ngCordova'])
 				listt.push(data);
 				$localstorage.setObject('surveys', listt);
 				alertPopup.close();
-				$state.go('survey-volunteer-data');
+				$state.go('surveys');
 			}
 		} else {
 			alertPopup.close();
@@ -135,7 +135,7 @@ angular.module('starter.controllers', ['ngCordova'])
 	};
 
 	$scope.goBack = function() {
-		$state.go('survey-volunteer-data');
+		$state.go('init');
 	};
 
 	$scope.showAlert = function(mensaje) {
@@ -160,7 +160,7 @@ angular.module('starter.controllers', ['ngCordova'])
 			   });
 
 				var ans2 = ans[surveyID];
-				var json = {sid: surveyID, answers: ans2, volunteer: $localstorage.getObject('volunteer')};
+				var json = {sid: surveyID, answers: ans2};
 				console.log(json);
 
 		 	$http.post('http://104.236.99.15/api/v1/sync/response/', json)
@@ -214,7 +214,6 @@ angular.module('starter.controllers', ['ngCordova'])
 		var survey = $localstorage.getObject('actual');
 		if(survey != null) {
 				for(i = 0; i < $scope.sections.length; i++){
-					var gid = $scope.sections[i].gid;
 					if(typeof survey[context.getSurvey().sid][gid] !== "undefined"){
 						if(survey[context.getSurvey().sid][gid]['completed'] == false){
 							$scope.showAlert('Existen una o mas secciones incompletas, por favor ingrese todos los datos obligatorios.');
@@ -398,7 +397,7 @@ angular.module('starter.controllers', ['ngCordova'])
 					}
 				}else if($scope.question.type == 'F') {
 					for(var i in $scope.question.subquestions) {
-						if($scope.question.subquestions[i].checked != false) {							
+						if($scope.question.subquestions[i].checked != false) {
 							return true;
 						}
 					}
@@ -499,9 +498,10 @@ angular.module('starter.controllers', ['ngCordova'])
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 					}
 				}else{
-					if($scope.question.preg != ''){ // answered question
+					if($scope.question.preg != '' && $scope.question.preg != null && typeof $scope.question.preg !== 'undefined'){ // answered question
 						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 						var value = $scope.question.preg;
+						// para envio se necesita que el Date lleve comillas dobles.
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 					}
 				}
@@ -730,8 +730,8 @@ $scope.sectionState = function() {
 					var key = context.getSurvey().sid + "X" + context.getSection().gid + "X" + $scope.question.id + $scope.row.title;
 					var value = tmp.checked;
 					if(value != false){
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 						if($tracker.get().indexOf(value) >= 0) {
-							$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 							$tracker.remove(value);
 						}
 					}

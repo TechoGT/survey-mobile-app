@@ -13,7 +13,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.geolocation.then(success, error);
     }
-    
+
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
@@ -41,11 +41,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('sections', {
     url: '/surveys/sections',
     templateUrl: 'templates/sections-list.html'
-  })
-
-  .state('survey-volunteer-data', {
-    url: '/surveys/data',
-    templateUrl: 'templates/survey-volunteer-data.html'
   })
 
   .state('survey-question', {

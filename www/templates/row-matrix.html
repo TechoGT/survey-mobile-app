@@ -67,7 +67,7 @@
       <div class="card" ng-if="question.type == 'F'">
         <div class="list"> <!--RADIO OPTIONS-->
           <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
-            <ion-radio ng-model="row.checked" ng-value="key" name="group" ng-disabled="verify(key)">{{option.answer}}</ion-radio>
+            <ion-radio ng-model="row.checked" ng-value="key" name="group" ng-disabled="verify(key) && question.attributes.exclude_all_others">{{option.answer}}</ion-radio>
           </label>
         </div>
       </div>
