@@ -412,6 +412,10 @@ angular.module('starter.controllers', ['ngCordova'])
 							return true;
 						}
 					}
+				}else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
+					if($localstorage.getObject('gps')){
+						return true;
+					}
 				}else if($scope.question.type == 'M') {
 					for(j in $scope.question.subquestions) {
 						var checked = $scope.question.subquestions[j].checked;
