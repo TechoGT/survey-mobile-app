@@ -25,7 +25,7 @@
 						  </a>
 
 							<label class="item item-input" ng-if="question.type == 'D' && (question.attributes.date_format == 'yyyy')">
-								<input type="number" ng-model="question.preg" placeholder="Ej.: 1950">
+								<input type="date" ng-model="question.preg">
 							</label>
 
 		       	<div class="list" ng-if="question.type == 'G'">	 <!--GENDER-->
@@ -90,10 +90,14 @@
 					</label>
 				</div>
 				<div  class="list" ng-if="question.type == 'K'"> <!-- List of number inputs-->
-					<label class="item item-input" ng-repeat="option in question.subquestions">
-						{{option.question}}:&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="number" ng-model="option.answer">
-					</label>
+					<div ng-repeat="option in question.subquestions">
+						<label class="item item-input">
+							<p>{{option.question}}</p>
+						</label>
+						<label class="item item-input">
+							<input type="number" ng-model="option.answer">
+						</label>
+					</div>
 				</div>
 				<div ng-if="question.type == 'P'">      <!--CHECKBOX WITH COMMENTS-->
 					<div ng-repeat="option in question.subquestions">
@@ -106,14 +110,18 @@
 					</div>
 				</div>
 				<div ng-if="question.type == 'Q'">      <!--MULTIPLE INPUTS-->
-					<label class="item item-input" ng-repeat="option in question.subquestions">
-							{{option.question}}:&nbsp;&nbsp;
+					<div ng-repeat="option in question.subquestions">
+						<label class="item item-input">
+								<p>{{option.question}}</p>
+						</label>
+						<label class="item item-input">
 							<input type="text" ng-model="option.answer">
-					</label>
+						</label>
+					</div>
 				</div>
 				<div ng-if="question.type == 'S' && question.attributes.location_mapservice == '1'">      <!--GEOLOCATION -->
 					  <center><div class="item item-icon ion-ios-plus bigger-2" ng-click="getPosition()"></div></center>
-					  <div ng-show="showGpsList" class="item item-text-wrap row" ng-repeat="(index,pos) in gps track by $index">
+					  <div class="item item-text-wrap row" ng-repeat="(index,pos) in gps track by $index">
 					  	<div class="col">{{index}}</div>
 					    <div class="col col-75">{{gps[index]}}</div>
 					  </div>

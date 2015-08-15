@@ -367,7 +367,7 @@ angular.module('starter.controllers', ['ngCordova'])
 	 };
 })
 
-.controller('questionController', function($scope, $state, context, $answers, $cordovaGeolocation, $ionicPopup, $localstorage, $ionicModal, $tracker) {
+.controller('questionController', function($scope, $state, context, $answers, $cordovaGeolocation, $ionicPopup, $localstorage, $ionicModal, $tracker, $timeout) {
 	$scope.section = context.getSection();
 	$scope.question = context.getQuestion();
 
@@ -501,8 +501,13 @@ angular.module('starter.controllers', ['ngCordova'])
 				}else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
 					if($localstorage.getObject('gps') != null) {
 						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
-						var value = $localstorage.getObject('gps')[key];
+						var value = "";
+						for(item in $localstorage.getObject('gps')[key]) {
+							value = value + ";" + $localstorage.getObject('gps')[key][item];
+						}
+						value = value.substring(1, value.length);
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+						$localstorage.removeObject('gps');
 					}
 				}else if($scope.question.type == 'L' && $scope.question.other == 'Y') {
 						var key1 = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
@@ -526,7 +531,8 @@ angular.module('starter.controllers', ['ngCordova'])
 				}else if($scope.question.type == 'D' && $scope.question.attributes.date_format == 'yyyy') {
 					if($scope.question.preg != '' && $scope.question.preg != null && typeof $scope.question.preg !== 'undefined') {
 						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
-						var value = $scope.question.preg + '-01-01 00:00:00';
+						var date = new Date($scope.question.preg);
+						var value = date.getFullYear() + '-01-01 00:00:00';
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 					}
 				}else if($scope.question.type == 'D' && $scope.question.attributes.date_format == 'HH:MM') {
@@ -614,8 +620,8 @@ $scope.sectionState = function() {
 
 	$scope.recurrentExecution = function() {
 		var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+		$scope.showGpsList = true;
 		if($localstorage.getObject('gps') != null && $scope.question.type == "S" && $scope.question.attributes.location_mapservice == '1') {
-			$scope.showGpsList = true;
 			var tmp = $localstorage.getObject('gps');
 			$scope.gps = tmp[key];
 		}else{
@@ -691,37 +697,49 @@ $scope.sectionState = function() {
 	});
 
 	  $scope.getPosition = function() {
-	  	var posOptions = {timeout: 10000, enableHighAccuracy: true};
+			var alertPopup = $ionicPopup.alert({
+				title: 'Localizando...',
+				template: '<center><ion-spinner icon="ripple" class="bigger-2"></ion-spinner></center>',
+				scope: $scope,
+				buttons: {}
+			});
+
+	  	var posOptions = {timeout: 5000, enableHighAccuracy: true};
 	  	$cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
 	      var latitude  = position.coords.latitude;
 	      var longitude = position.coords.longitude;
 				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 	      	if($localstorage.getObject('gps') != null) {
 						var jsonPos = $localstorage.getObject('gps');
-						console.log(jsonPos);
 						jsonPos[key].push(latitude + "," + longitude);
 						$localstorage.setObject('gps', jsonPos);
+						alertPopup.close();
 					}else {
 						var positions = [];
 						positions.push(latitude + "," + longitude);
 						var jsonPos = {};
 						jsonPos[key] = positions;
 						$localstorage.setObject('gps', jsonPos);
-						console.log(jsonPos);
+						alertPopup.close();
 					}
+					$scope.recurrentExecution();
 	    }, function(err) {
 	      //error
+				alertPopup.close();
 	      $scope.showAlert("Verifique que el GPS de su dispositivo este encendido.");
 	    });
+
 			if($localstorage.getObject('gps') != null) {
 				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
-				$scope.showGpsList = true;
 				var tmp = $localstorage.getObject('gps');
 				$scope.gps = tmp[key];
 			}else{
-				$scope.showGpsList = false;
 				$scope.gps = [];
 			}
+
+			$timeout(function() {
+		     alertPopup.close(); //close the popup after 3 seconds for some reason
+		  }, 6000);
 	  };
 
 	  	$scope.showAlert = function(mensaje) {
