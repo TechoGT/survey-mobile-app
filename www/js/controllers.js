@@ -393,6 +393,7 @@ angular.module('starter.controllers', ['ngCordova'])
 					 $scope.question.type == 'C'){
 					for(i in $scope.columns){
 						var answer = $scope.columns[i].answer;
+						console.log($scope.columns);
 						if(answer != ''){
 							return true;
 						}
