@@ -10,7 +10,7 @@
     </ion-header-bar>
     <ion-content>
       <div>
-        <p class="font-dark-gray back-gray" align="center">{{question.question}}</p>
+        <p class="font-dark-gray back-gray" align="center">{{question.help}}</p>
         <hr class="style-two"/>
         <p class="font-light-gray" align="center">{{row.question}}</p>
       </div>
@@ -19,7 +19,8 @@
           <p class="back-gray" align="center">
             {{field.question}}
           </p>
-          <label class="item item-input" ng-if="field.type == 'S'"> <!--SIMPLE TEXT-->
+          <label class="item item-input" ng-if="field.type == 'S'
+          || (field.type != 'D' && field.type != 'G' && field.type != 'N' && field.type != 'Y' && field.type != '5' && field.type != '10' && field.type != 'T')"> <!--SIMPLE TEXT-->
             <input type="text" ng-model="field.answer">
           </label>
           <label class="item item-input" ng-if="field.type == 'D'"> <!--DATE-->
@@ -67,7 +68,7 @@
       <div class="card" ng-if="question.type == 'F'">
         <div class="list"> <!--RADIO OPTIONS-->
           <label class="item item-radio" ng-repeat="(key, option) in question.answeroptions">
-            <ion-radio ng-model="row.checked" ng-value="key" name="group" ng-disabled="verify(key)">{{option.answer}}</ion-radio>
+            <ion-radio ng-model="row.checked" ng-value="key" name="group" ng-disabled="verify(key) && question.attributes.exclude_all_others">{{option.answer}}</ion-radio>
           </label>
         </div>
       </div>
