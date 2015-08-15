@@ -620,8 +620,8 @@ $scope.sectionState = function() {
 
 	$scope.recurrentExecution = function() {
 		var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+		$scope.showGpsList = true;
 		if($localstorage.getObject('gps') != null && $scope.question.type == "S" && $scope.question.attributes.location_mapservice == '1') {
-			$scope.showGpsList = true;
 			var tmp = $localstorage.getObject('gps');
 			$scope.gps = tmp[key];
 		}else{
@@ -722,6 +722,7 @@ $scope.sectionState = function() {
 						$localstorage.setObject('gps', jsonPos);
 						alertPopup.close();
 					}
+					$scope.recurrentExecution();
 	    }, function(err) {
 	      //error
 				alertPopup.close();
@@ -730,11 +731,9 @@ $scope.sectionState = function() {
 
 			if($localstorage.getObject('gps') != null) {
 				var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
-				$scope.showGpsList = true;
 				var tmp = $localstorage.getObject('gps');
 				$scope.gps = tmp[key];
 			}else{
-				$scope.showGpsList = false;
 				$scope.gps = [];
 			}
 

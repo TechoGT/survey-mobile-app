@@ -121,7 +121,7 @@
 				</div>
 				<div ng-if="question.type == 'S' && question.attributes.location_mapservice == '1'">      <!--GEOLOCATION -->
 					  <center><div class="item item-icon ion-ios-plus bigger-2" ng-click="getPosition()"></div></center>
-					  <div ng-show="showGpsList" class="item item-text-wrap row" ng-repeat="(index,pos) in gps track by $index">
+					  <div class="item item-text-wrap row" ng-repeat="(index,pos) in gps track by $index">
 					  	<div class="col">{{index}}</div>
 					    <div class="col col-75">{{gps[index]}}</div>
 					  </div>
