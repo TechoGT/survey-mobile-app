@@ -375,7 +375,8 @@ angular.module('starter.controllers', ['ngCordova'])
 		var date = new Date();
 		var hours = date.getHours();
 		var minutes = date.getMinutes();
-		$scope.question.preg = hours + ":" + minutes;
+		var seconds = date.getSeconds();
+		$scope.question.preg = hours + ":" + minutes + ":" + seconds;
 	}
 
 	$scope.validate = function() {
@@ -526,6 +527,12 @@ angular.module('starter.controllers', ['ngCordova'])
 					if($scope.question.preg != '' && $scope.question.preg != null && typeof $scope.question.preg !== 'undefined') {
 						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
 						var value = $scope.question.preg + '-01-01 00:00:00';
+						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
+					}
+				}else if($scope.question.type == 'D' && $scope.question.attributes.date_format == 'HH:MM') {
+					if($scope.question.preg != '' && $scope.question.preg != null && typeof $scope.question.preg !== 'undefined') {
+						var key = context.getSurvey().sid + 'X' + context.getSection().gid + 'X'	+ $scope.question.id;
+						var value = '1970-01-01 ' + $scope.question.preg;
 						$answers.addAnswer(context.getSurvey().sid, $scope.section.gid, key, value);
 					}
 				}else{

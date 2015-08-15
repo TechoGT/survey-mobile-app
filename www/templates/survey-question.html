@@ -18,9 +18,11 @@
 								<input type="date" ng-model="question.preg">
 		       		</label>
 
-							<label class="item item-input" ng-if="question.type == 'D' && question.attributes.date_format == 'HH:MM'">
-								<button align="center" class="button icon-left ion-ios-clock-outline positive" type="button" ng-click="getTime()">Obtener Hora ( {{question.preg}} )</button>
-							</label>
+							<a class="item item-icon-left" ng-click="getTime()" ng-if="question.type == 'D' && question.attributes.date_format == 'HH:MM'">
+						    <i class="icon ion-ios-clock-outline positive"></i>
+						    Obtener Hora
+								<span class="item-note">{{question.preg}}</span>
+						  </a>
 
 							<label class="item item-input" ng-if="question.type == 'D' && (question.attributes.date_format == 'yyyy')">
 								<input type="number" ng-model="question.preg" placeholder="Ej.: 1950">
