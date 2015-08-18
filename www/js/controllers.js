@@ -703,12 +703,12 @@ $scope.sectionState = function() {
 	  $scope.getPosition = function() {
 			var alertPopup = $ionicPopup.alert({
 				title: 'Localizando...',
-				template: '<center><ion-spinner icon="ripple" class="bigger-2"></ion-spinner></center>',
+				template: '<center><ion-spinner icon="android" class="bigger-2"></ion-spinner></center>',
 				scope: $scope,
 				buttons: {}
 			});
 
-	  	var posOptions = {timeout: 5000, enableHighAccuracy: true};
+	  	var posOptions = {timeout: 10000, enableHighAccuracy: true};
 	  	$cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
 	      var latitude  = position.coords.latitude;
 	      var longitude = position.coords.longitude;
@@ -743,7 +743,7 @@ $scope.sectionState = function() {
 
 			$timeout(function() {
 		     alertPopup.close(); //close the popup after 3 seconds for some reason
-		  }, 6000);
+		  }, 15000);
 	  };
 
 	  	$scope.showAlert = function(mensaje) {
