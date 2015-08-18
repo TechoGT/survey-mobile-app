@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.wiredcodes.techosurvey" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Techo Survey</name>
+  <name>Techo Survey</name>  
   <description>
     Aplicación para las encuentas de campo de Techo para mi pais.
   </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-    Ionic Framework Team
+  <author email="gersonestrada.giron@gmail.com" href="https://github.com/humbertn">
+    Humberth
   </author>
   <content src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="data:*"/>
+  <allow-navigation href="geo:*" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
