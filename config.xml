@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.wiredcodes.techosurvey" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Techo Survey</name>  
+  <name>Techo Survey</name>
   <description>
     Aplicación para las encuentas de campo de Techo para mi pais.
   </description>
@@ -10,18 +10,21 @@
   <content src="index.html"/>
   <access origin="*"/>
   <allow-navigation href="data:*"/>
-  <allow-navigation href="geo:*" />
+  <allow-navigation href="geo:*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
+  <preference name="AutoHideSplashScreen" value="false"/>
   <plugin name="Geolocation" value="org.apache.cordova.GeoBroker"/>
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>
   <platform name="android">
+    <preference name="SplashScreen" value="screen"/>
+    <preference name="SplashScreenDelay" value="50000"/>
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
     <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>
@@ -41,4 +44,5 @@
     <splash src="resources/android/splash/drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
     <splash src="resources/android/splash/drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
   </platform>
+  <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
 </widget>
