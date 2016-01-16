@@ -16,7 +16,7 @@ angular.module('starter.services',[])
       return angular.fromJson($window.localStorage[key] || null);
     },
     removeObject: function(key) {
-    	$window.localStorage.removeItem(key);
+      $window.localStorage.removeItem(key);
     }
   }
 }])
@@ -66,69 +66,69 @@ angular.module('starter.services',[])
 }])
 
 .factory('context', function() {
-	var avaliableSurveys = [];
-	var survey = {};
-	var section = {};
-	var question = {};
-	var currentQuestion = 0;
-	var volunteers = [{name:'', phone:'', email:''}, {name:'', phone:'', email:''}];
-	surveyID = 0;
+  var avaliableSurveys = [];
+  var survey = {};
+  var section = {};
+  var question = {};
+  var currentQuestion = 0;
+  var volunteers = [{name:'', phone:'', email:''}, {name:'', phone:'', email:''}];
+  surveyID = 0;
 
-	return {
-		getSurvey: function (){
-			return survey;
-		},
+  return {
+    getSurvey: function (){
+      return survey;
+    },
 
-		getSection: function (){
-			return section;
-		},
+    getSection: function (){
+      return section;
+    },
 
-		getQuestion: function (){
-			return question;
-		},
+    getQuestion: function (){
+      return question;
+    },
 
-		setSurvey: function(Survey) {
-			survey = Survey;
-		},
+    setSurvey: function(Survey) {
+      survey = Survey;
+    },
 
-		setSection: function(Section) {
-			section = Section;
-		},
+    setSection: function(Section) {
+      section = Section;
+    },
 
-		setQuestion: function(Question) {
-			question = Question;
-		},
+    setQuestion: function(Question) {
+      question = Question;
+    },
 
-		setCurrentQuestion: function(cq) {
-			currentQuestion = cq;
-		},
-		setVolunteers: function(v) {
-			volunteers = v;
-		},
-		getVolunteers: function() {
-			return volunteers;
-		},
+    setCurrentQuestion: function(cq) {
+      currentQuestion = cq;
+    },
+    setVolunteers: function(v) {
+      volunteers = v;
+    },
+    getVolunteers: function() {
+      return volunteers;
+    },
 
-		changeQuestion: function(direction) {
-			if (direction === 1) {
-				if(section.questions[currentQuestion+1]) {
-					question = section.questions[currentQuestion+1];
-					currentQuestion++;
-					return true;
-				} else {
-					currentQuestion = 0;
-					return false;
-				}
-			} else if (direction === -1) {
-				if (section.questions[currentQuestion-1]) {
-					question = section.questions[currentQuestion-1];
-					currentQuestion--;
-					return true;
-				}else {
-					currentQuestion = 0;
-					return false;
-				}
-			}
-		}
-	};
+    changeQuestion: function(direction) {
+      if (direction === 1) {
+        if(section.questions[currentQuestion+1]) {
+          question = section.questions[currentQuestion+1];
+          currentQuestion++;
+          return true;
+        } else {
+          currentQuestion = 0;
+          return false;
+        }
+      } else if (direction === -1) {
+        if (section.questions[currentQuestion-1]) {
+          question = section.questions[currentQuestion-1];
+          currentQuestion--;
+          return true;
+        }else {
+          currentQuestion = 0;
+          return false;
+        }
+      }
+    }
+  };
 });
