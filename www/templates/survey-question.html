@@ -74,12 +74,11 @@
               <input type="text" ng-model="question.preg">
             </label>
             <div class="list" ng-if="question.type == '!'">  <!--DROPDOWN LIST-->
-              <label class="item item-input item-select">
-              <select>
-                <option selected>Seleccione una opcion</option>
-                <option ng-repeat="answeroption in question.answeroptions">{{answeroption.answer}}</option>
+            <label class="item item-input item-select" style="min-height: 32px;">
+              <select ng-model="question.preg" ng-change="testing()">                
+                <option ng-repeat="answeroption in question.answeroptions" ng-value="answeroption.answer" ng-selected="question.preg === answeroption.answer">{{answeroption.answer}}</option>
               </select>
-          </label>
+            </label>
         </div>
         <div ng-if="question.type == 'M'">    <!--CHECKBOX-->
           <div ng-repeat="option in question.subquestions">

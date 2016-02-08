@@ -377,10 +377,13 @@ angular.module('starter.controllers', ['ngCordova'])
     var minutes = date.getMinutes();
     var seconds = date.getSeconds();
     $scope.question.preg = hours + ":" + minutes + ":" + seconds;
-  }
+  };
+
+  $scope.testing = function() {
+      console.log($scope.question);
+  };
 
   $scope.validate = function() {
-
     if($scope.question.mandatory == 'Y') {
       if($scope.question.preg != ''){
         return true;
