@@ -75,7 +75,7 @@
             </label>
             <div class="list" ng-if="question.type == '!'">  <!--DROPDOWN LIST-->
             <label class="item item-input item-select" style="min-height: 32px;">
-              <select ng-model="question.preg" ng-change="testing()">                
+              <select ng-model="question.preg">                
                 <option ng-repeat="answeroption in question.answeroptions" ng-value="answeroption.answer" ng-selected="question.preg === answeroption.answer">{{answeroption.answer}}</option>
               </select>
             </label>

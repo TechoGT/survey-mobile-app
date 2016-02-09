@@ -379,57 +379,62 @@ angular.module('starter.controllers', ['ngCordova'])
     $scope.question.preg = hours + ":" + minutes + ":" + seconds;
   };
 
-  $scope.testing = function() {
-      console.log($scope.question);
+  $scope.validate = function() {
+
+    if($scope.question.mandatory == 'Y') {
+      return $scope.revalidate();
+    }else {
+      if($scope.question.relevance !== '1' || $scope.question.relevance !== 1) {
+        return $scope.revalidate();
+      }else {
+        return true;
+      }
+    }
   };
 
-  $scope.validate = function() {
-    if($scope.question.mandatory == 'Y') {
-      if($scope.question.preg != ''){
-        return true;
-      }else{
-        if($scope.question.type == ';' ||
-           $scope.question.type == ':' ||
-           $scope.question.type == 'E' ||
-           $scope.question.type == 'B' ||
-           $scope.question.type == 'A' ||
-           $scope.question.type == 'C'){
-          for(i in $scope.columns){
-            var answer = $scope.columns[i].answer;
-            if(answer != ''){
-              return true;
-            }
-          }
-        }else if($scope.question.type == 'F') {
-          for(var i in $scope.question.subquestions) {
-            if($scope.question.subquestions[i].checked != false) {
-              return true;
-            }
-          }
-        }else if($scope.question.type == 'Q' ||
-                 $scope.question.type == 'K' ||
-                 $scope.question.type == 'P'){
-          for(j in $scope.question.subquestions) {
-            var answer = $scope.question.subquestions[j].answer;
-            if(answer != ''){
-              return true;
-            }
-          }
-        }else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
-          if($localstorage.getObject('gps')){
+  $scope.revalidate = function() {
+    if($scope.question.preg != ''){
+      return true;
+    }else{
+      if($scope.question.type == ';' ||
+         $scope.question.type == ':' ||
+         $scope.question.type == 'E' ||
+         $scope.question.type == 'B' ||
+         $scope.question.type == 'A' ||
+         $scope.question.type == 'C'){
+        for(i in $scope.columns){
+          var answer = $scope.columns[i].answer;
+          if(answer != ''){
             return true;
           }
-        }else if($scope.question.type == 'M') {
-          for(j in $scope.question.subquestions) {
-            var checked = $scope.question.subquestions[j].checked;
-            if(checked){
-              return true;
-            }
+        }
+      }else if($scope.question.type == 'F') {
+        for(var i in $scope.question.subquestions) {
+          if($scope.question.subquestions[i].checked != false) {
+            return true;
+          }
+        }
+      }else if($scope.question.type == 'Q' ||
+               $scope.question.type == 'K' ||
+               $scope.question.type == 'P'){
+        for(j in $scope.question.subquestions) {
+          var answer = $scope.question.subquestions[j].answer;
+          if(answer != ''){
+            return true;
+          }
+        }
+      }else if($scope.question.type == 'S' && $scope.question.attributes.location_mapservice == '1') {
+        if($localstorage.getObject('gps')){
+          return true;
+        }
+      }else if($scope.question.type == 'M') {
+        for(j in $scope.question.subquestions) {
+          var checked = $scope.question.subquestions[j].checked;
+          if(checked){
+            return true;
           }
         }
       }
-    }else {
-      return true;
     }
   };
 
