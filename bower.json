@@ -1,8 +1,8 @@
 {
-  "name": "techoSurveyMobile",
+  "name": "HelloIonic",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0",
+    "ionic": "driftyco/ionic-bower#1.2.4",
     "mathjs": "~1.7.0",
     "ngCordova": "~0.1.17-alpha"
   }
